@@ -3348,12 +3348,134 @@ a {
     color: var(--text-primary);
 }
 
-/* Hide switcher on screens > 1024px (native desktops) */
-@media (min-width: 1025px) {
-    .device-switcher-fab {
-        display: none;
-    }
+/* Always show switcher to allow simulation on PC */
+.device-switcher-fab {
+    display: flex !important;
 }
+
+/* Simulated Mobile Mode styling on Desktop Screens */
+html.simulated-mobile-mode {
+    background: #04050D !important;
+}
+
+html.simulated-mobile-mode body {
+    max-width: 480px !important;
+    width: 480px !important;
+    margin: 0 auto !important;
+    position: relative !important;
+    border-left: 1px solid rgba(201, 162, 39, 0.25) !important;
+    border-right: 1px solid rgba(201, 162, 39, 0.25) !important;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.8) !important;
+    background: #060814 !important;
+    overflow-x: hidden !important;
+}
+
+html.simulated-mobile-mode .header {
+    width: 480px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    position: fixed !important;
+}
+
+/* Force mobile layouts on desktop in simulated mobile mode */
+html.simulated-mobile-mode .hero-grid,
+html.simulated-mobile-mode .grid-two-cols {
+    grid-template-columns: 1fr !important;
+    gap: 3rem !important;
+}
+
+html.simulated-mobile-mode .hero-visual {
+    order: -1 !important;
+}
+
+html.simulated-mobile-mode .features-grid,
+html.simulated-mobile-mode .portfolio-grid {
+    grid-template-columns: 1fr !important;
+}
+
+html.simulated-mobile-mode .solutions-container .feature-card {
+    flex: 1 1 100% !important;
+    max-width: 100% !important;
+}
+
+html.simulated-mobile-mode .industries-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+}
+
+html.simulated-mobile-mode .difference-grid {
+    grid-template-columns: 1fr !important;
+}
+
+html.simulated-mobile-mode .sliders-grid {
+    grid-template-columns: 1fr !important;
+}
+
+html.simulated-mobile-mode .nav-menu {
+    position: fixed !important;
+    top: 80px !important;
+    left: -100% !important;
+    width: 480px !important;
+    height: calc(100vh - 80px) !important;
+    background: rgba(6, 8, 20, 0.95) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    flex-direction: column !important;
+    padding: 3rem !important;
+    gap: 2rem !important;
+    transition: left 0.4s ease-in-out !important;
+    z-index: 99 !important;
+    display: flex !important;
+}
+
+html.simulated-mobile-mode .nav-menu.active {
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+}
+
+html.simulated-mobile-mode .menu-hamburger {
+    display: flex !important;
+}
+
+html.simulated-mobile-mode .btn-nav {
+    display: none !important;
+}
+
+html.simulated-mobile-mode .portal-dashboard {
+    grid-template-columns: 1fr !important;
+}
+
+html.simulated-mobile-mode .dashboard-sidebar {
+    border-right: none !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    padding: 1.5rem !important;
+}
+
+html.simulated-mobile-mode .db-nav {
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+}
+
+html.simulated-mobile-mode .pipeline-header-row,
+html.simulated-mobile-mode .pipeline-row-item {
+    grid-template-columns: 1.2fr 1fr !important;
+}
+
+html.simulated-mobile-mode .pipeline-header-row span:nth-child(3),
+html.simulated-mobile-mode .pipeline-header-row span:nth-child(4),
+html.simulated-mobile-mode .pipeline-row-item span:nth-child(3),
+html.simulated-mobile-mode .pipeline-row-item span:nth-child(4) {
+    display: none !important;
+}
+
+html.simulated-mobile-mode .device-switcher-fab {
+    display: flex !important;
+    position: fixed !important;
+    bottom: 2rem !important;
+    left: calc(50% - 220px) !important; /* Keep FAB inside the simulated viewport */
+    transform: none !important;
+    z-index: 99999 !important;
+}
+
 
 /* Forced PC / Desktop Mode layout overrides on mobile viewports */
 html.forced-pc-mode {

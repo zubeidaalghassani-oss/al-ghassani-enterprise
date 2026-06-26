@@ -6,10 +6,17 @@
     <script>
         (function() {
             const savedMode = localStorage.getItem('viewport-mode');
-            if (savedMode === 'pc') {
-                const vp = document.getElementById('viewport-meta');
-                if (vp) vp.setAttribute('content', 'width=1200, initial-scale=0.3, shrink-to-fit=no');
-                document.documentElement.classList.add('forced-pc-mode');
+            const isDesktopScreen = window.innerWidth > 1024;
+            if (isDesktopScreen) {
+                if (savedMode === 'mobile') {
+                    document.documentElement.classList.add('simulated-mobile-mode');
+                }
+            } else {
+                if (savedMode === 'pc') {
+                    const vp = document.getElementById('viewport-meta');
+                    if (vp) vp.setAttribute('content', 'width=1200, initial-scale=0.3, shrink-to-fit=no');
+                    document.documentElement.classList.add('forced-pc-mode');
+                }
             }
         })();
     </script>

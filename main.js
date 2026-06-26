@@ -940,26 +940,54 @@ We would like to analyze how Al Ghassani Enterprise can support navigating our g
         const mobileIcon = document.getElementById('switcher-icon-mobile');
         const switcherText = document.getElementById('switcher-text');
         
-        if (mode === 'pc') {
-            // Set simulated desktop viewport
-            viewportMeta.setAttribute('content', 'width=1200, initial-scale=0.3, shrink-to-fit=no');
-            document.documentElement.classList.add('forced-pc-mode');
-            
-            if (pcIcon) pcIcon.style.display = 'none';
-            if (mobileIcon) mobileIcon.style.display = 'inline-block';
-            if (switcherText) switcherText.innerText = 'Mobile View';
-            
-            showToast("Switched to Desktop Mode", "success");
+        const isDesktopScreen = window.innerWidth > 1024;
+        
+        if (isDesktopScreen) {
+            // NATIVE DESKTOP VIEWPORT
+            if (mode === 'mobile') {
+                document.documentElement.classList.add('simulated-mobile-mode');
+                document.documentElement.classList.remove('forced-pc-mode');
+                viewportMeta.setAttribute('content', 'width=device-width, initial-scale=1.0');
+                
+                if (pcIcon) pcIcon.style.display = 'inline-block';
+                if (mobileIcon) mobileIcon.style.display = 'none';
+                if (switcherText) switcherText.innerText = 'Desktop View';
+                
+                showToast("Switched to Simulated Mobile View", "success");
+            } else {
+                document.documentElement.classList.remove('simulated-mobile-mode');
+                document.documentElement.classList.remove('forced-pc-mode');
+                viewportMeta.setAttribute('content', 'width=device-width, initial-scale=1.0');
+                
+                if (pcIcon) pcIcon.style.display = 'none';
+                if (mobileIcon) mobileIcon.style.display = 'inline-block';
+                if (switcherText) switcherText.innerText = 'Mobile View';
+                
+                showToast("Switched to Standard Desktop View", "success");
+            }
         } else {
-            // Restore standard mobile responsive viewport
-            viewportMeta.setAttribute('content', 'width=device-width, initial-scale=1.0');
-            document.documentElement.classList.remove('forced-pc-mode');
-            
-            if (pcIcon) pcIcon.style.display = 'inline-block';
-            if (mobileIcon) mobileIcon.style.display = 'none';
-            if (switcherText) switcherText.innerText = 'Desktop View';
-            
-            showToast("Switched to Mobile Mode", "success");
+            // NATIVE MOBILE VIEWPORT
+            if (mode === 'pc') {
+                viewportMeta.setAttribute('content', 'width=1200, initial-scale=0.3, shrink-to-fit=no');
+                document.documentElement.classList.add('forced-pc-mode');
+                document.documentElement.classList.remove('simulated-mobile-mode');
+                
+                if (pcIcon) pcIcon.style.display = 'none';
+                if (mobileIcon) mobileIcon.style.display = 'inline-block';
+                if (switcherText) switcherText.innerText = 'Mobile View';
+                
+                showToast("Switched to Desktop Mode", "success");
+            } else {
+                viewportMeta.setAttribute('content', 'width=device-width, initial-scale=1.0');
+                document.documentElement.classList.remove('forced-pc-mode');
+                document.documentElement.classList.remove('simulated-mobile-mode');
+                
+                if (pcIcon) pcIcon.style.display = 'inline-block';
+                if (mobileIcon) mobileIcon.style.display = 'none';
+                if (switcherText) switcherText.innerText = 'Desktop View';
+                
+                showToast("Switched to Mobile Mode", "success");
+            }
         }
         
         // Re-align any dynamic layouts if needed
@@ -969,15 +997,60 @@ We would like to analyze how Al Ghassani Enterprise can support navigating our g
     }
     
     if (switcherFab) {
-        // Load initial state and update icons/texts if PC mode was set by head script
-        const savedMode = localStorage.getItem('viewport-mode') || 'mobile';
-        if (savedMode === 'pc') {
-            applyViewportMode('pc');
+        const isDesktopScreen = window.innerWidth > 1024;
+        const savedMode = localStorage.getItem('viewport-mode');
+        
+        // Determine initial active mode
+        let initialMode;
+        if (isDesktopScreen) {
+            initialMode = (savedMode === 'mobile') ? 'mobile' : 'pc';
+        } else {
+            initialMode = (savedMode === 'pc') ? 'pc' : 'mobile';
+        }
+        
+        // Apply initial state representation silently without toast alert
+        const pcIcon = document.getElementById('switcher-icon-pc');
+        const mobileIcon = document.getElementById('switcher-icon-mobile');
+        const switcherText = document.getElementById('switcher-text');
+        
+        if (isDesktopScreen) {
+            if (initialMode === 'mobile') {
+                document.documentElement.classList.add('simulated-mobile-mode');
+                if (pcIcon) pcIcon.style.display = 'inline-block';
+                if (mobileIcon) mobileIcon.style.display = 'none';
+                if (switcherText) switcherText.innerText = 'Desktop View';
+            } else {
+                document.documentElement.classList.remove('simulated-mobile-mode');
+                if (pcIcon) pcIcon.style.display = 'none';
+                if (mobileIcon) mobileIcon.style.display = 'inline-block';
+                if (switcherText) switcherText.innerText = 'Mobile View';
+            }
+        } else {
+            if (initialMode === 'pc') {
+                if (viewportMeta) viewportMeta.setAttribute('content', 'width=1200, initial-scale=0.3, shrink-to-fit=no');
+                document.documentElement.classList.add('forced-pc-mode');
+                if (pcIcon) pcIcon.style.display = 'none';
+                if (mobileIcon) mobileIcon.style.display = 'inline-block';
+                if (switcherText) switcherText.innerText = 'Mobile View';
+            } else {
+                if (viewportMeta) viewportMeta.setAttribute('content', 'width=device-width, initial-scale=1.0');
+                document.documentElement.classList.remove('forced-pc-mode');
+                if (pcIcon) pcIcon.style.display = 'inline-block';
+                if (mobileIcon) mobileIcon.style.display = 'none';
+                if (switcherText) switcherText.innerText = 'Desktop View';
+            }
         }
         
         switcherFab.addEventListener('click', () => {
-            const isPC = document.documentElement.classList.contains('forced-pc-mode');
-            const newMode = isPC ? 'mobile' : 'pc';
+            const currentIsDesktop = window.innerWidth > 1024;
+            let currentMode;
+            if (currentIsDesktop) {
+                currentMode = document.documentElement.classList.contains('simulated-mobile-mode') ? 'mobile' : 'pc';
+            } else {
+                currentMode = document.documentElement.classList.contains('forced-pc-mode') ? 'pc' : 'mobile';
+            }
+            
+            const newMode = (currentMode === 'mobile') ? 'pc' : 'mobile';
             localStorage.setItem('viewport-mode', newMode);
             applyViewportMode(newMode);
         });
