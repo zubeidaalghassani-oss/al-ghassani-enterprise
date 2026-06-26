@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGE Corporate Letterhead</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="brand_kit.css">
+    <style>
+        body {
+            background-color: #f1f5f9;
+            font-family: var(--font-body);
+            padding: 3rem 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .actions {
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            background-color: var(--color-navy);
+            color: #ffffff;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: var(--color-gold);
+        }
+
+        /* A4 Page container */
+        .page {
+            width: 8.27in;
+            height: 11.69in;
+            background: #ffffff;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.06);
+            padding: 1in;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        /* Letterhead Header */
+        .letterhead-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(201, 162, 39, 0.2);
+            padding-bottom: 1.5rem;
+        }
+
+        .logo-box {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-img {
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
+        }
+
+        .logo-text h1 {
+            font-family: var(--font-heading);
+            font-size: 1.6rem;
+            color: var(--color-navy);
+            line-height: 1.1;
+        }
+
+        .logo-text p {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-gold);
+            font-weight: 600;
+        }
+
+        .header-meta {
+            text-align: right;
+            font-size: 0.75rem;
+            color: var(--color-charcoal);
+            line-height: 1.4;
+        }
+
+        /* Letterhead Content Body */
+        .letterhead-body {
+            flex-grow: 1;
+            padding: 3rem 0;
+            font-size: 0.95rem;
+            color: var(--color-charcoal);
+            line-height: 1.6;
+        }
+
+        .date-line {
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+
+        .recipient-block {
+            margin-bottom: 2rem;
+            line-height: 1.4;
+        }
+
+        .letter-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .signature-block {
+            margin-top: 3rem;
+            line-height: 1.4;
+        }
+
+        /* Letterhead Footer */
+        .letterhead-footer {
+            border-top: 1px solid rgba(0,0,0,0.05);
+            padding-top: 1rem;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.7rem;
+            color: #888;
+            line-height: 1.4;
+        }
+
+        /* Print optimization */
+        @media print {
+            body {
+                background-color: #ffffff;
+                padding: 0;
+            }
+            .actions {
+                display: none;
+            }
+            .page {
+                box-shadow: none;
+                padding: 1in;
+                width: 100%;
+                height: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="actions">
+        <button class="btn" onclick="window.print()">Print Letterhead Document</button>
+    </div>
+
+    <div class="page">
+        <!-- HEADER -->
+        <header class="letterhead-header">
+            <div class="logo-box">
+                <img src="../logo.png" alt="AGE Logo" class="logo-img">
+                <div class="logo-text">
+                    <h1>AGE</h1>
+                    <p>Al Ghassani Enterprise</p>
+                </div>
+            </div>
+            <div class="header-meta">
+                <span>The Gate District, East Wing</span><br>
+                <span>DIFC, Dubai, United Arab Emirates</span><br>
+                <span>T: +971 4 123 4567 • E: info@alghassani.com</span>
+            </div>
+        </header>
+
+        <!-- BODY -->
+        <main class="letterhead-body">
+            <div class="date-line">Date: June 26, 2026</div>
+            <div class="recipient-block">
+                <strong>To: Executive Leadership Team</strong><br>
+                <span>Al Ghassani Enterprise Hubs</span><br>
+                <span>Dubai, United Arab Emirates</span>
+            </div>
+            <div class="letter-content">
+                <p>Dear Partners,</p>
+                <p>
+                    I am pleased to present the finalized brand identity and operational blueprint documents for Al Ghassani Enterprise (AGE). We have successfully locked our corporate architecture, G&A shared service model, and playmaker expansion methodologies for the GCC markets.
+                </p>
+                <p>
+                    Our transition establishes a secure B2B platform operating with absolute integrity, confidentiality, and institutional precision. We are now fully prepared to scale our pipeline referrals and assist client organizations in navigating market entry and government alliances.
+                </p>
+                <p>Sincerely,</p>
+            </div>
+            <div class="signature-block">
+                <strong>Yahya Al Ghassani</strong><br>
+                <span style="color:var(--color-gold); font-size:0.8rem; font-weight:600; text-transform:uppercase;">Founder & Chairman</span>
+            </div>
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="letterhead-footer">
+            <div>
+                <span>AGE Al Ghassani Enterprise Group Ltd.</span><br>
+                <span>Registered under DIFC Holdings Regulations, Dubai, UAE.</span>
+            </div>
+            <div style="text-align: right;">
+                <span>Corporate Website: www.alghassani.com</span><br>
+                <span>Strictly Confidential & Proprietary Document</span>
+            </div>
+        </footer>
+    </div>
+
+</body>
+</html>

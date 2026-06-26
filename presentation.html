@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Al Ghassani Enterprise | Corporate Presentation</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --color-navy: #0B1F3A;
+            --color-gold: #C9A227;
+            --color-charcoal: #2E3138;
+            --color-dark-bg: #050E1B;
+            --color-card-bg: rgba(46, 49, 56, 0.45);
+            --font-heading: 'Cormorant Garamond', 'Georgia', serif;
+            --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --transition-speed: 0.5s;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--color-dark-bg);
+            color: #ffffff;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Top controls bar */
+        .controls-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 3rem;
+            z-index: 100;
+        }
+
+        .back-link {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+
+        .back-link:hover {
+            opacity: 1;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            padding: 0.6rem 1.2rem;
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover {
+            background-color: var(--color-gold);
+            border-color: var(--color-gold);
+            color: var(--color-navy);
+        }
+
+        /* Slide Deck wrapper */
+        .slides-wrapper {
+            position: relative;
+            flex-grow: 1;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Single Slide style */
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 4rem 4rem 4rem;
+            transition: opacity var(--transition-speed) ease, visibility var(--transition-speed) ease;
+            z-index: 10;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 20;
+        }
+
+        /* Slide layout template */
+        .slide-content {
+            width: 100%;
+            max-width: 1100px;
+            height: 100%;
+            background-color: var(--color-card-bg);
+            border: 1px solid rgba(201, 162, 39, 0.15);
+            border-radius: 12px;
+            padding: 4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        /* Cover slide variant */
+        .slide.slide-cover .slide-content {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border-color: var(--color-gold);
+        }
+
+        .cover-logo {
+            width: 140px;
+            height: 140px;
+            margin-bottom: 2rem;
+            object-fit: contain;
+        }
+
+        .cover-title {
+            font-family: var(--font-heading);
+            font-size: 3.8rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .cover-subtitle {
+            font-family: var(--font-body);
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--color-gold);
+            font-weight: 600;
+            margin-bottom: 3rem;
+        }
+
+        .cover-meta {
+            font-size: 0.85rem;
+            color: #8c9ba5;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 1.5rem;
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        /* Standard slide layout headers */
+        .slide-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(201, 162, 39, 0.15);
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .slide-title-area h2 {
+            font-family: var(--font-heading);
+            font-size: 2.4rem;
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .slide-title-area p {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-gold);
+            font-weight: 600;
+        }
+
+        .slide-index {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            color: rgba(201, 162, 39, 0.4);
+            font-style: italic;
+        }
+
+        .slide-body {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .slide-footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 1rem;
+            margin-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            color: #8c9ba5;
+        }
+
+        /* Text formatting inside slide body */
+        p.lead {
+            font-size: 1.3rem;
+            font-weight: 300;
+            color: #d1d5db;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .quote-container {
+            background-color: rgba(11, 31, 58, 0.3);
+            border-left: 4px solid var(--color-gold);
+            padding: 2rem;
+            border-radius: 0 6px 6px 0;
+            margin: 1rem 0;
+        }
+
+        .quote-body-text {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            color: #ffffff;
+            font-style: italic;
+            line-height: 1.4;
+            margin-bottom: 0.8rem;
+        }
+
+        .quote-author {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--color-gold);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Structures for layout splits */
+        .grid-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .flex-row {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .card-item {
+            background-color: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 1.5rem;
+            border-radius: 6px;
+            flex: 1;
+        }
+
+        .card-item h4 {
+            font-family: var(--font-heading);
+            font-size: 1.4rem;
+            color: var(--color-gold);
+            margin-bottom: 0.6rem;
+        }
+
+        .card-item p {
+            font-size: 0.9rem;
+            color: #cbd5e1;
+            line-height: 1.5;
+        }
+
+        /* Bullet lists */
+        ul.accent-bullets {
+            list-style: none;
+        }
+
+        ul.accent-bullets li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.8rem;
+            font-size: 1.05rem;
+            color: #cbd5e1;
+        }
+
+        ul.accent-bullets li::before {
+            content: "■";
+            color: var(--color-gold);
+            position: absolute;
+            left: 0;
+            top: 2px;
+            font-size: 0.8rem;
+        }
+
+        /* Footer Slide Controls */
+        .navigation-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 3rem;
+            z-index: 100;
+        }
+
+        .nav-arrows {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .arrow-btn {
+            background: none;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .arrow-btn:hover {
+            background-color: var(--color-gold);
+            border-color: var(--color-gold);
+            color: var(--color-navy);
+        }
+
+        .indicators {
+            display: flex;
+            gap: 0.6rem;
+        }
+
+        .indicator-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.2);
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .indicator-dot.active {
+            background-color: var(--color-gold);
+            transform: scale(1.2);
+        }
+
+        /* Print CSS for Landscape Slide PDF output */
+        @media print {
+            body {
+                background-color: #ffffff;
+                color: #000000;
+                overflow: visible;
+                height: auto;
+                width: auto;
+            }
+
+            .controls-bar, .navigation-footer {
+                display: none;
+            }
+
+            .slides-wrapper {
+                height: auto;
+            }
+
+            .slide {
+                position: relative;
+                opacity: 1;
+                visibility: visible;
+                page-break-after: always;
+                height: 100vh;
+                width: 100vw;
+                padding: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .slide-content {
+                width: 100%;
+                height: 100%;
+                border: none;
+                box-shadow: none;
+                background-color: #ffffff;
+                color: #000000;
+                padding: 3rem;
+            }
+
+            .slide-title-area h2, .cover-title {
+                color: var(--color-navy);
+            }
+
+            .slide-title-area p, .cover-subtitle {
+                color: var(--color-gold);
+            }
+
+            .card-item {
+                background-color: #f8fafc;
+                border: 1px solid rgba(0,0,0,0.06);
+            }
+
+            .card-item p, ul.accent-bullets li {
+                color: #334155;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Controls Header -->
+    <header class="controls-bar">
+        <a href="index.html" class="back-link">
+            <i data-lucide="arrow-left"></i> Back to Live Site
+        </a>
+        <div class="action-buttons">
+            <button class="btn" onclick="window.print()">
+                <i data-lucide="download"></i> Download PDF Deck
+            </button>
+        </div>
+    </header>
+
+    <!-- Slide Deck wrapper -->
+    <div class="slides-wrapper">
+
+        <!-- Slide 1: Cover Page -->
+        <div class="slide slide-cover active" id="slide-0">
+            <div class="slide-content">
+                <img src="logo.png" alt="AGE Logo" class="cover-logo">
+                <h1 class="cover-title">AGE</h1>
+                <p class="cover-subtitle">Al Ghassani Enterprise</p>
+                <div class="cover-meta">
+                    <p><strong>PREPARED FOR:</strong> Yahya Al Ghassani (Founder & Chairman)</p>
+                    <p><strong>DATE:</strong> June 2026</p>
+                    <p><strong>STATUS:</strong> Strict Confidentiality</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: The Playmaker Creed -->
+        <div class="slide" id="slide-1">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <div class="slide-title-area">
+                        <h2>The Playmaker's Philosophy</h2>
+                        <p>Corporate Narrative & Philosophy</p>
+                    </div>
+                    <div class="slide-index">02 / 07</div>
+                </div>
+                <div class="slide-body">
+                    <p class="lead">
+                        In football, playmakers run the midfield. They read the pitch, absorb operational pressure from the defense, and distribute the perfect assist so the forward line can score. AGE applies this exact philosophy to B2B corporate expansion.
+                    </p>
+                    <div class="quote-container">
+                        <p class="quote-body-text">
+                            "Great teams win through vision, trust, and the right passes at the right time. Al Ghassani Enterprise applies that same philosophy to business—connecting the right people, at the right moment, to create lasting growth."
+                        </p>
+                        <p class="quote-author">— Yahya Al Ghassani, Founder & Chairman</p>
+                    </div>
+                </div>
+                <div class="slide-footer">
+                    <span>AGE Al Ghassani Enterprise • Proprietary & Confidential</span>
+                    <span>Corporate Blueprint</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Core Identity -->
+        <div class="slide" id="slide-2">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <div class="slide-title-area">
+                        <h2>Core Identity Structure</h2>
+                        <p>Handbook & Foundation</p>
+                    </div>
+                    <div class="slide-index">03 / 07</div>
+                </div>
+                <div class="slide-body">
+                    <div class="flex-row" style="margin-bottom: 2rem;">
+                        <div class="card-item">
+                            <h4>Corporate Purpose</h4>
+                            <p>To help businesses grow through strategic relationships, trusted partnerships, and expert execution. We bridge the gap for companies with outstanding products that lack access to decision-makers, investors, and governments.</p>
+                        </div>
+                        <div class="card-item">
+                            <h4>The Vision</h4>
+                            <p>To become the GCC's most trusted strategic growth enterprise, enabling businesses, governments, investors, and entrepreneurs to unlock sustainable growth through relationships, innovation, and execution.</p>
+                        </div>
+                    </div>
+                    <div class="flex-row">
+                        <div class="card-item">
+                            <h4>The Mission</h4>
+                            <p>We connect businesses with opportunities. Through strategic partnerships, market access, executive advisory, and business development, we help ambitious organizations grow faster and smarter.</p>
+                        </div>
+                        <div class="card-item" style="border-color: var(--color-gold);">
+                            <h4>Purpose Statement & Slogan</h4>
+                            <p><strong>Statement:</strong> Opening doors that create opportunities.<br><strong>Primary Slogan:</strong> Opening Doors. Accelerating Growth.<br><strong>Alternative Slogan:</strong> Relationships. Strategy. Growth.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-footer">
+                    <span>AGE Al Ghassani Enterprise • Proprietary & Confidential</span>
+                    <span>Corporate Blueprint</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: What We Do -->
+        <div class="slide" id="slide-3">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <div class="slide-title-area">
+                        <h2>Our Five Flagship Solutions</h2>
+                        <p>Productized Advisory Frameworks</p>
+                    </div>
+                    <div class="slide-index">04 / 07</div>
+                </div>
+                <div class="slide-body">
+                    <div class="flex-row" style="margin-bottom: 1.5rem;">
+                        <div class="card-item">
+                            <h4>1. AGE Launch™</h4>
+                            <span class="rec-label" style="font-size: 0.75rem; color: var(--color-gold); font-weight: bold; text-transform: uppercase;">Market Entry</span>
+                            <p>Supporting international firms expanding to GCC. Navigating corporate structuring, ADGM/DIFC compliance, and sponsor agreements.</p>
+                        </div>
+                        <div class="card-item">
+                            <h4>2. AGE Connect™</h4>
+                            <span class="rec-label" style="font-size: 0.75rem; color: var(--color-gold); font-weight: bold; text-transform: uppercase;">Strategic Introductions</span>
+                            <p>Facilitating elite, trust-based introductions to regional corporate boards, family offices, and key GCC stakeholders.</p>
+                        </div>
+                        <div class="card-item">
+                            <h4>3. AGE Scale™</h4>
+                            <span class="rec-label" style="font-size: 0.75rem; color: var(--color-gold); font-weight: bold; text-transform: uppercase;">Business Growth</span>
+                            <p>Active commercial acceleration to expand client acquisition, build B2B pipelines, and secure regional distribution nodes.</p>
+                        </div>
+                    </div>
+                    <div class="flex-row">
+                        <div class="card-item" style="flex: 1.5;">
+                            <h4>4. AGE AI™</h4>
+                            <span class="rec-label" style="font-size: 0.75rem; color: var(--color-gold); font-weight: bold; text-transform: uppercase;">AI Transformation</span>
+                            <p>Integrating state-of-the-art AI systems and digital tools to optimize administrative workflows and minimize G&A overhead.</p>
+                        </div>
+                        <div class="card-item" style="flex: 1.5;">
+                            <h4>5. AGE Capital™</h4>
+                            <span class="rec-label" style="font-size: 0.75rem; color: var(--color-gold); font-weight: bold; text-transform: uppercase;">Investment Readiness</span>
+                            <p>Auditing corporate files, structuring joint-venture allocations, and preparing organizations for capital raises or equity transactions.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-footer">
+                    <span>AGE Al Ghassani Enterprise • Proprietary & Confidential</span>
+                    <span>Corporate Blueprint</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Who We Serve & Revenue Model -->
+        <div class="slide" id="slide-4">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <div class="slide-title-area">
+                        <h2>Target Sectors & Business Model</h2>
+                        <p>Commercial Framework</p>
+                    </div>
+                    <div class="slide-index">05 / 07</div>
+                </div>
+                <div class="slide-body grid-split">
+                    <div>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.6rem; color: var(--color-gold); margin-bottom: 1rem;">Who We Serve</h3>
+                        <ul class="accent-bullets">
+                            <li><strong>SMEs & Startups:</strong> High-growth technology builders.</li>
+                            <li><strong>Family Offices & Corporates:</strong> Diversified local assets.</li>
+                            <li><strong>Government Ecosystems:</strong> Organizations navigating public-sector frameworks.</li>
+                            <li><strong>Sports Organizations:</strong> Commercial clubs & federations.</li>
+                            <li><strong>International Companies:</strong> Firms expanding to UAE/GCC.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.6rem; color: var(--color-gold); margin-bottom: 1rem;">Revenue Streams</h3>
+                        <ul class="accent-bullets">
+                            <li><strong>Strategic Advisory Retainers:</strong> Stable monthly advisory fee.</li>
+                            <li><strong>Project Management Fees:</strong> Phased execution & setup billing.</li>
+                            <li><strong>Success Fees:</strong> Placement commission on closed partnerships.</li>
+                            <li><strong>Joint Venture Equity:</strong> Direct local stakes in client expansions.</li>
+                            <li><strong>Corporate Sponsorship Commissions:</strong> Sports network deals.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="slide-footer">
+                    <span>AGE Al Ghassani Enterprise • Proprietary & Confidential</span>
+                    <span>Corporate Blueprint</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Organization & Team -->
+        <div class="slide" id="slide-5">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <div class="slide-title-area">
+                        <h2>Corporate Structure & Initial Team</h2>
+                        <p>Operating Engine</p>
+                    </div>
+                    <div class="slide-index">06 / 07</div>
+                </div>
+                <div class="slide-body">
+                    <div class="lead" style="font-size: 1.1rem; text-align: center; margin-bottom: 2rem;">
+                        <strong>Corporate Structure:</strong> Founder & Chairman &rarr; Chief Executive Officer &rarr; 7 Specialized Departments (BD, Operations, Marketing, Finance, Technology, Legal, People & Culture)
+                    </div>
+                    <div class="flex-row">
+                        <div class="card-item">
+                            <h4 style="font-size: 1.2rem;">Executive Board</h4>
+                            <p style="font-size: 0.85rem; color:#cbd5e1; margin-top: 0.4rem;">
+                                • Founder & Chairman<br>
+                                • Chief Executive Officer<br>
+                                • Executive Assistant
+                            </p>
+                        </div>
+                        <div class="card-item">
+                            <h4 style="font-size: 1.2rem;">Core Advisory Operations</h4>
+                            <p style="font-size: 0.85rem; color:#cbd5e1; margin-top: 0.4rem;">
+                                • Business Development Director<br>
+                                • Relationship Manager<br>
+                                • Project Manager
+                            </p>
+                        </div>
+                        <div class="card-item">
+                            <h4 style="font-size: 1.2rem;">Finance & Administration</h4>
+                            <p style="font-size: 0.85rem; color:#cbd5e1; margin-top: 0.4rem;">
+                                • Finance & Admin Manager<br>
+                                • Marketing Manager<br>
+                                • Legal Advisor (Outsourced)
+                            </p>
+                        </div>
+                        <div class="card-item">
+                            <h4 style="font-size: 1.2rem;">Technology & Creative</h4>
+                            <p style="font-size: 0.85rem; color:#cbd5e1; margin-top: 0.4rem;">
+                                • Graphic Designer<br>
+                                • Web Developer<br>
+                                • AI Consultant
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-footer">
+                    <span>AGE Al Ghassani Enterprise • Proprietary & Confidential</span>
+                    <span>Corporate Blueprint</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: PMO Risk Governance -->
+        <div class="slide" id="slide-6">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <div class="slide-title-area">
+                        <h2>PMO Governance & 36-Month Timeline</h2>
+                        <p>Corporate Safeguards & Execution Phases</p>
+                    </div>
+                    <div class="slide-index">07 / 07</div>
+                </div>
+                <div class="slide-body grid-split">
+                    <div>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.5rem; color: var(--color-gold); margin-bottom: 0.8rem;">Mitigating the Founder SPOF</h3>
+                        <p style="font-size: 0.9rem; color: #cbd5e1; margin-bottom: 1rem; line-height: 1.5;">
+                            To ensure operations run smoothly during the Chairman's high-profile regional travel, we decouple daily operations. The CEO and managing directors execute standard client tracks, while the Chairman coordinates top-of-funnel sovereign matchmaking and sports negotiations.
+                        </p>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.5rem; color: var(--color-gold); margin-bottom: 0.8rem;">Information Security & Integrity</h3>
+                        <p style="font-size: 0.9rem; color: #cbd5e1; line-height: 1.5;">
+                            All corporate evaluations and matchmade data are protected under strict ADGM/DIFC multi-lateral NDAs, isolating competing client portfolios with separate legal channels.
+                        </p>
+                    </div>
+                    <div>
+                        <h3 style="font-family: var(--font-heading); font-size: 1.5rem; color: var(--color-gold); margin-bottom: 0.8rem;">36-Month Phased Growth Roadmap</h3>
+                        <ul class="accent-bullets" style="font-size: 0.9rem;">
+                            <li><strong>Phase A (Months 1–6):</strong> Launch digital platform, deploy initial G&A templates, and execute first 48-hour client audits.</li>
+                            <li><strong>Phase B (Months 6–18):</strong> Scale shared corporate services, launch AI consultant track, and execute initial success-fee agreements.</li>
+                            <li><strong>Phase C (Months 18–36):</strong> Expand joint-venture local holdings, activate full ADGM/DIFC sponsor grids, and launch international portals.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="slide-footer">
+                    <span>AGE Al Ghassani Enterprise • Proprietary & Confidential</span>
+                    <span>Corporate Blueprint</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Navigation Footer Controls -->
+    <footer class="navigation-footer">
+        <div class="indicators" id="indicators">
+            <!-- JavaScript loads indicator dots dynamically -->
+        </div>
+        <div class="nav-arrows">
+            <button class="arrow-btn" onclick="prevSlide()" aria-label="Previous Slide">
+                <i data-lucide="chevron-left"></i>
+            </button>
+            <button class="arrow-btn" onclick="nextSlide()" aria-label="Next Slide">
+                <i data-lucide="chevron-right"></i>
+            </button>
+        </div>
+    </footer>
+
+    <!-- JavaScript Slide Control Motor -->
+    <script>
+        // Initialize icons
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+
+        // Slides array & State
+        let currentSlideIndex = 0;
+        const slides = document.querySelectorAll('.slide');
+        const indicatorsContainer = document.getElementById('indicators');
+
+        // Dynamically build indicators
+        slides.forEach((slide, idx) => {
+            const dot = document.createElement('span');
+            dot.className = `indicator-dot ${idx === 0 ? 'active' : ''}`;
+            dot.onclick = () => showSlide(idx);
+            indicatorsContainer.appendChild(dot);
+        });
+
+        const dots = document.querySelectorAll('.indicator-dot');
+
+        function showSlide(index) {
+            if (index < 0 || index >= slides.length) return;
+            
+            // Remove active classes
+            slides[currentSlideIndex].classList.remove('active');
+            dots[currentSlideIndex].classList.remove('active');
+
+            // Set new active index
+            currentSlideIndex = index;
+            slides[currentSlideIndex].classList.add('active');
+            dots[currentSlideIndex].classList.add('active');
+        }
+
+        function nextSlide() {
+            let nextIndex = currentSlideIndex + 1;
+            if (nextIndex >= slides.length) nextIndex = 0;
+            showSlide(nextIndex);
+        }
+
+        function prevSlide() {
+            let prevIndex = currentSlideIndex - 1;
+            if (prevIndex < 0) prevIndex = slides.length - 1;
+            showSlide(prevIndex);
+        }
+
+        // Support Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                prevSlide();
+            }
+        });
+    </script>
+</body>
+</html>

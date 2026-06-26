@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Al Ghassani Enterprise | Corporate Profile</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* CSS reset & base variables */
+        :root {
+            --color-navy: #0B1F3A;
+            --color-gold: #C9A227;
+            --color-charcoal: #2E3138;
+            --color-light-bg: #F4F6F9;
+            --color-border: rgba(11, 31, 58, 0.08);
+            --font-heading: 'Cormorant Garamond', 'Georgia', serif;
+            --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --shadow-premium: 0 20px 50px rgba(11, 31, 58, 0.12);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: #051020; /* Dark background to frame the white letterhead sheet */
+            color: var(--color-charcoal);
+            line-height: 1.6;
+            padding: 3rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Floating action/download header bar */
+        .download-bar {
+            width: 100%;
+            max-width: 850px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .back-link {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: var(--color-gold);
+        }
+
+        .btn-download {
+            background-color: var(--color-gold);
+            color: #ffffff;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            box-shadow: 0 4px 15px rgba(201, 162, 39, 0.25);
+            transition: all 0.2s ease;
+        }
+
+        .btn-download:hover {
+            background-color: #ffffff;
+            color: var(--color-navy);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.15);
+        }
+
+        /* Profile Paper Sheet container */
+        .profile-container {
+            width: 100%;
+            max-width: 850px;
+            background: #ffffff;
+            border-top: 6px solid var(--color-gold);
+            padding: 5rem 4.5rem;
+            box-shadow: var(--shadow-premium);
+            position: relative;
+            overflow: hidden;
+            animation: slideUp 0.8s cubic-bezier(0.15, 0.85, 0.3, 1);
+        }
+
+        /* Profile Header styling */
+        .profile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 1px solid rgba(11, 31, 58, 0.08);
+            padding-bottom: 2.5rem;
+            margin-bottom: 3.5rem;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 55px;
+            height: 55px;
+        }
+
+        .logo-img {
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
+        }
+
+        .logo-text-group {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            line-height: 1.1;
+        }
+
+        .logo-title {
+            font-family: var(--font-heading);
+            font-weight: 800;
+            font-size: 1.7rem;
+            letter-spacing: 0.06em;
+            color: var(--color-navy);
+            text-transform: uppercase;
+        }
+
+        .logo-subtitle {
+            font-family: var(--font-body);
+            font-weight: 500;
+            font-size: 0.7rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--color-gold);
+        }
+
+        .meta-area {
+            text-align: right;
+            font-size: 0.8rem;
+            color: #6b7280;
+            line-height: 1.5;
+        }
+
+        .meta-area .doc-title {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--color-navy);
+            margin-bottom: 0.25rem;
+        }
+
+        .meta-area .classification {
+            color: var(--color-gold);
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            font-size: 0.7rem;
+        }
+
+        /* Section layouts */
+        .section {
+            margin-bottom: 3.5rem;
+        }
+
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 1.75rem;
+            color: var(--color-navy);
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-weight: 700;
+        }
+
+        .section-title::after {
+            content: '';
+            flex-grow: 1;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(201, 162, 39, 0.3) 0%, rgba(255, 255, 255, 0) 100%);
+            margin-left: 1rem;
+        }
+
+        .section-title i {
+            color: var(--color-gold);
+            width: 20px;
+            height: 20px;
+        }
+
+        p.narrative {
+            font-size: 1.05rem;
+            color: #374151;
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+
+        /* Callout Box / Creed */
+        .creed-container {
+            background-color: #f7fafc;
+            border-left: 3px solid var(--color-gold);
+            padding: 2rem 2.5rem;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .creed-quote {
+            font-family: var(--font-heading);
+            font-size: 1.45rem;
+            color: var(--color-navy);
+            font-style: italic;
+            line-height: 1.5;
+            margin-bottom: 0.8rem;
+        }
+
+        .creed-author {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--color-charcoal);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .creed-author::before {
+            content: '';
+            width: 15px;
+            height: 1px;
+            background-color: var(--color-gold);
+        }
+
+        /* Core Focus & Capabilities Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .service-card {
+            border: 1px solid rgba(11, 31, 58, 0.06);
+            background: #ffffff;
+            padding: 1.75rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover {
+            border-color: rgba(201, 162, 39, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(11, 31, 58, 0.03);
+        }
+
+        .service-card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .service-card-header i {
+            color: var(--color-gold);
+            background: rgba(201, 162, 39, 0.08);
+            padding: 0.5rem;
+            border-radius: 4px;
+            width: 34px;
+            height: 34px;
+        }
+
+        .service-card h4 {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            color: var(--color-navy);
+            font-weight: 700;
+        }
+
+        .service-card p {
+            font-size: 0.9rem;
+            color: #4b5563;
+            line-height: 1.5;
+        }
+
+        /* Target Audiences & Revenue Model lists */
+        .split-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+        }
+
+        .list-card {
+            background-color: #fafbfc;
+            border: 1px solid rgba(11, 31, 58, 0.04);
+            padding: 2rem;
+            border-radius: 6px;
+        }
+
+        .list-card h3 {
+            font-family: var(--font-heading);
+            font-size: 1.35rem;
+            color: var(--color-navy);
+            margin-bottom: 1.2rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .list-card h3 i {
+            color: var(--color-gold);
+            width: 18px;
+            height: 18px;
+        }
+
+        .bullets-list {
+            list-style: none;
+        }
+
+        .bullets-list li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.8rem;
+            font-size: 0.95rem;
+            color: #4b5563;
+            font-weight: 500;
+        }
+
+        .bullets-list li::before {
+            content: "•";
+            color: var(--color-gold);
+            font-weight: bold;
+            font-size: 1.3rem;
+            position: absolute;
+            left: 0;
+            top: -2px;
+        }
+
+        /* Strategic Pathway Flowchart */
+        .pathway {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin: 2.5rem 0;
+            gap: 1rem;
+        }
+
+        .pathway::before {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 10%;
+            right: 10%;
+            height: 1px;
+            background: repeating-linear-gradient(90deg, var(--color-gold) 0, var(--color-gold) 5px, transparent 5px, transparent 10px);
+            z-index: 1;
+        }
+
+        .pathway-node {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .node-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #ffffff;
+            border: 2px solid var(--color-navy);
+            color: var(--color-navy);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin: 0 auto 0.75rem auto;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .pathway-node:hover .node-circle {
+            background-color: var(--color-gold);
+            border-color: var(--color-gold);
+            color: #ffffff;
+            transform: scale(1.1);
+        }
+
+        .node-title {
+            font-family: var(--font-heading);
+            font-size: 1.15rem;
+            color: var(--color-navy);
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .node-desc {
+            font-size: 0.75rem;
+            color: #6b7280;
+            line-height: 1.4;
+            padding: 0 0.5rem;
+        }
+
+        /* Governance Safeguards Table */
+        .advisory-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+        }
+
+        .advisory-table th, .advisory-table td {
+            text-align: left;
+            padding: 1rem;
+            border-bottom: 1px solid rgba(11, 31, 58, 0.08);
+            font-size: 0.88rem;
+        }
+
+        .advisory-table th {
+            background-color: rgba(11, 31, 58, 0.03);
+            color: var(--color-navy);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
+        .advisory-table td strong {
+            color: var(--color-navy);
+        }
+
+        .advisory-table tr:hover td {
+            background-color: rgba(201, 162, 39, 0.02);
+        }
+
+        /* Signature block */
+        .signature-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: 4rem;
+            border-top: 1px dashed rgba(11, 31, 58, 0.1);
+            padding-top: 3rem;
+            position: relative;
+        }
+
+        .signature-block {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .sig-line {
+            width: 200px;
+            height: 1px;
+            background-color: var(--color-charcoal);
+            margin-bottom: 1rem;
+        }
+
+        .founder-name {
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            color: var(--color-navy);
+            font-weight: 700;
+        }
+
+        .founder-title {
+            font-size: 0.75rem;
+            color: var(--color-gold);
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+
+        .seal-block {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .seal-watermark {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 1px dashed rgba(201, 162, 39, 0.25);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: rotateSeal 20s infinite linear;
+        }
+
+        .seal-inner {
+            font-family: var(--font-heading);
+            font-size: 0.65rem;
+            color: var(--color-gold);
+            font-weight: 700;
+            text-transform: uppercase;
+            text-align: center;
+            letter-spacing: 0.05em;
+            line-height: 1.2;
+        }
+
+        /* Why AGE Grid */
+        .why-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .why-item {
+            border-left: 2px solid var(--color-gold);
+            padding-left: 1rem;
+            font-size: 0.92rem;
+            color: #4b5563;
+        }
+
+        .why-item strong {
+            display: block;
+            color: var(--color-navy);
+            font-family: var(--font-heading);
+            font-size: 1.15rem;
+            margin-bottom: 0.25rem;
+            font-weight: 700;
+        }
+
+        /* Executive Leadership */
+        .leadership-container {
+            display: grid;
+            grid-template-columns: 1fr 2.2fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .portrait-placeholder {
+            width: 100%;
+            aspect-ratio: 1 / 1.25;
+            background-color: var(--color-navy);
+            border: 2px solid var(--color-gold);
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-gold);
+            font-family: var(--font-heading);
+            position: relative;
+            box-shadow: 0 4px 15px rgba(11, 31, 58, 0.05);
+        }
+
+        .placeholder-initials {
+            font-size: 3rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .placeholder-label {
+            font-size: 0.65rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 500;
+        }
+
+        .founder-heading {
+            font-family: var(--font-heading);
+            font-size: 1.7rem;
+            color: var(--color-navy);
+            font-weight: 700;
+        }
+
+        .founder-subheading {
+            font-size: 0.85rem;
+            color: var(--color-gold);
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+        }
+
+        .founder-bio {
+            font-size: 0.95rem;
+            color: #4b5563;
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+
+        .leadership-sub {
+            font-family: var(--font-heading);
+            font-size: 1.15rem;
+            color: var(--color-navy);
+            margin: 1rem 0 0.5rem 0;
+            font-weight: 700;
+        }
+
+        .founder-vision {
+            font-size: 0.95rem;
+            color: var(--color-navy);
+            font-style: italic;
+            border-left: 2px solid var(--color-gold);
+            padding-left: 1rem;
+            margin-top: 0.75rem;
+        }
+
+        /* Achievements / Metrics */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .metric-card {
+            background-color: #fafbfc;
+            border: 1px solid rgba(11, 31, 58, 0.04);
+            border-radius: 6px;
+            padding: 1.5rem 1.25rem;
+            text-align: center;
+        }
+
+        .metric-num {
+            font-family: var(--font-heading);
+            font-size: 2.2rem;
+            color: var(--color-navy);
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .metric-label {
+            font-size: 0.75rem;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+        }
+
+        /* Call To Action */
+        .cta-section {
+            background-color: var(--color-navy);
+            color: #ffffff;
+            border-radius: 6px;
+            padding: 3rem 2.5rem;
+            text-align: center;
+            margin: 4.5rem 0;
+        }
+
+        .cta-heading {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            color: #ffffff;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .cta-text {
+            font-size: 1.05rem;
+            color: rgba(255, 255, 255, 0.85);
+            max-width: 600px;
+            margin: 0 auto 2rem auto;
+        }
+
+        .cta-contact-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .cta-detail-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-align: left;
+            font-size: 0.88rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .cta-detail-item i {
+            color: var(--color-gold);
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Profile Footer */
+        .profile-footer {
+            border-top: 1px solid rgba(11, 31, 58, 0.08);
+            padding-top: 2rem;
+            margin-top: 4.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+            color: #888;
+        }
+
+        /* Industries Grid */
+        .industries-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .industry-badge {
+            background-color: #fafbfc;
+            border: 1px solid rgba(11, 31, 58, 0.04);
+            border-radius: 4px;
+            padding: 1rem 0.75rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.25s ease;
+        }
+
+        .industry-badge:hover {
+            border-color: rgba(201, 162, 39, 0.2);
+            background-color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        .industry-badge i {
+            color: var(--color-gold);
+            width: 20px;
+            height: 20px;
+        }
+
+        .industry-badge span {
+            font-size: 0.72rem;
+            font-weight: 650;
+            color: var(--color-navy);
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            text-align: center;
+        }
+
+        /* Keyframes */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes rotateSeal {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Printing optimizations */
+        @media print {
+            body {
+                background-color: #ffffff;
+                padding: 0;
+            }
+
+            .profile-container {
+                border: none;
+                box-shadow: none;
+                padding: 0;
+                max-width: 100%;
+            }
+
+            .download-bar {
+                display: none;
+            }
+
+            .section {
+                page-break-inside: avoid;
+            }
+            
+            .pathway::before {
+                border-bottom: 1px dashed var(--color-gold);
+                background: none;
+            }
+            
+            .node-circle {
+                background: #ffffff !important;
+                color: var(--color-navy) !important;
+                border-color: var(--color-navy) !important;
+            }
+
+            .cta-section {
+                background: #f7fafc !important;
+                color: var(--color-navy) !important;
+                border: 1px solid rgba(11, 31, 58, 0.1) !important;
+                margin: 2rem 0 !important;
+                padding: 2rem !important;
+                page-break-inside: avoid;
+            }
+
+            .cta-heading {
+                color: var(--color-navy) !important;
+            }
+
+            .cta-text {
+                color: var(--color-charcoal) !important;
+            }
+
+            .cta-detail-item {
+                color: var(--color-charcoal) !important;
+            }
+
+            .portrait-placeholder {
+                background: #f7fafc !important;
+                border-color: var(--color-navy) !important;
+                color: var(--color-navy) !important;
+            }
+
+            .placeholder-label {
+                color: #6b7280 !important;
+            }
+
+            .industries-grid {
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 0.75rem !important;
+            }
+
+            .industry-badge {
+                background: #f7fafc !important;
+                border: 1px solid rgba(11, 31, 58, 0.1) !important;
+                padding: 0.75rem !important;
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Upper Download Bar -->
+    <div class="download-bar">
+        <a href="index.html" class="back-link">
+            <i data-lucide="arrow-left" style="width: 16px; height: 16px;"></i> Back to Corporate Site
+        </a>
+        <button class="btn-download" onclick="window.print()">
+            <i data-lucide="download" style="width: 16px; height: 16px;"></i> Export Profile as PDF
+        </button>
+    </div>
+
+    <!-- Main Profile Card -->
+    <div class="profile-container">
+        <!-- Profile Header -->
+        <header class="profile-header">
+            <a href="index.html" class="logo-area">
+                <img src="logo.png" alt="AGE Logo" class="logo-img">
+                <div class="logo-text-group">
+                    <span class="logo-title">AGE</span>
+                    <span class="logo-subtitle">Al Ghassani Enterprise</span>
+                </div>
+            </a>
+            <div class="meta-area">
+                <p class="doc-title">Master Corporate Profile</p>
+                <p class="classification">Strict Confidentiality</p>
+                <p>Doc ID: AGE-CP-2026-V1</p>
+                <p>GCC Hubs Registry</p>
+            </div>
+        </header>
+
+        <!-- Section 1: Executive Philosophy -->
+        <section class="section">
+            <h2 class="section-title"><i data-lucide="compass"></i> The Playmaker's Creed</h2>
+            <p class="narrative">
+                At Al Ghassani Enterprise (AGE), we apply the structural vision, discipline, and strategic distribution of elite athletic leadership directly to regional enterprise expansion in the GCC. Relationships build trust, trust creates opportunity, and opportunity accelerates growth. Our core role is to act as the ultimate playmaker—absorbing back-office operational friction, reading the corporate landscape, and executing perfect matches at the right moment.
+            </p>
+            <div class="creed-container">
+                <p class="creed-quote">
+                    "Great teams win through vision, trust, and the right passes at the right time. Al Ghassani Enterprise applies that same philosophy to business—connecting the right people, at the right moment, to create lasting growth."
+                </p>
+                <p class="creed-author">Yahya Al Ghassani, Founder & Chairman</p>
+            </div>
+        </section>
+
+        <!-- Section 2: Why Partner with AGE -->
+        <section class="section">
+            <h2 class="section-title"><i data-lucide="help-circle"></i> Why Partner with AGE</h2>
+            <div class="why-grid">
+                <div class="why-item">
+                    <strong>Trusted GCC Relationships:</strong> We bridge local corporate and regulatory networks, providing warm introductions based on mutual trust.
+                </div>
+                <div class="why-item">
+                    <strong>Executive-Level Advisory:</strong> Our support extends beyond consultation to high-level strategic alignment and corporate board escorting.
+                </div>
+                <div class="why-item">
+                    <strong>Founder-Led Strategic Access:</strong> Clients leverage the Chairman's direct corporate network and high-valency strategic introductions.
+                </div>
+                <div class="why-item">
+                    <strong>Practical Execution & Support:</strong> We don't just deliver advice; we actively guide onboarding, municipal compliance, and transaction execution.
+                </div>
+                <div class="why-item">
+                    <strong>AI-Enabled Transformation:</strong> Integrating advanced workflow automation, security safeguards, and custom technology solutions.
+                </div>
+                <div class="why-item">
+                    <strong>Confidential Partnerships:</strong> Operating with strict data isolation, secure cohorts, and compliance with DIFC/ADGM standards.
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Signature Advisory Solutions -->
+        <section class="section">
+            <h2 class="section-title"><i data-lucide="activity"></i> Signature Advisory Solutions</h2>
+            <div class="solutions-grid">
+                <div class="solution-card">
+                    <div class="solution-card-header">
+                        <i data-lucide="rocket"></i>
+                        <h4>AGE Launch™</h4>
+                    </div>
+                    <p>Helping international businesses establish, license, and grow their presence in the GCC, including ADGM and DIFC corporate structuring and municipal compliance setups.</p>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-card-header">
+                        <i data-lucide="link"></i>
+                        <h4>AGE Connect™</h4>
+                    </div>
+                    <p>Facilitating high-valency strategic introductions, corporate alignments, key institutional matchmaking, and board-level partnership access in the region.</p>
+                </div>
+                <div class="solution-card">
+                    <div class="solution-card-header">
+                        <i data-lucide="trending-up"></i>
+                        <h4>AGE Scale™</h4>
+                    </div>
+                    <p>Driving business transformation, practical AI advisory adoption, automated workflows, corporate governance scaling, and local commercial network expansion execution.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Executive Leadership -->
+        <section class="section">
+            <h2 class="section-title"><i data-lucide="user"></i> Executive Leadership</h2>
+            <div class="leadership-container">
+                <div class="leadership-image-col">
+                    <div class="portrait-placeholder" style="margin-bottom: 1.5rem;">
+                        <div class="placeholder-initials">YA</div>
+                        <div class="placeholder-label">Yahya Al Ghassani</div>
+                    </div>
+                    <div class="list-card" style="padding: 1.25rem;">
+                        <h4 style="font-family: var(--font-heading); color: var(--color-navy); font-size: 1.1rem; margin-bottom: 0.75rem; font-weight: 700;">Leadership Principles</h4>
+                        <ul class="bullets-list" style="font-size: 0.85rem;">
+                            <li style="font-size: 0.8rem; margin-bottom: 0.5rem;">Relationships Before Transactions</li>
+                            <li style="font-size: 0.8rem; margin-bottom: 0.5rem;">Integrity in Every Engagement</li>
+                            <li style="font-size: 0.8rem; margin-bottom: 0.5rem;">Long-Term Value Creation</li>
+                            <li style="font-size: 0.8rem; margin-bottom: 0.5rem;">Excellence Through Execution</li>
+                            <li style="font-size: 0.8rem; margin-bottom: 0.5rem;">Confidentiality and Trust</li>
+                            <li style="font-size: 0.8rem; margin-bottom: 0.5rem;">Innovation with Purpose</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="leadership-content-col">
+                    <h3 class="founder-heading">Yahya Al Ghassani</h3>
+                    <p class="founder-subheading">Founder & Chairman | AGE – Al Ghassani Enterprise</p>
+                    
+                    <div class="founder-bio-text">
+                        <p class="founder-bio">
+                            Yahya Al Ghassani is the Founder and Chairman of <strong>AGE – Al Ghassani Enterprise</strong>, a strategic growth platform dedicated to helping businesses expand through trusted relationships, executive advisory, strategic partnerships, and market access across the GCC.
+                        </p>
+                        <p class="founder-bio">
+                            Drawing on years of leadership, discipline, and experience operating in high-performance environments, Yahya established AGE with a clear mission: to bridge the gap between ambitious businesses and the opportunities they need to grow. His philosophy is rooted in the belief that sustainable success is built on trust, strong partnerships, and flawless execution.
+                        </p>
+                        <p class="founder-bio">
+                            Recognized for his distinguished football career, Yahya developed a reputation for vision, teamwork, and leadership under pressure. Those same principles now guide AGE's approach to business—connecting organizations with the right partners, investors, institutions, and decision-makers to accelerate growth and create long-term value.
+                        </p>
+                        <p class="founder-bio">
+                            As Founder and Chairman, Yahya focuses on strategic relationships, executive engagement, and long-term corporate vision. He works closely with business leaders, government stakeholders, family businesses, and international organizations seeking to establish or expand their presence within the GCC.
+                        </p>
+                        <p class="founder-bio">
+                            Under his leadership, AGE has been designed as more than an advisory firm. It is an enterprise built to help organizations navigate regional markets, unlock strategic opportunities, and execute growth initiatives with professionalism, confidentiality, and integrity.
+                        </p>
+                    </div>
+
+                    <h4 class="leadership-sub">Leadership Philosophy:</h4>
+                    <p class="founder-vision" style="margin-bottom: 1.5rem;">
+                        "Great opportunities are rarely created by chance. They are built through vision, trust, meaningful relationships, and disciplined execution. At AGE, our role is to connect the right people, at the right time, to create lasting business success."
+                    </p>
+
+                    <h4 class="leadership-sub">Areas of Focus:</h4>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem 1.5rem; margin-bottom: 1.5rem;">
+                        <ul class="bullets-list" style="font-size: 0.85rem;">
+                            <li style="font-size: 0.85rem; margin-bottom: 0.3rem;">Strategic Business Growth</li>
+                            <li style="font-size: 0.85rem; margin-bottom: 0.3rem;">Executive Advisory</li>
+                            <li style="font-size: 0.85rem; margin-bottom: 0.3rem;">GCC Market Entry</li>
+                            <li style="font-size: 0.85rem; margin-bottom: 0.3rem;">Strategic Partnerships</li>
+                            <li style="font-size: 0.85rem; margin-bottom: 0.3rem;">Government & Institutional Engagement</li>
+                        </ul>
+                        <ul class="bullets-list" style="font-size: 0.85rem;">
+                            <li style="font-size: 0.85rem; margin-bottom: 0.3rem;">Corporate Relationship Development</li>
+                            <li style="font-size: 0.85rem; margin-bottom: 0.3rem;">Sports & Commercial Partnerships</li>
+                            <li style="font-size: 0.85rem; margin-bottom: 0.3rem;">AI & Business Transformation</li>
+                            <li style="font-size: 0.85rem; margin-bottom: 0.3rem;">Family Business Advisory</li>
+                        </ul>
+                    </div>
+
+                    <h4 class="leadership-sub">Vision for AGE:</h4>
+                    <p class="founder-vision" style="font-weight: 600; color: var(--color-navy);">
+                        "Our ambition is to establish AGE as the GCC's trusted strategic growth partner—connecting businesses with opportunities, enabling meaningful partnerships, and helping organizations grow with confidence. We believe that the strongest businesses are built not only through strategy, but through trusted relationships and consistent execution."
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: The Strategic Pathway -->
+        <section class="section">
+            <h2 class="section-title"><i data-lucide="git-commit"></i> The Strategic Alignment Pathway</h2>
+            <div class="pathway">
+                <div class="pathway-node">
+                    <div class="node-circle">01</div>
+                    <h5 class="node-title">Evaluation</h5>
+                    <p class="node-desc">Performance & bottleneck corporate audit.</p>
+                </div>
+                <div class="pathway-node">
+                    <div class="node-circle">02</div>
+                    <h5 class="node-title">Structure</h5>
+                    <p class="node-desc">Retainer, success fee, or JV term designs.</p>
+                </div>
+                <div class="pathway-node">
+                    <div class="node-circle">03</div>
+                    <h5 class="node-title">Matchmake</h5>
+                    <p class="node-desc">Direct alignment with GCC decision-makers.</p>
+                </div>
+                <div class="pathway-node">
+                    <div class="node-circle">04</div>
+                    <h5 class="node-title">Execution</h5>
+                    <p class="node-desc">Final transaction execution & scaling.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Target Segments & Revenue Model -->
+        <section class="section">
+            <h2 class="section-title"><i data-lucide="pie-chart"></i> Partnership Matrix</h2>
+            <div class="split-grid">
+                <div class="list-card">
+                    <h3><i data-lucide="users"></i> Target Segments</h3>
+                    <ul class="bullets-list">
+                        <li>SMEs & Multi-Family Offices</li>
+                        <li>Venture-Backed & Tech Startups</li>
+                        <li>Sovereign & Public Entities</li>
+                        <li>Sports Franchises & Brands</li>
+                        <li>Global Firms Entering GCC</li>
+                    </ul>
+                </div>
+                <div class="list-card">
+                    <h3><i data-lucide="credit-card"></i> Revenue Architecture</h3>
+                    <ul class="bullets-list">
+                        <li>Strategic Advisory Retainers</li>
+                        <li>Project Commissions & Success Fees</li>
+                        <li>Joint Venture Equity Allocations</li>
+                        <li>Corporate Sponsorship Brokering</li>
+                        <li>Technology Advisory & Audit Fees</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Market Focus & Selected Industries -->
+        <section class="section">
+            <h2 class="section-title"><i data-lucide="layers"></i> Market Focus & Selected Industries</h2>
+            <p class="narrative">
+                Al Ghassani Enterprise provides bespoke advisory services across a curated set of high-growth sectors, ensuring our client alignment matches the economic diversification drivers of the GCC region.
+            </p>
+            <div class="industries-grid">
+                <div class="industry-badge"><i data-lucide="milestone"></i> <span>Government & Public Sector</span></div>
+                <div class="industry-badge"><i data-lucide="terminal"></i> <span>Technology & AI</span></div>
+                <div class="industry-badge"><i data-lucide="trophy"></i> <span>Sports & Entertainment</span></div>
+                <div class="industry-badge"><i data-lucide="heart-pulse"></i> <span>Healthcare</span></div>
+                <div class="industry-badge"><i data-lucide="palmtree"></i> <span>Hospitality</span></div>
+                <div class="industry-badge"><i data-lucide="building"></i> <span>Real Estate</span></div>
+                <div class="industry-badge"><i data-lucide="zap"></i> <span>Energy & CleanTech</span></div>
+                <div class="industry-badge"><i data-lucide="briefcase"></i> <span>Family Businesses</span></div>
+                <div class="industry-badge"><i data-lucide="graduation-cap"></i> <span>Education</span></div>
+                <div class="industry-badge"><i data-lucide="wallet"></i> <span>Financial Services</span></div>
+            </div>
+        </section>
+
+        <!-- Section 7: Strategic Credibility & Performance -->
+        <section class="section">
+            <h2 class="section-title"><i data-lucide="bar-chart-2"></i> Strategic Credibility & Performance</h2>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-num"><i data-lucide="check-circle" style="width: 32px; height: 32px; color: var(--color-gold);"></i></div>
+                    <div class="metric-label" style="margin-top: 0.5rem;">GCC Strategic Access</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-num"><i data-lucide="shield-check" style="width: 32px; height: 32px; color: var(--color-gold);"></i></div>
+                    <div class="metric-label" style="margin-top: 0.5rem;">Compliance-First Architecture</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-num"><i data-lucide="globe" style="width: 32px; height: 32px; color: var(--color-gold);"></i></div>
+                    <div class="metric-label" style="margin-top: 0.5rem;">DIFC / ADGM Frameworks</div>
+                </div>
+            </div>
+            <p class="narrative" style="font-size: 0.85rem; color: #6b7280; font-style: italic; margin-top: 1.2rem; text-align: center;">
+                Note: To protect client confidentiality under our ADGM and DIFC nondisclosure standards, specific institutional project highlights and corporate engagements are shared only under strict bilateral NDA protocols.
+            </p>
+        </section>
+
+        <!-- Section 5: Risk Governance & Safeguards -->
+        <section class="section">
+            <h2 class="section-title"><i data-lucide="shield-check"></i> Operational Risk Governance</h2>
+            <table class="advisory-table">
+                <thead>
+                    <tr>
+                        <th style="width: 40%">Identified Risk Area</th>
+                        <th style="width: 60%">Operational Mitigation / Safeguard</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Founder Dependency (SPOF)</strong></td>
+                        <td>Operational segregation of advisory delivery. Structured operational advisors guide execution pathways, supported by the founder's strategic network introductions.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Client Conflict of Interest</strong></td>
+                        <td>Strict corporate separation policies. Separate project paths and legal counsels bound by ADGM/DIFC NDA compliance standards.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Regulatory Framework Adjustments</strong></td>
+                        <td>Adhering to paced 36-month local compliance tracks to monitor entity formation, ADGM license layouts, and GCC municipality alignments.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Section 8: Call to Action -->
+        <section class="section cta-section">
+            <h3 class="cta-heading">Let's Build What's Next.</h3>
+            <p class="cta-text">
+                Whether you are entering the GCC, seeking high-level strategic partnerships, or accelerating commercial growth, Al Ghassani Enterprise is ready to help you navigate your journey.
+            </p>
+            <div class="cta-contact-details">
+                <div class="cta-detail-item">
+                    <i data-lucide="mail"></i> <span>info@alghassani.com</span>
+                </div>
+                <div class="cta-detail-item">
+                    <i data-lucide="globe"></i> <span>www.alghassani.com</span>
+                </div>
+                <div class="cta-detail-item">
+                    <i data-lucide="linkedin"></i> <span>linkedin.com/company/al-ghassani-enterprise</span>
+                </div>
+                <div class="cta-detail-item">
+                    <i data-lucide="map-pin"></i> <span>The Gate Precinct, DIFC, Dubai, UAE</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Endorsement/Signature block -->
+        <div class="signature-section">
+            <div class="signature-block">
+                <div class="sig-line"></div>
+                <span class="founder-name">Yahya Al Ghassani</span>
+                <span class="founder-title">Founder & Chairman</span>
+                <span style="font-size: 0.7rem; color: #888;">Al Ghassani Enterprise Board Approval</span>
+            </div>
+            <div class="seal-block">
+                <div class="seal-watermark"></div>
+                <div class="seal-inner">
+                    AGE<br>
+                    Advisory<br>
+                    Approved
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Footer -->
+        <footer class="profile-footer">
+            <p>&copy; 2026 AGE Al Ghassani Enterprise. All rights reserved.</p>
+            <p>Registered under DIFC Holdings Regulations, Dubai, UAE.</p>
+        </footer>
+    </div>
+
+    <!-- Initialize Lucide Icons -->
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

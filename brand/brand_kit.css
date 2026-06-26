@@ -1,0 +1,37 @@
+/* ==========================================================================
+   AL GHASSANI ENTERPRISE - BRAND KIT STYLES (PRINT & DIGITAL)
+   ========================================================================== */
+
+:root {
+    --color-navy: #0B1F3A;
+    --color-gold: #C9A227;
+    --color-charcoal: #2E3138;
+    --color-light-bg: #F9FAF7;
+    --font-heading: 'Cormorant Garamond', 'Georgia', serif;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Base Print setup */
+@page {
+    size: A4;
+    margin: 20mm;
+}
+
+/* Premium business typography defaults */
+.brand-title {
+    font-family: var(--font-heading);
+    color: var(--color-navy);
+    font-weight: 700;
+}
+
+.brand-accent {
+    color: var(--color-gold);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+}
+
+.brand-text {
+    font-family: var(--font-body);
+    color: var(--color-charcoal);
+}
