@@ -928,4 +928,58 @@ We would like to analyze how Al Ghassani Enterprise can support navigating our g
             }
         }
     };
+
+    // 15. DYNAMIC DEVICE/VIEWMODE SWITCHER (MOBILE <=> PC)
+    const viewportMeta = document.getElementById('viewport-meta');
+    const switcherFab = document.getElementById('device-switcher-fab');
+    
+    function applyViewportMode(mode) {
+        if (!viewportMeta) return;
+        
+        const pcIcon = document.getElementById('switcher-icon-pc');
+        const mobileIcon = document.getElementById('switcher-icon-mobile');
+        const switcherText = document.getElementById('switcher-text');
+        
+        if (mode === 'pc') {
+            // Set simulated desktop viewport
+            viewportMeta.setAttribute('content', 'width=1200, initial-scale=0.3, shrink-to-fit=no');
+            document.documentElement.classList.add('forced-pc-mode');
+            
+            if (pcIcon) pcIcon.style.display = 'none';
+            if (mobileIcon) mobileIcon.style.display = 'inline-block';
+            if (switcherText) switcherText.innerText = 'Mobile View';
+            
+            showToast("Switched to Desktop Mode", "success");
+        } else {
+            // Restore standard mobile responsive viewport
+            viewportMeta.setAttribute('content', 'width=device-width, initial-scale=1.0');
+            document.documentElement.classList.remove('forced-pc-mode');
+            
+            if (pcIcon) pcIcon.style.display = 'inline-block';
+            if (mobileIcon) mobileIcon.style.display = 'none';
+            if (switcherText) switcherText.innerText = 'Desktop View';
+            
+            showToast("Switched to Mobile Mode", "success");
+        }
+        
+        // Re-align any dynamic layouts if needed
+        if (window.lucide) {
+            window.lucide.createIcons();
+        }
+    }
+    
+    if (switcherFab) {
+        // Load initial state and update icons/texts if PC mode was set by head script
+        const savedMode = localStorage.getItem('viewport-mode') || 'mobile';
+        if (savedMode === 'pc') {
+            applyViewportMode('pc');
+        }
+        
+        switcherFab.addEventListener('click', () => {
+            const isPC = document.documentElement.classList.contains('forced-pc-mode');
+            const newMode = isPC ? 'mobile' : 'pc';
+            localStorage.setItem('viewport-mode', newMode);
+            applyViewportMode(newMode);
+        });
+    }
 });

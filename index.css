@@ -3290,3 +3290,104 @@ a {
 }
 
 .mt-sm { margin-top: 0.8rem; }
+
+/* ==========================================================================
+   15. DEVICE VIEW MODE SWITCHER (MOBILE <=> PC)
+   ========================================================================== */
+
+/* Floating Switcher FAB styling */
+.device-switcher-fab {
+    position: fixed;
+    bottom: 2rem;
+    left: 2rem;
+    z-index: 999; /* Ensure it floats above all, including other fixed containers */
+    background: rgba(11, 31, 58, 0.8);
+    border: 1px solid rgba(201, 162, 39, 0.45);
+    color: var(--text-primary);
+    padding: 0.7rem 1.2rem;
+    border-radius: 50px;
+    cursor: pointer;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), var(--shadow-glow-gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    transition: all var(--transition-normal);
+}
+
+.device-switcher-fab:hover {
+    background: rgba(201, 162, 39, 0.15);
+    border-color: var(--color-gold);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5), 0 0 18px rgba(201, 162, 39, 0.5);
+}
+
+.device-switcher-fab:active {
+    transform: translateY(-1px);
+}
+
+.device-switcher-fab i {
+    width: 15px;
+    height: 15px;
+    color: var(--color-gold);
+    display: inline-block;
+}
+
+.device-switcher-fab .fab-content {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+#switcher-text {
+    color: var(--text-primary);
+}
+
+/* Hide switcher on screens > 1024px (native desktops) */
+@media (min-width: 1025px) {
+    .device-switcher-fab {
+        display: none;
+    }
+}
+
+/* Forced PC / Desktop Mode layout overrides on mobile viewports */
+html.forced-pc-mode {
+    overflow-x: auto !important;
+}
+
+html.forced-pc-mode body {
+    min-width: 1200px !important;
+    width: 1200px !important;
+    overflow-x: auto !important;
+}
+
+/* Maintain FAB visibility and scale it up slightly so it remains readable when zoomed out */
+html.forced-pc-mode .device-switcher-fab {
+    display: flex !important;
+    position: fixed !important;
+    bottom: 2rem !important;
+    left: 2rem !important;
+    transform: scale(1.6) !important;
+    transform-origin: bottom left !important;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6) !important;
+    z-index: 99999 !important;
+}
+
+/* Position header at absolute 1200px width so it scales stably with the rest of the canvas */
+html.forced-pc-mode .header {
+    position: absolute !important;
+    width: 1200px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+}
+
+/* Maintain default backgrounds and alignment */
+html.forced-pc-mode .bg-glows {
+    width: 1200px !important;
+}
+

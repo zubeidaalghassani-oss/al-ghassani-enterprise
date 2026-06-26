@@ -2,7 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" id="viewport-meta" content="width=device-width, initial-scale=1.0">
+    <script>
+        (function() {
+            const savedMode = localStorage.getItem('viewport-mode');
+            if (savedMode === 'pc') {
+                const vp = document.getElementById('viewport-meta');
+                if (vp) vp.setAttribute('content', 'width=1200, initial-scale=0.3, shrink-to-fit=no');
+                document.documentElement.classList.add('forced-pc-mode');
+            }
+        })();
+    </script>
     <title>Al Ghassani Enterprise | Strategic Growth & Corporate Advisory</title>
     <meta name="description" content="Al Ghassani Enterprise helps businesses grow in the GCC through strategic partnerships, market entry, executive advisory, and government relations.">
     <!-- Google Fonts -->
@@ -1034,6 +1044,15 @@
             <p>&copy; 2026 Al Ghassani Enterprise Group Ltd. All rights reserved. Registered under DIFC Holdings Regulations, Dubai, United Arab Emirates. Advisory services aligned with DIFC, ADGM and UAE corporate regulatory guidelines.</p>
         </div>
     </footer>
+
+    <!-- View Mode Switcher FAB (Visible on Mobile/Tablet viewports) -->
+    <button class="device-switcher-fab" id="device-switcher-fab" aria-label="Toggle View Mode" title="Switch View Mode">
+        <span class="fab-content">
+            <i data-lucide="monitor" id="switcher-icon-pc"></i>
+            <i data-lucide="smartphone" id="switcher-icon-mobile" style="display: none;"></i>
+            <span id="switcher-text">Desktop View</span>
+        </span>
+    </button>
 
     <!-- JS Link -->
     <script src="main.js"></script>
