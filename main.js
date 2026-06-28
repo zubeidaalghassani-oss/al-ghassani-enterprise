@@ -660,12 +660,12 @@ We would like to analyze how Al Ghassani Enterprise can support navigating our g
     // 14. INTERACTIVE FOUNDER TACTICAL PLAYBOOK ENGINE
     const founderQuotes = {
         playmaker: {
-            quote: `"Great teams win through vision, trust, and the right passes at the right time. Al Ghassani Enterprise applies that same philosophy to business—connecting the right people, at the right moment, to create lasting growth."`,
-            signature: "— Legendary Playmaker & Chairman"
+            quote: `"From elite sport to enterprise growth, Yahya Al Ghassani brings the discipline, vision and relationship-building philosophy of a professional playmaker to business leadership."`,
+            signature: "— Yahya Al Ghassani, Founder & Chairman"
         },
         resilience: {
             quote: `"A solid defense is the foundation of any championship squad. We absorb your non-core back-office G&A friction—compliance, HR, and legal audits—forming a secure shield so you are never caught off guard."`,
-            signature: "— CEO & Strategy Board"
+            signature: "— Al Ghassani Enterprise Board"
         },
         acceleration: {
             quote: `"In the attacking third, speed and synchronization are everything. We align strategic partnerships and activate warm GCC matchmaking routes, accelerating your enterprise to regional dominance."`,
@@ -1055,4 +1055,21 @@ We would like to analyze how Al Ghassani Enterprise can support navigating our g
             applyViewportMode(newMode);
         });
     }
+
+    // 16. DYNAMIC WIDGET REVEAL ENGINES
+    window.activateInteractive = (id) => {
+        const node = document.getElementById(id === 'calculator' ? 'calc-card-node' : 'portal-dashboard-node');
+        if (node) {
+            node.classList.remove('interactive-covered');
+            const overlay = node.querySelector('.interactive-cover-overlay');
+            if (overlay) {
+                overlay.style.opacity = '0';
+                overlay.style.visibility = 'hidden';
+                setTimeout(() => {
+                    overlay.remove();
+                }, 400);
+            }
+            showToast(id === 'calculator' ? "Growth Modeler Activated" : "Portal Sandbox Activated", "success");
+        }
+    };
 });
