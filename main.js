@@ -1,5 +1,5 @@
 /* ==========================================================================
-   AL GHASSANI ENTERPRISE - INTERACTIVE PROTOTYPE MOTOR (VANILLA JS)
+   AL GHASSANI ENTERPRISES - INTERACTIVE PROTOTYPE MOTOR (VANILLA JS)
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -596,7 +596,7 @@ Individual Maturity Markers (1-10):
 - Capital & Investment: ${C}/10
 - Government & Regulatory: ${G}/10
 
-We would like to analyze how Al Ghassani Enterprise can support navigating our growth and scaling priorities.`;
+We would like to analyze how Al Ghassani Enterprises can support navigating our growth and scaling priorities.`;
             showToast("Your executive assessment indicators have been loaded into the request form below!", "info");
         }
     };
@@ -665,7 +665,7 @@ We would like to analyze how Al Ghassani Enterprise can support navigating our g
         },
         resilience: {
             quote: `"A solid defense is the foundation of any championship squad. We absorb your non-core back-office G&A friction—compliance, HR, and legal audits—forming a secure shield so you are never caught off guard."`,
-            signature: "— Al Ghassani Enterprise Board"
+            signature: "— Al Ghassani Enterprises Board"
         },
         acceleration: {
             quote: `"In the attacking third, speed and synchronization are everything. We align strategic partnerships and activate warm GCC matchmaking routes, accelerating your enterprise to regional dominance."`,
@@ -831,7 +831,7 @@ We would like to analyze how Al Ghassani Enterprise can support navigating our g
                 const C = +document.getElementById('score-capital').value;
                 const G = +document.getElementById('score-government').value;
 
-                const promptText = `You are the AI Advisory Engine of AGE - Al Ghassani Enterprise, an elite boutique strategic growth firm in the GCC. 
+                const promptText = `You are the AI Advisory Engine of AGE - Al Ghassani Enterprises, an elite boutique strategic growth firm in the GCC. 
 Analyze the following client readiness scores (each out of 10) and write a highly professional, concise, executive advisory report (maximum 150 words).
 
 Client Scores:
@@ -910,7 +910,7 @@ Individual Maturity Markers (1-10):
 - Capital & Investment: ${C}/10
 - Government & Regulatory: ${G}/10
 
-We would like to analyze how Al Ghassani Enterprise can support navigating our growth and scaling priorities.`;
+We would like to analyze how Al Ghassani Enterprises can support navigating our growth and scaling priorities.`;
                     }
 
                     showToast("Custom AI Advisory insights generated successfully!", "success");
