@@ -601,18 +601,26 @@ We would like to analyze how Al Ghassani Enterprises can support navigating our 
         }
     };
 
-    // 11. INQUIRY FORM SUBMISSION SIMULATION
+    // 11. INQUIRY FORM SUBMISSION SIMULATION & MAILTO INTEGRATION
     window.handleInquirySubmit = (e) => {
         e.preventDefault();
         
         const nameInput = document.getElementById('contact-name');
+        const roleInput = document.getElementById('contact-role');
+        const emailInput = document.getElementById('contact-email');
+        const phoneInput = document.getElementById('contact-phone');
         const companyInput = document.getElementById('contact-company');
+        const messageInput = document.getElementById('contact-message');
         const form = document.getElementById('inquiry-form');
 
         if (!nameInput || !companyInput) return;
 
         const name = nameInput.value.trim();
+        const role = roleInput ? roleInput.value.trim() : "";
+        const email = emailInput ? emailInput.value.trim() : "";
+        const phone = phoneInput ? phoneInput.value.trim() : "";
         const company = companyInput.value.trim();
+        const message = messageInput ? messageInput.value.trim() : "";
 
         // Visual feedback
         const submitBtn = form.querySelector('button[type="submit"]');
@@ -621,11 +629,28 @@ We would like to analyze how Al Ghassani Enterprises can support navigating our 
         submitBtn.disabled = true;
 
         setTimeout(() => {
-            submitBtn.innerText = "Advisory Request Transmitted!";
+            submitBtn.innerText = "Opening Secure Mail Channel...";
             submitBtn.style.background = "#00FF66";
             submitBtn.style.color = "#04050D";
 
-            showToast(`Thank you, ${name}. Secure advisory request for '${company}' has been logged in DIFC Dubai Secure Node.`, 'success');
+            showToast(`Thank you, ${name}. Launching your secure mail channel...`, 'success');
+
+            // Construct and trigger mailto link
+            const subject = encodeURIComponent(`AGE Advisory Request - ${company}`);
+            const body = encodeURIComponent(`AGE Advisory Inquiry Details:
+---------------------------------------------
+Full Name: ${name}
+Corporate Title: ${role}
+Secure Corporate Email: ${email}
+Direct Contact Number: ${phone}
+Enterprise Name: ${company}
+
+Growth Directives & Friction Areas:
+${message}
+---------------------------------------------
+Sent from AGE Al Ghassani Enterprises Portal`);
+
+            window.location.href = `mailto:info@alghassani.com?subject=${subject}&body=${body}`;
 
             setTimeout(() => {
                 form.reset();
@@ -633,8 +658,8 @@ We would like to analyze how Al Ghassani Enterprises can support navigating our 
                 submitBtn.disabled = false;
                 submitBtn.style.background = "";
                 submitBtn.style.color = "";
-            }, 4000);
-        }, 2000);
+            }, 3000);
+        }, 1500);
     };
 
     // 13. RESPONSIVE MOBILE NAVIGATION MENU
