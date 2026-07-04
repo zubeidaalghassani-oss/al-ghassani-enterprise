@@ -641,6 +641,120 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     };
 
+    // Render the Case Studies / Insights grid dynamically
+    const renderInsightsGrid = (insightsList) => {
+        const grid = document.getElementById('insights-grid');
+        if (!grid) return;
+
+        grid.innerHTML = "";
+
+        insightsList.forEach(item => {
+            const card = document.createElement('div');
+            card.className = "portfolio-card glass-card";
+            card.style.position = "relative";
+            card.style.overflow = "hidden";
+            card.style.borderRadius = "var(--radius-md)";
+
+            // Check category for border accents
+            let accentClass = "accent-cyan";
+            if (item.category === "PARTNERSHIP") accentClass = "accent-gold";
+            if (item.category === "COMPLIANCE") accentClass = "accent-magenta";
+
+            card.innerHTML = `
+                <div class="card-accent ${accentClass}"></div>
+                <div class="portfolio-header">
+                    <span class="badge-tier equity">${item.category}</span>
+                    <span class="status-text">${item.date}</span>
+                </div>
+                <h3 style="font-family: var(--font-heading); font-size: 1.6rem; font-weight: 700; margin-bottom: 1.2rem; color: var(--text-primary);">${item.title}</h3>
+                <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">
+                    ${item.summary}
+                </p>
+                <a href="${item.url}" class="btn btn-sm btn-cyan mt-sm" style="display: inline-block; padding: 0.5rem 1rem; border-radius: 4px; font-weight: 600; text-align: center; text-decoration: none;">View Detail</a>
+            `;
+            grid.appendChild(card);
+        });
+    };
+
+    // Load insights from Google Sheets (second tab)
+    const loadInsightsFromGoogleSheet = () => {
+        const fallbackList = [
+            {
+                title: "UAE Healthcare Expansion",
+                category: "GTM & ACCESS",
+                summary: "Problem: Clinic group needed to scale cross-border. Solution: Deployed AGE Launch™ to navigate filings. Outcome: Established 3 regional hubs, accelerating licensing by 40%.",
+                date: "CASE STUDY",
+                url: "#contact"
+            },
+            {
+                title: "Saudi Sports Matchmaking",
+                category: "PARTNERSHIP",
+                summary: "Problem: Sports tech firm sought Saudi access. Solution: Activated AGE Connect™ to secure pathways. Outcome: Secured 2 multi-year sponsorships, growing footprint by 55%.",
+                date: "CASE STUDY",
+                url: "#contact"
+            },
+            {
+                title: "ADGM Fintech Licensing",
+                category: "COMPLIANCE",
+                summary: "Problem: Fintech firm required regulatory setup. Solution: Orchestrated AGE Scale™ to conduct audits. Outcome: Secured full license in record time with zero friction.",
+                date: "CASE STUDY",
+                url: "#contact"
+            }
+        ];
+
+        if (!GOOGLE_SHEET_ID || GOOGLE_SHEET_ID === "YOUR_GOOGLE_SHEET_ID_HERE") {
+            renderInsightsGrid(fallbackList);
+            return;
+        }
+
+        const url = `https://docs.google.com/spreadsheets/d/${GOOGLE_SHEET_ID}/gviz/tq?tqx=out:json&sheet=Insights`;
+
+        fetch(url)
+            .then(res => res.text())
+            .then(text => {
+                const jsonString = text.substring(text.indexOf("{"), text.lastIndexOf("}") + 1);
+                const json = JSON.parse(jsonString);
+                
+                if (!json.table || !json.table.rows) {
+                    throw new Error("Invalid Google Sheets structure");
+                }
+
+                const rows = json.table.rows;
+                const insightsList = [];
+
+                rows.forEach(row => {
+                    const cells = row.c;
+                    if (!cells || cells.length < 4) return;
+
+                    const title = cells[0] ? (cells[0].v || "").toString().trim() : "";
+                    if (!title) return;
+
+                    const category = cells[1] ? (cells[1].v || "").toString().trim() : "";
+                    const date = cells[2] ? (cells[2].v || "").toString().trim() : "";
+                    const summary = cells[3] ? (cells[3].v || "").toString().trim() : "";
+                    const urlVal = cells[4] ? (cells[4].v || "").toString().trim() : "#contact";
+
+                    insightsList.push({
+                        title,
+                        category,
+                        date,
+                        summary,
+                        url: urlVal
+                    });
+                });
+
+                if (insightsList.length > 0) {
+                    renderInsightsGrid(insightsList);
+                } else {
+                    renderInsightsGrid(fallbackList);
+                }
+            })
+            .catch(err => {
+                console.error("Failed to load insights from Google Sheets, using fallback:", err);
+                renderInsightsGrid(fallbackList);
+            });
+    };
+
     window.showPartnerDetails = (partnerName) => {
         const data = partnerData[partnerName];
         if (!data || !modal) return;
@@ -1279,6 +1393,7 @@ We would like to analyze how Al Ghassani Enterprises can support navigating our 
         }
     };
 
-    // Initialize Google Sheets Portfolio Data
+    // Initialize Google Sheets Portfolio & Insights Data
     loadPartnersFromGoogleSheet();
+    loadInsightsFromGoogleSheet();
 });
