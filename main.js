@@ -601,7 +601,7 @@ We would like to analyze how Al Ghassani Enterprises can support navigating our 
         }
     };
 
-    // 11. INQUIRY FORM SUBMISSION SIMULATION & MAILTO INTEGRATION
+    // 11. INQUIRY FORM SUBMISSION - WEB3FORMS BACKGROUND INTEGRATION
     window.handleInquirySubmit = (e) => {
         e.preventDefault();
         
@@ -622,22 +622,26 @@ We would like to analyze how Al Ghassani Enterprises can support navigating our 
         const company = companyInput.value.trim();
         const message = messageInput ? messageInput.value.trim() : "";
 
+        // Replace this with your Web3Forms Access Key from web3forms.com
+        const accessKey = "YOUR_ACCESS_KEY_HERE";
+
         // Visual feedback
         const submitBtn = form.querySelector('button[type="submit"]');
         const originalText = submitBtn.innerText;
         submitBtn.innerText = "Encrypting Node Pipeline...";
         submitBtn.disabled = true;
 
-        setTimeout(() => {
-            submitBtn.innerText = "Opening Secure Mail Channel...";
-            submitBtn.style.background = "#00FF66";
-            submitBtn.style.color = "#04050D";
+        if (accessKey === "YOUR_ACCESS_KEY_HERE") {
+            // Fallback to mailto link if key is not yet set
+            setTimeout(() => {
+                submitBtn.innerText = "Opening Secure Mail Channel...";
+                submitBtn.style.background = "#00FF66";
+                submitBtn.style.color = "#04050D";
 
-            showToast(`Thank you, ${name}. Launching your secure mail channel...`, 'success');
+                showToast(`Access Key not set. Launching mail client...`, 'info');
 
-            // Construct and trigger mailto link
-            const subject = encodeURIComponent(`AGE Advisory Request - ${company}`);
-            const body = encodeURIComponent(`AGE Advisory Inquiry Details:
+                const subject = encodeURIComponent(`AGE Advisory Request - ${company}`);
+                const body = encodeURIComponent(`AGE Advisory Inquiry Details:
 ---------------------------------------------
 Full Name: ${name}
 Corporate Title: ${role}
@@ -650,16 +654,66 @@ ${message}
 ---------------------------------------------
 Sent from AGE Al Ghassani Enterprises Portal`);
 
-            window.location.href = `mailto:info@alghassani.com?subject=${subject}&body=${body}`;
+                window.location.href = `mailto:info@alghassani.com?subject=${subject}&body=${body}`;
 
+                setTimeout(() => {
+                    form.reset();
+                    submitBtn.innerText = originalText;
+                    submitBtn.disabled = false;
+                    submitBtn.style.background = "";
+                    submitBtn.style.color = "";
+                }, 3000);
+            }, 1000);
+            return;
+        }
+
+        // Web3Forms API submission in background
+        fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                access_key: accessKey,
+                name: name,
+                email: email,
+                subject: `AGE Advisory Request - ${company}`,
+                message: `AGE Advisory Inquiry Details:\n---------------------------------------------\nFull Name: ${name}\nCorporate Title: ${role}\nSecure Corporate Email: ${email}\nDirect Contact Number: ${phone}\nEnterprise Name: ${company}\n\nGrowth Directives & Friction Areas:\n${message}\n---------------------------------------------`
+            })
+        })
+        .then(async (response) => {
+            let json = await response.json();
+            if (response.status == 200) {
+                submitBtn.innerText = "Advisory Request Transmitted!";
+                submitBtn.style.background = "#00FF66";
+                submitBtn.style.color = "#04050D";
+                showToast(`Thank you, ${name}. Secure advisory request for '${company}' has been transmitted.`, 'success');
+                
+                setTimeout(() => {
+                    form.reset();
+                    submitBtn.innerText = originalText;
+                    submitBtn.disabled = false;
+                    submitBtn.style.background = "";
+                    submitBtn.style.color = "";
+                }, 3000);
+            } else {
+                throw new Error(json.message || "Submission failed");
+            }
+        })
+        .catch(error => {
+            submitBtn.innerText = "Transmission Failed";
+            submitBtn.style.background = "#FF0055";
+            submitBtn.style.color = "#FFFFFF";
+            showToast(`Error: ${error.message || "Failed to transmit request"}`, 'warning');
+            
             setTimeout(() => {
-                form.reset();
                 submitBtn.innerText = originalText;
                 submitBtn.disabled = false;
                 submitBtn.style.background = "";
                 submitBtn.style.color = "";
             }, 3000);
-        }, 1500);
+        });
     };
 
     // 13. RESPONSIVE MOBILE NAVIGATION MENU
