@@ -623,7 +623,7 @@ We would like to analyze how Al Ghassani Enterprises can support navigating our 
         const message = messageInput ? messageInput.value.trim() : "";
 
         // Replace this with your Web3Forms Access Key from web3forms.com
-        const accessKey = "YOUR_ACCESS_KEY_HERE";
+        const accessKey = "dc0090f0-d1d8-451a-a1c1-36f1728a3e47";
 
         // Visual feedback
         const submitBtn = form.querySelector('button[type="submit"]');
