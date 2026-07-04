@@ -3633,3 +3633,66 @@ html.simulated-mobile-mode .cover-content p {
     font-size: 0.8rem;
 }
 
+/* ==========================================================================
+   STRATEGIC ALLIANCE GRID (DYNAMIC SPREADSHEET PORTFOLIO)
+   ========================================================================== */
+.alliance-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    width: 100%;
+}
+
+.alliance-card {
+    padding: 2.2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 250px;
+    transition: all var(--transition-normal);
+    cursor: pointer;
+    border-radius: var(--radius-md);
+}
+
+.alliance-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(201, 162, 39, 0.25) !important;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+}
+
+.alliance-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.alliance-card-name {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.8rem;
+}
+
+.alliance-card-desc {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+}
+
+.alliance-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 1.2rem;
+    font-size: 0.8rem;
+}
+
+.alliance-card-metric {
+    font-weight: 700;
+}
+

@@ -463,7 +463,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalIP = document.getElementById('modal-ip');
     const modalAlignments = document.getElementById('modal-alignments-list');
 
-    const partnerData = {
+    // Google Sheets Integration Config
+    const GOOGLE_SHEET_ID = "YOUR_GOOGLE_SHEET_ID_HERE";
+
+    let partnerData = {
         "Nexus Analytics": {
             sector: "Family Offices & Large Corporations",
             tag: "large-corp",
@@ -512,6 +515,130 @@ document.addEventListener('DOMContentLoaded', () => {
                 "Executive advisory and coaching support managed by Al Ghassani."
             ]
         }
+    };
+
+    // Render the alliance grid cards dynamically
+    const renderPortfolioGrid = () => {
+        const grid = document.getElementById('alliance-grid');
+        if (!grid) return;
+
+        grid.innerHTML = "";
+
+        Object.keys(partnerData).forEach(partnerName => {
+            const partner = partnerData[partnerName];
+            
+            const card = document.createElement('div');
+            card.className = "alliance-card glass-card";
+            card.onclick = () => showPartnerDetails(partnerName);
+
+            // Assign border accent based on tag
+            let accentColor = "var(--color-cyan)";
+            if (partner.tag === "large-corp") accentColor = "var(--color-gold)";
+            if (partner.tag === "sports-commercial") accentColor = "var(--color-magenta)";
+
+            card.innerHTML = `
+                <div>
+                    <div class="alliance-card-header">
+                        <span class="badge-tier" style="border-color: ${accentColor}; color: ${accentColor};">${partner.sector}</span>
+                    </div>
+                    <h3 class="alliance-card-name">${partnerName}</h3>
+                    <p class="alliance-card-desc">${partner.desc}</p>
+                </div>
+                <div class="alliance-card-footer">
+                    <span class="text-muted">Direct Offset: <strong style="color: var(--color-cyan);">${partner.savings}</strong></span>
+                    <span class="alliance-card-metric" style="color: var(--color-gold);">${partner.referrals}</span>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+
+        // Initialize Lucide Icons for dynamic content
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+    };
+
+    // Dynamically populate select dropdown options inside Client Portal
+    const populatePortalDropdowns = () => {
+        const select = document.getElementById('deal-sector');
+        if (!select) return;
+
+        select.innerHTML = "";
+
+        Object.keys(partnerData).forEach(partnerName => {
+            const opt = document.createElement('option');
+            opt.value = partnerName;
+            opt.innerText = partnerName;
+            select.appendChild(opt);
+        });
+    };
+
+    // Google Sheets fetch loader
+    const loadPartnersFromGoogleSheet = () => {
+        if (!GOOGLE_SHEET_ID || GOOGLE_SHEET_ID === "YOUR_GOOGLE_SHEET_ID_HERE") {
+            console.log("Using default fallback portfolio data.");
+            renderPortfolioGrid();
+            populatePortalDropdowns();
+            return;
+        }
+
+        const url = `https://docs.google.com/spreadsheets/d/${GOOGLE_SHEET_ID}/gviz/tq?tqx=out:json`;
+
+        fetch(url)
+            .then(res => res.text())
+            .then(text => {
+                const jsonString = text.substring(text.indexOf("{"), text.lastIndexOf("}") + 1);
+                const json = JSON.parse(jsonString);
+                
+                if (!json.table || !json.table.rows) {
+                    throw new Error("Invalid Google Sheets data structure");
+                }
+
+                const rows = json.table.rows;
+                const newPartnerData = {};
+
+                rows.forEach(row => {
+                    const cells = row.c;
+                    if (!cells || cells.length < 4) return;
+
+                    const name = cells[0] ? (cells[0].v || "").toString().trim() : "";
+                    if (!name) return;
+
+                    const sector = cells[1] ? (cells[1].v || "").toString().trim() : "";
+                    const tag = cells[2] ? (cells[2].v || "").toString().trim() : "";
+                    const desc = cells[3] ? (cells[3].v || "").toString().trim() : "";
+                    const savings = cells[4] ? (cells[4].v || "").toString().trim() : "";
+                    const referrals = cells[5] ? (cells[5].v || "").toString().trim() : "";
+                    const ip = cells[6] ? (cells[6].v || "").toString().trim() : "";
+                    
+                    const alignments = [];
+                    if (cells[7] && cells[7].v) alignments.push(cells[7].v.toString().trim());
+                    if (cells[8] && cells[8].v) alignments.push(cells[8].v.toString().trim());
+
+                    newPartnerData[name] = {
+                        sector,
+                        tag,
+                        desc,
+                        savings,
+                        referrals,
+                        ip,
+                        alignments
+                    };
+                });
+
+                if (Object.keys(newPartnerData).length > 0) {
+                    partnerData = newPartnerData;
+                    console.log("Successfully loaded portfolio data from Google Sheets:", partnerData);
+                }
+                
+                renderPortfolioGrid();
+                populatePortalDropdowns();
+            })
+            .catch(err => {
+                console.error("Failed to load portfolio from Google Sheets, using fallback:", err);
+                renderPortfolioGrid();
+                populatePortalDropdowns();
+            });
     };
 
     window.showPartnerDetails = (partnerName) => {
@@ -1151,4 +1278,7 @@ We would like to analyze how Al Ghassani Enterprises can support navigating our 
             showToast(id === 'calculator' ? "Growth Modeler Activated" : "Portal Sandbox Activated", "success");
         }
     };
+
+    // Initialize Google Sheets Portfolio Data
+    loadPartnersFromGoogleSheet();
 });
