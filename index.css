@@ -3708,3 +3708,47 @@ html.simulated-mobile-mode .cover-content p {
     font-weight: 700;
 }
 
+/* ==========================================================================
+   MOBILE & SIMULATED MOBILE LAYOUT FIXES
+   ========================================================================== */
+
+/* 1. Collapse blurred content on mobile when covered to prevent giant empty scroll cards */
+@media (max-width: 768px) {
+    .interactive-covered {
+        min-height: 280px;
+    }
+    .interactive-covered > *:not(.interactive-cover-overlay) {
+        display: none !important;
+    }
+}
+html.simulated-mobile-mode .interactive-covered {
+    min-height: 280px;
+}
+html.simulated-mobile-mode .interactive-covered > *:not(.interactive-cover-overlay) {
+    display: none !important;
+}
+
+/* 2. Position floating mini-cards relatively on mobile so they flow instead of overlapping */
+@media (max-width: 768px) {
+    .mini-float-card {
+        position: relative !important;
+        bottom: auto !important;
+        left: auto !important;
+        margin: 2rem auto 0 !important;
+        max-width: 100% !important;
+        width: 100% !important;
+        box-shadow: none !important;
+        border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    }
+}
+html.simulated-mobile-mode .mini-float-card {
+    position: relative !important;
+    bottom: auto !important;
+    left: auto !important;
+    margin: 2rem auto 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    box-shadow: none !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
