@@ -464,7 +464,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalAlignments = document.getElementById('modal-alignments-list');
 
     // Google Sheets Integration Config
-    const GOOGLE_SHEET_ID = "YOUR_GOOGLE_SHEET_ID_HERE";
+    const GOOGLE_SHEET_ID = "1Yt_Jqu2YlVCmTTz3HNY9fMY1JY6pnrkdllQQGKytJxE";
 
     let partnerData = {
         "Nexus Analytics": {
