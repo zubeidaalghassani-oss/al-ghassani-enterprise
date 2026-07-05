@@ -3752,3 +3752,13 @@ html.simulated-mobile-mode .mini-float-card {
     border: 1px solid rgba(255, 255, 255, 0.05) !important;
 }
 
+/* 3. Hide the logo subtitle on mobile/simulated mobile to prevent header item collision */
+@media (max-width: 480px) {
+    .logo-subtitle {
+        display: none !important;
+    }
+}
+html.simulated-mobile-mode .logo-subtitle {
+    display: none !important;
+}
+
