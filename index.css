@@ -54,9 +54,9 @@
     --radius-md: 12px;
     --radius-lg: 18px;
     
-    --transition-fast: 0.15s cubic-bezier(0.2, 0.8, 0.2, 1);
-    --transition-normal: 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
-    --transition-slow: 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+    --transition-fast: 180ms cubic-bezier(0.25, 0.8, 0.25, 1);
+    --transition-normal: 280ms cubic-bezier(0.25, 0.8, 0.25, 1);
+    --transition-slow: 450ms cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 /* Light Theme Variables Override */
@@ -317,12 +317,12 @@ a {
     padding: 0.35rem 0.85rem;
     border-radius: 50px;
     font-family: var(--font-heading);
-    font-size: 0.75rem;
+    font-size: 0.82rem !important;
     font-weight: 500;
     color: var(--color-gold);
     margin-bottom: 1.2rem;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
+    text-transform: uppercase !important;
+    letter-spacing: 0.14em !important;
 }
 
 .badge-premium i {
@@ -566,10 +566,10 @@ a {
 
 .hero-title {
     font-size: 4.8rem;
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    line-height: 1.1;
-    margin-bottom: 2rem;
+    font-weight: 300 !important;
+    letter-spacing: -0.03em !important;
+    line-height: 0.95 !important;
+    margin-bottom: 2.2rem;
     font-family: var(--font-heading);
 }
 
@@ -1658,8 +1658,20 @@ a {
 }
 
 .result-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(223, 186, 115, 0.05);
+    border: 1px solid rgba(223, 186, 115, 0.18);
+    padding: 0.35rem 0.85rem;
+    border-radius: 50px;
+    font-family: var(--font-heading);
+    font-size: 0.82rem !important;
+    font-weight: 500;
+    color: var(--color-gold);
     margin-bottom: 2.5rem;
-    display: inline-block;
+    text-transform: uppercase !important;
+    letter-spacing: 0.14em !important;
 }
 
 .results-grid {
@@ -3815,5 +3827,23 @@ html.simulated-mobile-mode .contact-section,
 html.simulated-mobile-mode .insights-section,
 html.simulated-mobile-mode .alliance-section {
     padding: 4rem 0 !important;
+}
+
+/* 5. Desktop Section Padding (Spacious Luxury Whitespace) */
+@media (min-width: 1025px) {
+    section,
+    .about-section,
+    .difference-section,
+    .industries-section,
+    .calculator-section,
+    .portal-section,
+    .contact-section,
+    .insights-section,
+    .alliance-section {
+        padding: 12rem 0 !important;
+    }
+    .hero-section {
+        padding: 220px 0 140px 0 !important;
+    }
 }
 

@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" id="viewport-meta" content="width=device-width, initial-scale=1.0">
+    <script>
+        (function() {
+            const savedMode = localStorage.getItem('viewport-mode');
+            const isDesktopScreen = window.innerWidth > 1024;
+            if (isDesktopScreen) {
+                if (savedMode === 'mobile') {
+                    document.documentElement.classList.add('simulated-mobile-mode');
+                }
+            } else {
+                if (savedMode === 'pc') {
+                    const vp = document.getElementById('viewport-meta');
+                    if (vp) vp.setAttribute('content', 'width=1200, initial-scale=0.3, shrink-to-fit=no');
+                    document.documentElement.classList.add('forced-pc-mode');
+                }
+            }
+        })();
+    </script>
+    <title>Client Workspace | Al Ghassani Enterprises</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- CSS Link -->
+    <link rel="stylesheet" href="index.css">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .portal-page {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background-color: #050E1B;
+        }
+        .portal-header {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            background: rgba(8, 9, 20, 0.5);
+            backdrop-filter: blur(10px);
+        }
+        .assessment-container {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 2rem;
+        }
+        @media (max-width: 900px) {
+            .assessment-container {
+                grid-template-columns: 1fr !important;
+            }
+        }
+    </style>
+</head>
+<body class="portal-page">
+
+    <!-- Space Background Canvas / Glow Elements -->
+    <div class="bg-glows">
+        <div class="glow-orb glow-1"></div>
+        <div class="glow-orb glow-2"></div>
+        <div class="glow-orb glow-3"></div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="header portal-header">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="AGE Logo" class="logo-img">
+                <div class="logo-text-group">
+                    <span class="logo-title">AGE</span>
+                    <span class="logo-subtitle">Al Ghassani Enterprises</span>
+                </div>
+            </a>
+            
+            <div class="nav-actions">
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Theme">
+                    <i data-lucide="sun" class="icon-sun"></i>
+                    <i data-lucide="moon" class="icon-moon"></i>
+                </button>
+                <a href="index.html" class="btn btn-primary btn-nav">Sign Out</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- PORTAL CONTENT -->
+    <main style="flex: 1; padding: 4rem 1.5rem; display: flex; align-items: center; justify-content: center; width: 100%;">
+        <div class="container" style="max-width: 1200px; width: 100%;">
+            <div class="portal-dashboard glass-card interactive-covered" id="portal-dashboard-node" style="margin-top: 0; min-height: 600px;">
+                <!-- Interactive Cover Overlay -->
+                <div class="interactive-cover-overlay">
+                    <div class="cover-content">
+                        <i data-lucide="lock" class="cover-icon"></i>
+                        <h4>Secure Client Workspace</h4>
+                        <p>Accessing the private deal orchestration sandbox environment.</p>
+                        <button type="button" class="btn btn-primary" onclick="activateInteractive('portal')" style="padding: 0.6rem 1.4rem; font-size: 0.85rem;">Establish Connection</button>
+                    </div>
+                </div>
+                <!-- Dashboard Sidebar -->
+                <aside class="dashboard-sidebar">
+                    <div class="db-logo">
+                        <img src="logo.png" alt="AGE Logo" class="logo-img small-logo">
+                        <div class="logo-text-group">
+                            <span class="logo-title" style="font-size: 1.1rem; letter-spacing: 0.05em;">AGE PORTAL</span>
+                            <span class="logo-subtitle" style="font-size: 0.55rem;">Al Ghassani Enterprises</span>
+                        </div>
+                    </div>
+                    <ul class="db-nav">
+                        <li class="db-nav-item active" onclick="switchDbTab('overview', this)">
+                            <i data-lucide="layout-dashboard"></i> <span>Executive Workspace</span>
+                        </li>
+                        <li class="db-nav-item" onclick="switchDbTab('assessment', this)">
+                            <i data-lucide="line-chart"></i> <span>Strategic Growth Index</span>
+                        </li>
+                        <li class="db-nav-item" onclick="switchDbTab('vault', this)">
+                            <i data-lucide="archive"></i> <span>Shared Resource Vault</span>
+                        </li>
+                        <li class="db-nav-item" onclick="switchDbTab('pipeline', this)">
+                            <i data-lucide="arrow-left-right"></i> <span>Introducer Channels</span>
+                        </li>
+                        <li class="db-nav-item">
+                            <a href="profile.html" style="display: flex; align-items: center; gap: 0.8rem; width: 100%; color: inherit;"><i data-lucide="download"></i> <span>Download Profile</span></a>
+                        </li>
+                        <li class="db-nav-item">
+                            <a href="presentation.html" style="display: flex; align-items: center; gap: 0.8rem; width: 100%; color: inherit;"><i data-lucide="presentation"></i> <span>Founder Slide Deck</span></a>
+                        </li>
+                    </ul>
+                    <div class="db-user-pill">
+                        <div class="avatar">MD</div>
+                        <div class="user-meta">
+                            <span class="u-name">Managing Director</span>
+                            <span class="u-role">Strategic Partner</span>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Dashboard Main Content -->
+                <div class="dashboard-content">
+                    <!-- Header inside Dashboard -->
+                    <header class="db-header">
+                        <div class="db-title-area">
+                            <h4 id="db-tab-title">Executive Workspace</h4>
+                            <span class="db-subtitle">Consolidated growth metrics across active corporate accounts</span>
+                        </div>
+                        <div class="db-system-status">
+                            <span class="status-dot green-pulse"></span>
+                            <span class="status-text text-sm">Alliance Network: Optimal</span>
+                        </div>
+                    </header>
+
+                    <!-- Tab 1: Overview / Telemetry Hub -->
+                    <div class="db-tab-pane active" id="pane-overview">
+                        <div class="telemetry-summary-cards">
+                            <div class="mini-telemetry-card">
+                                <span class="tm-lbl">Advisory Fulfillment</span>
+                                <span class="tm-val text-cyan">Optimal</span>
+                                <span class="tm-desc"><i data-lucide="shield" class="trending-icon green"></i> All objectives on schedule</span>
+                            </div>
+                            <div class="mini-telemetry-card">
+                                <span class="tm-lbl">Matchmade Deal Pipeline</span>
+                                <span class="tm-val text-magenta">Active</span>
+                                <span class="tm-desc"><i data-lucide="link-2" class="trending-icon green"></i> Strategic introductions open</span>
+                            </div>
+                            <div class="mini-telemetry-card">
+                                <span class="tm-lbl">G&A Overhead Reductions</span>
+                                <span class="tm-val text-gold">Insulated</span>
+                                <span class="tm-desc">Discretionary GTM overhead minimized</span>
+                            </div>
+                        </div>
+
+                        <!-- Live Synergy Flow Activity Stream -->
+                        <div class="live-activity-box glass-card-nested">
+                            <div class="box-header">
+                                <h5>Strategic Activity Log</h5>
+                                <span class="realtime-badge">REAL-TIME TELEMETRY</span>
+                            </div>
+                            <div class="activity-feed" id="activity-feed">
+                                <div class="activity-row">
+                                    <span class="activity-time">Just Now</span>
+                                    <p class="activity-desc"><strong>Nexus Analytics <span class="text-cyan">[Advisory Client]</span></strong> secured commercial licensing in ADGM under Al Ghassani regulatory guidance.</p>
+                                    <span class="activity-tag tag-green">Market Entry Done</span>
+                                </div>
+                                <div class="activity-row">
+                                    <span class="activity-time">5 mins ago</span>
+                                    <p class="activity-desc"><strong>AeroTech International <span class="text-gold">[JV Partner]</span></strong> matched with Saudi commercial distribution nodes via Midfield Playmaker assist.</p>
+                                    <span class="activity-tag tag-cyan">Matchmade Deal</span>
+                                </div>
+                                <div class="activity-row">
+                                    <span class="activity-time">1 hour ago</span>
+                                    <p class="activity-desc"><strong>Vertex Healthcare Group <span class="text-cyan">[Advisory Client]</span></strong> adopted automated AI diagnostic middleware under Innovation Consulting track.</p>
+                                    <span class="activity-tag tag-magenta">AI Integration</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab 2: Shared Resource Vault -->
+                    <div class="db-tab-pane" id="pane-vault">
+                        <p class="tab-introduction">
+                            Portfolio partners and advisory clients receive direct access to critical corporate assets, regulatory matrices, and executive tools to speed up GCC expansion.
+                        </p>
+                        
+                        <div class="vault-items-grid">
+                            <!-- Vault Item 1 -->
+                            <div class="vault-item-card glass-card-nested">
+                                <div class="v-header">
+                                    <span class="v-category"><i data-lucide="scale" class="text-cyan"></i> Legal & Compliance</span>
+                                    <span class="v-availability green">Available</span>
+                                </div>
+                                <h5 class="v-name">GCC Market Entry Legal Templates</h5>
+                                <p class="v-desc">Corporate templates, ADGM/DIFC articles of association, and sponsor agreements compliant with latest federal laws.</p>
+                                <div class="v-action-row">
+                                    <span class="v-cost">Advisory Credit Rate: 0%</span>
+                                    <button class="btn btn-sm btn-cyan" onclick="checkoutAsset('GCC Legal Templates')">Request Allocation</button>
+                                </div>
+                            </div>
+
+                            <!-- Vault Item 2 -->
+                            <div class="vault-item-card glass-card-nested">
+                                <div class="v-header">
+                                    <span class="v-category"><i data-lucide="cpu" class="text-magenta"></i> Technology & AI</span>
+                                    <span class="v-availability green">Available</span>
+                                </div>
+                                <h5 class="v-name">AI Integration & Adoption Blueprint</h5>
+                                <p class="v-desc">Structured advisory frameworks for integrating neural models and automation tools inside administrative corporate workflows.</p>
+                                <div class="v-action-row">
+                                    <span class="v-cost">Advisory Credit Rate: 0%</span>
+                                    <button class="btn btn-sm btn-cyan" onclick="checkoutAsset('AI Adoption Blueprint')">Book Consultation</button>
+                                </div>
+                            </div>
+
+                            <!-- Vault Item 3 -->
+                            <div class="vault-item-card glass-card-nested">
+                                <div class="v-header">
+                                    <span class="v-category"><i data-lucide="book-open" class="text-gold"></i> Leadership</span>
+                                    <span class="v-availability green">Available</span>
+                                </div>
+                                <h5 class="v-name">Executive Coaching & Leadership Syllabus</h5>
+                                <p class="v-desc">Strategic coaching guides and training methods focused on executive negotiation, board relations, and leadership dynamics.</p>
+                                <div class="v-action-row">
+                                    <span class="v-cost">Advisory Credit Rate: 0%</span>
+                                    <button class="btn btn-sm btn-cyan" onclick="checkoutAsset('Executive Coaching')">Request Allocation</button>
+                                </div>
+                            </div>
+
+                            <!-- Vault Item 4 -->
+                            <div class="vault-item-card glass-card-nested">
+                                <div class="v-header">
+                                    <span class="v-category"><i data-lucide="shield-check" class="text-cyan"></i> Government</span>
+                                    <span class="v-availability orange">Heavy Demand</span>
+                                </div>
+                                <h5 class="v-name">Sovereign Procurement Portal Credentials</h5>
+                                <p class="v-desc">Access vectors to federal municipal registries and procurement portals for regional government project bids.</p>
+                                <div class="v-action-row">
+                                    <span class="v-cost">Advisory Credit Rate: 0%</span>
+                                    <button class="btn btn-sm btn-cyan" onclick="checkoutAsset('Procurement Key')">Request Access</button>
+                                </div>
+                            </div>
+
+                            <!-- Vault Item 5 (Founder Brand Equity Activation) -->
+                            <div class="vault-item-card glass-card-nested">
+                                <div class="v-header">
+                                    <span class="v-category"><i data-lucide="network" class="text-magenta"></i> Network Assist</span>
+                                    <span class="v-availability green">High Impact</span>
+                                </div>
+                                <h5 class="v-name">Founder's Strategic Network Activation</h5>
+                                <p class="v-desc">Activate a strategic pass via the Chairman's elite regional network, opening direct lines to sovereign decision-makers.</p>
+                                <div class="v-action-row">
+                                    <span class="v-cost">Advisory Credit Rate: 0%</span>
+                                    <button class="btn btn-sm btn-cyan" onclick="triggerFounderMediaBoost()">Activate Network Assist</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab 3: Introducer Channels -->
+                    <div class="db-tab-pane" id="pane-pipeline">
+                        <p class="tab-introduction">
+                            Tracking active commercial pathways, joint ventures, and municipal procurement agreements matching client products to GCC buyers.
+                        </p>
+                        
+                        <!-- Sleek deal flow velocity chart -->
+                        <div class="db-chart-container glass-card-nested" style="margin-bottom: 2rem; padding: 1.5rem; border: 1px solid rgba(255, 255, 255, 0.05); border-radius: var(--radius-md);">
+                            <div class="chart-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                <h5 style="margin: 0; font-family: var(--font-heading); font-size: 1.1rem; color: var(--text-primary);">Deal Inflow & Synergy Velocity</h5>
+                                <span style="font-size: 0.75rem; color: var(--color-gold); font-weight: 600; letter-spacing: 0.08em;">ACTIVE INTRODUCTIONS</span>
+                            </div>
+                            <div class="chart-wrapper" style="position: relative; height: 120px; width: 100%;">
+                                <!-- Embedded SVG Area Chart -->
+                                <svg viewBox="0 0 500 120" preserveAspectRatio="none" style="width: 100%; height: 100%;">
+                                    <defs>
+                                        <linearGradient id="chart-glow-grad" x1="0" y1="0" x2="0" y2="1">
+                                            <stop offset="0%" stop-color="var(--color-gold)" stop-opacity="0.25"/>
+                                            <stop offset="100%" stop-color="var(--color-gold)" stop-opacity="0.0"/>
+                                        </linearGradient>
+                                    </defs>
+                                    <!-- Trend Area -->
+                                    <path d="M 0 120 Q 50 80 100 95 T 200 40 T 300 65 T 400 25 T 500 10 L 500 120 Z" fill="url(#chart-glow-grad)"></path>
+                                    <!-- Trend Line -->
+                                    <path d="M 0 120 Q 50 80 100 95 T 200 40 T 300 65 T 400 25 T 500 10" fill="none" stroke="var(--color-gold)" stroke-width="2" stroke-linecap="round"></path>
+                                    <!-- Glowing Data Dots -->
+                                    <circle cx="200" cy="40" r="4" fill="var(--color-magenta)" filter="drop-shadow(0 0 3px var(--color-magenta))"></circle>
+                                    <circle cx="400" cy="25" r="4" fill="var(--color-cyan)" filter="drop-shadow(0 0 3px var(--color-cyan))"></circle>
+                                    <circle cx="500" cy="10" r="4" fill="var(--color-gold)" filter="drop-shadow(0 0 3px var(--color-gold))"></circle>
+                                </svg>
+                            </div>
+                        </div>
+                        
+                        <div class="pipeline-container glass-card-nested">
+                            <div class="pipeline-header-row">
+                                <span>Strategic Deal / Target</span>
+                                <span>Advisory Clients Involved</span>
+                                <span>Synergy Alignment</span>
+                                <span>Status</span>
+                            </div>
+                            <div class="pipeline-rows" id="pipeline-rows">
+                                <div class="pipeline-row-item">
+                                    <span class="p-opt">ADGM Financial Tech Hub License</span>
+                                    <span class="p-ops">AeroTech & Al Ghassani Legal</span>
+                                    <span class="p-val text-cyan">Strategic Opportunity</span>
+                                    <span class="p-status badge-cyan">In-Proposal</span>
+                                </div>
+                                <div class="pipeline-row-item">
+                                    <span class="p-opt">Commercial Sports Sponsorship Contract</span>
+                                    <span class="p-ops">Saudi Pro League & GCC Brand</span>
+                                    <span class="p-val text-gold">Joint Venture Fit</span>
+                                    <span class="p-status badge-gold">Feasibility Testing</span>
+                                </div>
+                                <div class="pipeline-row-item">
+                                    <span class="p-opt">Government Health AI Integration</span>
+                                    <span class="p-ops">Vertex Healthcare & Ministry of Health</span>
+                                    <span class="p-val text-green">High Synergy Value</span>
+                                    <span class="p-status badge-green">Contract Signed</span>
+                                </div>
+                            </div>
+                            
+                            <div class="pipeline-form-row">
+                                <h5>Register New Growth Opportunity</h5>
+                                <div class="deal-fields">
+                                    <input type="text" id="deal-name" placeholder="Client / Opportunity Name" class="custom-input">
+                                    <select id="deal-sector" class="custom-select-small">
+                                        <option value="Nexus Analytics">Nexus Analytics</option>
+                                        <option value="AeroTech Int">AeroTech Int</option>
+                                        <option value="Vertex Health">Vertex Health</option>
+                                        <option value="GCC Commercial">GCC Commercial</option>
+                                    </select>
+                                    <button class="btn btn-sm btn-magenta" onclick="registerSynergyOpportunity()">Launch Opportunity Node</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab 4: Strategic Growth Index -->
+                    <div class="db-tab-pane" id="pane-assessment">
+                        <p class="tab-introduction" style="margin-bottom: 2rem;">
+                            Self-assess your enterprise across 8 core dimensions to analyze growth maturity, evaluate expansion potential, and receive customized solution alignments.
+                        </p>
+                        
+                        <div class="assessment-container">
+                            <!-- Sliders Grid -->
+                            <div class="glass-card-nested" style="padding: 2rem; display: flex; flex-direction: column; gap: 1.5rem;" id="calc-card-node">
+                                <div class="sliders-grid" style="display: flex; flex-direction: column; gap: 1.2rem;">
+                                    <div class="input-group">
+                                        <div class="slider-header" style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
+                                            <label for="score-leadership" style="font-size: 0.9rem; font-weight: 500;">Leadership & Governance</label>
+                                            <span class="slider-value" id="val-leadership" style="font-size: 0.9rem; font-weight: 600; color: var(--color-cyan);">5 / 10</span>
+                                        </div>
+                                        <input type="range" id="score-leadership" min="1" max="10" step="1" value="5" class="custom-slider">
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="slider-header" style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
+                                            <label for="score-market" style="font-size: 0.9rem; font-weight: 500;">Market & GCC Positioning</label>
+                                            <span class="slider-value" id="val-market" style="font-size: 0.9rem; font-weight: 600; color: var(--color-cyan);">5 / 10</span>
+                                        </div>
+                                        <input type="range" id="score-market" min="1" max="10" step="1" value="5" class="custom-slider">
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="slider-header" style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
+                                            <label for="score-technology" style="font-size: 0.9rem; font-weight: 500;">Technology & Infrastructure</label>
+                                            <span class="slider-value" id="val-technology" style="font-size: 0.9rem; font-weight: 600; color: var(--color-cyan);">5 / 10</span>
+                                        </div>
+                                        <input type="range" id="score-technology" min="1" max="10" step="1" value="5" class="custom-slider">
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="slider-header" style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
+                                            <label for="score-operations" style="font-size: 0.9rem; font-weight: 500;">Operational Efficiency</label>
+                                            <span class="slider-value" id="val-operations" style="font-size: 0.9rem; font-weight: 600; color: var(--color-cyan);">5 / 10</span>
+                                        </div>
+                                        <input type="range" id="score-operations" min="1" max="10" step="1" value="5" class="custom-slider">
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="slider-header" style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
+                                            <label for="score-ai" style="font-size: 0.9rem; font-weight: 500;">AI & Automation Adoption</label>
+                                            <span class="slider-value" id="val-ai" style="font-size: 0.9rem; font-weight: 600; color: var(--color-cyan);">5 / 10</span>
+                                        </div>
+                                        <input type="range" id="score-ai" min="1" max="10" step="1" value="5" class="custom-slider">
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="slider-header" style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
+                                            <label for="score-partnerships" style="font-size: 0.9rem; font-weight: 500;">Strategic Partnerships</label>
+                                            <span class="slider-value" id="val-partnerships" style="font-size: 0.9rem; font-weight: 600; color: var(--color-cyan);">5 / 10</span>
+                                        </div>
+                                        <input type="range" id="score-partnerships" min="1" max="10" step="1" value="5" class="custom-slider">
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="slider-header" style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
+                                            <label for="score-capital" style="font-size: 0.9rem; font-weight: 500;">Capital & Investment Readiness</label>
+                                            <span class="slider-value" id="val-capital" style="font-size: 0.9rem; font-weight: 600; color: var(--color-cyan);">5 / 10</span>
+                                        </div>
+                                        <input type="range" id="score-capital" min="1" max="10" step="1" value="5" class="custom-slider">
+                                    </div>
+                                    <div class="input-group">
+                                        <div class="slider-header" style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
+                                            <label for="score-government" style="font-size: 0.9rem; font-weight: 500;">Government & Regulatory Readiness</label>
+                                            <span class="slider-value" id="val-government" style="font-size: 0.9rem; font-weight: 600; color: var(--color-cyan);">5 / 10</span>
+                                        </div>
+                                        <input type="range" id="score-government" min="1" max="10" step="1" value="5" class="custom-slider">
+                                    </div>
+                                </div>
+                                <p class="calc-disclaimer" style="margin-top: 1rem; font-size: 0.75rem; color: var(--text-muted);">*This index measures organizational maturity based on strategic growth and GCC positioning indicators, projecting recommended alignment solutions.</p>
+                                
+                                <!-- Gemini AI Integration Setting -->
+                                <div class="ai-key-wrapper" style="border-top: 1px solid rgba(255, 255, 255, 0.05); padding-top: 1.5rem; margin-top: 1rem;">
+                                    <div class="ai-key-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem;">
+                                        <label for="ai-api-key" style="font-size: 0.85rem; font-weight: 600;"><i data-lucide="cpu" class="text-cyan text-sm" style="vertical-align: middle; margin-right: 0.3rem;"></i> Gemini AI Advisory Engine</label>
+                                        <span class="ai-status-badge" id="ai-status" style="font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 4px; background: rgba(255, 255, 255, 0.05);">Inactive (Rule-Based)</span>
+                                    </div>
+                                    <div class="ai-key-input-container" style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                        <input type="password" id="ai-api-key" placeholder="Paste Gemini API Key from AI Studio..." class="custom-input ai-key-input" style="flex: 1; padding: 0.5rem; font-size: 0.8rem;">
+                                        <button type="button" class="btn btn-sm btn-cyan" onclick="testApiKey()">Connect</button>
+                                    </div>
+                                    <span class="ai-key-help" style="font-size: 0.75rem; color: var(--text-muted);">Generate a free key in <a href="https://aistudio.google.com/" target="_blank" style="color: var(--color-cyan); text-decoration: underline;">Google AI Studio</a> to unlock custom real-time LLM-generated executive advice.</span>
+                                </div>
+                            </div>
+
+                            <!-- Results Pane -->
+                            <div class="glass-card-nested result-card" style="padding: 2rem; display: flex; flex-direction: column; justify-content: space-between; min-height: 100%;">
+                                <div style="display: flex; flex-direction: column; align-items: center;">
+                                    <h3 class="result-title" style="font-size: 1.3rem; margin-bottom: 0.2rem;">Executive Evaluation Output</h3>
+                                    <span class="result-tag tag-cyan" style="margin-bottom: 1.5rem;">AGE Strategic Growth Index</span>
+
+                                    <!-- SVG Radial Progress Gauge -->
+                                    <div class="score-radial-wrapper" style="margin: 0.5rem auto 1.5rem;">
+                                        <svg class="score-radial-svg" viewBox="0 0 100 100">
+                                            <defs>
+                                                <linearGradient id="score-radial-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                                    <stop offset="0%" stop-color="#DFBA73" />
+                                                    <stop offset="100%" stop-color="#C9A227" />
+                                                </linearGradient>
+                                            </defs>
+                                            <circle class="score-radial-bg" cx="50" cy="50" r="45"></circle>
+                                            <circle class="score-radial-bar" id="score-radial-bar" cx="50" cy="50" r="45"></circle>
+                                        </svg>
+                                        <div class="score-radial-content">
+                                            <span class="grand-lbl">Readiness Index</span>
+                                            <h4 class="grand-val gradient-text" id="res-maturity-score">50%</h4>
+                                        </div>
+                                    </div>
+                                    <p class="grand-increase" style="margin-bottom: 1.5rem;">Investment Readiness: <span id="res-investment-level" class="text-gold">Moderate</span></p>
+
+                                    <div class="results-grid" style="width: 100%; display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem;">
+                                        <div class="result-item" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                            <span class="res-lbl" style="font-size: 0.85rem; color: var(--text-secondary);">Expansion Score</span>
+                                            <span class="res-val text-green" id="res-expansion-score" style="font-size: 1.1rem; font-weight: 700;">50%</span>
+                                        </div>
+                                        <div class="result-item" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                            <span class="res-lbl" style="font-size: 0.85rem; color: var(--text-secondary);">Risk Level Profile</span>
+                                            <span class="res-val text-magenta" id="res-risk-level" style="font-size: 1.1rem; font-weight: 700;">Moderate</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Recommended Product Box -->
+                                    <div class="recommended-service-box" style="width: 100%; padding: 1.2rem; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 6px;">
+                                        <span class="rec-label" style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 0.3rem;">Recommended Strategic Solution</span>
+                                        <h5 class="rec-name text-cyan" id="res-recommended-product" style="font-size: 1.1rem; font-weight: 700; margin: 0 0 0.5rem 0;">AGE Scale™</h5>
+                                        <div id="ai-loading-spinner" style="display: none; padding: 1rem 0; text-align: center;">
+                                            <div class="spinner"></div>
+                                            <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.5rem;">Orchestrating Gemini Advisory Node...</p>
+                                        </div>
+                                        <p class="rec-desc" id="res-recommended-desc" style="font-size: 0.8rem; color: var(--text-secondary); margin: 0; line-height: 1.5;">Structured expansion to establish B2B sales pipelines and accelerate commercial footprint across GCC growth markets.</p>
+                                        <button type="button" id="btn-run-ai" class="btn btn-sm btn-cyan mt-sm" style="display: none; width: 100%; border-radius: 4px; padding: 0.5rem; font-weight: 600;" onclick="runAiAnalysis()">Generate AI Insights</button>
+                                    </div>
+                                </div>
+
+                                <a href="index.html#contact" class="btn btn-primary btn-block text-center mt-lg" style="width: 100%; display: block; margin-top: 1.5rem;">Request Strategic Consultation</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer style="padding: 2rem 0; border-top: 1px solid rgba(255, 255, 255, 0.03); background: rgba(8, 9, 20, 0.8); text-align: center; font-size: 0.8rem; color: var(--text-muted);">
+        <p>&copy; 2026 Al Ghassani Enterprises. All rights reserved. DIFC & ADGM Regulatory Sandboxed Connection.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Automatic setup on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            // Uncover the portal with micro-interaction toast
+            setTimeout(() => {
+                activateInteractive('portal');
+            }, 800);
+            
+            // Render slider triggers
+            const sliders = document.querySelectorAll('.custom-slider');
+            sliders.forEach(slider => {
+                slider.addEventListener('input', () => {
+                    updateAssessmentResults();
+                });
+            });
+        });
+    </script>
+    <script src="main.js"></script>
+</body>
+</html>

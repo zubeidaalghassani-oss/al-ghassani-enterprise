@@ -284,6 +284,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('res-recommended-product').innerText = recommendation.service;
         document.getElementById('res-recommended-desc').innerText = recommendation.desc;
     };
+    window.updateAssessmentResults = updateAssessmentResults;
 
     // Add listeners to sliders
     const sliders = [lSlider, mSlider, tSlider, oSlider, aSlider, pSlider, cSlider, gSlider];
@@ -387,7 +388,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const dbSub = document.querySelector('.db-subtitle');
 
         if (tabId === 'overview') {
-            dbTitle.innerText = "Telemetry Hub";
+            dbTitle.innerText = "Executive Workspace";
             dbSub.innerText = "Consolidated growth metrics across active corporate accounts";
         } else if (tabId === 'vault') {
             dbTitle.innerText = "Shared Resource Vault";
@@ -395,6 +396,9 @@ document.addEventListener('DOMContentLoaded', () => {
         } else if (tabId === 'pipeline') {
             dbTitle.innerText = "Introducer Channels";
             dbSub.innerText = "Track warm paths, co-pitch opportunities, and GCC sports procurement matchmaking";
+        } else if (tabId === 'assessment') {
+            dbTitle.innerText = "Strategic Growth Index";
+            dbSub.innerText = "Evaluate enterprise maturity and regional readiness";
         }
     };
 
@@ -1397,7 +1401,7 @@ We would like to analyze how Al Ghassani Enterprises can support navigating our 
                     overlay.remove();
                 }, 400);
             }
-            showToast(id === 'calculator' ? "Growth Modeler Activated" : "Portal Sandbox Activated", "success");
+            showToast(id === 'calculator' ? "Strategic Growth Index Activated" : "Client Workspace Activated", "success");
         }
     };
 
