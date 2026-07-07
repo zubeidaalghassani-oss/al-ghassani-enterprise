@@ -3903,3 +3903,10 @@ html.simulated-mobile-mode .alliance-section {
     height: 24px !important;
 }
 
+/* 7. Mobile Logo Text Minimization (Clean Luxury Icon only on Mobile) */
+@media (max-width: 768px) {
+    .logo-text-group {
+        display: none !important;
+    }
+}
+
