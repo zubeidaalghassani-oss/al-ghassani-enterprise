@@ -544,75 +544,100 @@ a {
     z-index: 1;
 }
 
-.hero-grid {
-    display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
-    gap: 4rem;
+.hero-centered-container {
+    display: flex;
+    flex-direction: column;
     align-items: center;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+}
+
+.hero-centered-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 950px;
+    margin-bottom: 5rem;
 }
 
 .hero-title {
-    font-size: 4rem;
+    font-size: 4.8rem;
     font-weight: 800;
     letter-spacing: -0.03em;
     line-height: 1.1;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
+    font-family: var(--font-heading);
 }
 
 .hero-subtitle {
-    font-family: var(--font-heading);
-    font-size: 1.5rem;
-    line-height: 1.4;
-    color: var(--color-gold);
-    margin-bottom: 2.5rem;
-    max-width: 580px;
+    font-family: var(--font-body);
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    margin-bottom: 2.8rem;
+    max-width: 750px;
 }
 
 .hero-ctas {
     display: flex;
-    gap: 1.2rem;
+    gap: 1.5rem;
+    justify-content: center;
 }
 
-/* Hero Visuals / Interactive Cards */
-.hero-visual {
+/* Horizontal Executive Dashboard Grid */
+.hero-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 1200px;
+    z-index: 2;
+}
+
+.metric-grid-card {
+    padding: 2.2rem 2rem;
     position: relative;
-}
-
-.hero-card-container {
-    position: relative;
-    padding: 2rem;
-}
-
-.hero-stats-card {
-    padding: 2.5rem;
-    animation: cardFloating 6s infinite ease-in-out;
-}
-
-.card-header-stats {
+    overflow: hidden;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    transition: all var(--transition-normal);
+}
+
+.metric-grid-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--border-glow);
+    box-shadow: var(--shadow-glow);
+}
+
+.metric-card-header {
+    display: flex;
     justify-content: space-between;
+    align-items: center;
+    width: 100%;
     margin-bottom: 1.5rem;
 }
 
-.card-tag {
-    font-family: var(--font-heading);
+.metric-card-header i {
+    width: 24px;
+    height: 24px;
+}
+
+.metric-grid-card h3 {
+    font-size: 1.4rem;
     font-weight: 700;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    padding: 0.25rem 0.75rem;
-    border-radius: 4px;
+    margin-bottom: 0.6rem;
+    font-family: var(--font-heading);
+    color: var(--text-primary);
 }
 
-.tag-cyan {
-    background: rgba(0, 242, 254, 0.1);
-    color: var(--color-cyan);
-}
-
-.tag-magenta {
-    background: rgba(209, 98, 255, 0.1);
-    color: var(--color-magenta);
+.metric-grid-card p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
 }
 
 .pulse-indicator {
@@ -629,72 +654,23 @@ a {
     100% { opacity: 1; transform: scale(1.2); }
 }
 
-.stats-card-title {
-    font-size: 1.8rem;
-    margin-bottom: 2rem;
+.hero-mesh-glow {
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(201, 162, 39, 0.12) 0%, rgba(11, 31, 58, 0) 70%);
+    filter: blur(80px);
+    z-index: 0;
+    pointer-events: none;
+    animation: meshPulse 8s infinite alternate ease-in-out;
 }
 
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
-    margin-bottom: 2rem;
-}
-
-.stat-item {
-    display: flex;
-    flex-direction: column;
-}
-
-.stat-label {
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    letter-spacing: 0.05em;
-    margin-bottom: 0.3rem;
-}
-
-.stat-val {
-    font-family: var(--font-heading);
-    font-weight: 800;
-    font-size: 2rem;
-    color: var(--text-primary);
-}
-
-.stat-unit {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--color-cyan);
-    margin-left: 1px;
-}
-
-.telemetry-bar {
-    width: 100%;
-    height: 4px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 20px;
-    overflow: hidden;
-    margin-bottom: 1rem;
-}
-
-.bar-fill {
-    height: 100%;
-    background: var(--gradient-primary);
-    border-radius: 20px;
-    transition: width var(--transition-slow);
-}
-
-.telemetry-log {
-    font-size: 0.75rem;
-    color: var(--text-secondary);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.telemetry-log i {
-    width: 14px;
-    height: 14px;
+@keyframes meshPulse {
+    0% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+    100% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
 }
 
 /* Secondary mini-float card */
@@ -2626,19 +2602,15 @@ a {
 /* 14. RESPONSIVE DESIGN (MEDIA QUERIES) */
 @media (max-width: 1024px) {
     html { font-size: 16px; }
-    .hero-grid, .grid-two-cols {
+    .hero-title {
+        font-size: 3.8rem;
+    }
+    .hero-metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .grid-two-cols {
         grid-template-columns: 1fr;
         gap: 3rem;
-    }
-    .hero-visual {
-        order: -1;
-    }
-    .hero-stats-card {
-        max-width: 500px;
-        margin: 0 auto;
-    }
-    .mini-float-card {
-        left: 20px;
     }
     .features-grid, .portfolio-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -3731,28 +3703,36 @@ html.simulated-mobile-mode .interactive-covered > *:not(.interactive-cover-overl
     display: none !important;
 }
 
-/* 2. Position floating mini-cards relatively on mobile so they flow instead of overlapping */
+/* 2. Responsive styles for centered hero metrics grid on mobile */
 @media (max-width: 768px) {
-    .mini-float-card {
-        position: relative !important;
-        bottom: auto !important;
-        left: auto !important;
-        margin: 2rem auto 0 !important;
-        max-width: 100% !important;
-        width: 100% !important;
-        box-shadow: none !important;
-        border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    .hero-title {
+        font-size: 2.8rem !important;
+    }
+    .hero-subtitle {
+        font-size: 1.15rem !important;
+        margin-bottom: 2rem !important;
+    }
+    .hero-metrics-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1.2rem !important;
+    }
+    .metric-grid-card {
+        padding: 1.8rem 1.5rem !important;
     }
 }
-html.simulated-mobile-mode .mini-float-card {
-    position: relative !important;
-    bottom: auto !important;
-    left: auto !important;
-    margin: 2rem auto 0 !important;
-    max-width: 100% !important;
-    width: 100% !important;
-    box-shadow: none !important;
-    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+html.simulated-mobile-mode .hero-title {
+    font-size: 2.8rem !important;
+}
+html.simulated-mobile-mode .hero-subtitle {
+    font-size: 1.15rem !important;
+    margin-bottom: 2rem !important;
+}
+html.simulated-mobile-mode .hero-metrics-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.2rem !important;
+}
+html.simulated-mobile-mode .metric-grid-card {
+    padding: 1.8rem 1.5rem !important;
 }
 
 /* 3. Hide the logo subtitle on mobile/simulated mobile to prevent header item collision */
