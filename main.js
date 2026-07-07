@@ -778,7 +778,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     const category = cells[1] ? (cells[1].v || "").toString().trim() : "";
                     const date = cells[2] ? (cells[2].v || "").toString().trim() : "";
                     const summary = cells[3] ? (cells[3].v || "").toString().trim() : "";
-                    const urlVal = cells[4] ? (cells[4].v || "").toString().trim() : "#contact";
+                    
+                    // Validate URL format to prevent broken G&A redirect issues
+                    let urlVal = cells[4] ? (cells[4].v || "").toString().trim() : "#contact";
+                    if (!urlVal.startsWith('http://') && !urlVal.startsWith('https://') && !urlVal.startsWith('#')) {
+                        urlVal = "#contact";
+                    }
 
                     insightsList.push({
                         title,
@@ -789,7 +794,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                 });
 
+                // Pad the grid to at least 3 cards using fallback cards for layout balance
                 if (insightsList.length > 0) {
+                    if (insightsList.length < 3) {
+                        const needed = 3 - insightsList.length;
+                        for (let i = 0; i < needed; i++) {
+                            if (fallbackList[i]) {
+                                insightsList.push(fallbackList[i]);
+                            }
+                        }
+                    }
                     renderInsightsGrid(insightsList);
                 } else {
                     renderInsightsGrid(fallbackList);
