@@ -145,8 +145,10 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     initRegion();
 
-    // Check system preference or localStorage
-    const savedTheme = localStorage.getItem('ghassani-theme') || 'dark';
+    // Check system preference or localStorage, default to light for public pages and dark for portal
+    const isPortalPage = window.location.pathname.includes('portal.html');
+    const defaultTheme = isPortalPage ? 'dark' : 'light';
+    const savedTheme = localStorage.getItem('ghassani-theme') || defaultTheme;
     htmlElement.setAttribute('data-theme', savedTheme);
 
     if (themeToggleBtn) {
@@ -672,17 +674,49 @@ document.addEventListener('DOMContentLoaded', () => {
             if (item.category === "PARTNERSHIP") accentClass = "accent-gold";
             if (item.category === "COMPLIANCE") accentClass = "accent-magenta";
 
+            // Parse Challenge, Solution, Outcome from summary
+            let problem = "";
+            let solution = "";
+            let outcome = "";
+            const raw = item.summary || "";
+
+            const pIdx = raw.indexOf("Problem:");
+            const sIdx = raw.indexOf("Solution:");
+            const oIdx = raw.indexOf("Outcome:");
+
+            if (pIdx !== -1 && sIdx !== -1 && oIdx !== -1) {
+                problem = raw.substring(pIdx + 8, sIdx).trim();
+                solution = raw.substring(sIdx + 9, oIdx).trim();
+                outcome = raw.substring(oIdx + 8).trim();
+            } else {
+                problem = raw;
+            }
+
             card.innerHTML = `
                 <div class="card-accent ${accentClass}"></div>
-                <div class="portfolio-header">
-                    <span class="badge-tier equity">${item.category}</span>
-                    <span class="status-text">${item.date}</span>
+                <div class="portfolio-header" style="margin-bottom: 1.5rem;">
+                    <span class="badge-tier equity" style="font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;">${item.category}</span>
+                    <span class="status-text" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 500;">${item.date}</span>
                 </div>
-                <h3 style="font-family: var(--font-heading); font-size: 1.6rem; font-weight: 700; margin-bottom: 1.2rem; color: var(--text-primary);">${item.title}</h3>
-                <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">
-                    ${item.summary}
-                </p>
-                <a href="${item.url}" class="btn btn-sm btn-cyan mt-sm" style="display: inline-block; padding: 0.5rem 1rem; border-radius: 4px; font-weight: 600; text-align: center; text-decoration: none;">View Detail</a>
+                <h3 style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 600; margin-bottom: 1.2rem; color: var(--text-primary);">${item.title}</h3>
+                
+                <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 1.8rem;">
+                    <p style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.65; margin: 0;">
+                        <strong>Challenge:</strong> ${problem}
+                    </p>
+                    ${solution ? `
+                    <p style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.65; margin: 0;">
+                        <strong>AGE Solution:</strong> ${solution}
+                    </p>
+                    ` : ''}
+                    ${outcome ? `
+                    <p style="font-size: 0.82rem; color: var(--color-gold); line-height: 1.65; font-weight: 600; margin: 0;">
+                        <strong>Outcome:</strong> ${outcome}
+                    </p>
+                    ` : ''}
+                </div>
+                
+                <a href="${item.url}" class="btn btn-secondary btn-sm" style="display: block; width: 100%; text-align: center; text-decoration: none; border-radius: 4px; padding: 0.6rem; font-weight: 600; font-size: 0.8rem; border-color: rgba(255,255,255,0.08); background: rgba(255,255,255,0.02);">Read Case Study</a>
             `;
             grid.appendChild(card);
         });

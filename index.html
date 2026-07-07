@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" id="viewport-meta" content="width=device-width, initial-scale=1.0">
@@ -46,8 +46,12 @@
     <!-- HEADER / NAVIGATION -->
     <header class="header">
         <div class="nav-container">
-            <a href="#" class="logo">
-                <img src="logo.png" alt="AGE Logo" class="logo-img">
+            <a href="index.html" class="logo">
+                <svg class="logo-svg" viewBox="0 0 70 40" width="70" height="40" style="display: block; width: 70px; height: 40px; margin-right: 0.8rem;">
+                    <path d="M15,32 L22,8 L29,32 M18,24 L26,24" fill="none" stroke="var(--color-gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M48,20 Q48,9 39,9 Q32,9 32,20 Q32,31 39,31 Q44,31 46,27 L46,22 L40,22" fill="none" stroke="var(--color-gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M62,9 L52,9 L52,31 L62,31 M52,20 L60,20" fill="none" stroke="var(--color-gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
                 <div class="logo-text-group">
                     <span class="logo-title">AGE</span>
                     <span class="logo-subtitle">Al Ghassani Enterprises</span>
@@ -105,7 +109,7 @@
                     </div>
                     <h1 class="hero-title animate-slide-up">
                         Opening Doors.<br>
-                        Building Opportunities.<br>
+                        Creating Opportunity.<br>
                         <span class="gradient-text">Accelerating Growth.</span>
                     </h1>
                     <p class="hero-subtitle animate-slide-up-delayed" style="font-weight: 500; font-size: 1.25rem; line-height: 1.6; margin: 0 auto 2.5rem; max-width: 750px; color: var(--text-secondary);">
@@ -281,6 +285,36 @@
                         <span class="rec-label" style="color: var(--color-gold); margin-bottom: 0.8rem; display: block; font-weight: 600;">Investment Readiness</span>
                         <p>Auditing corporate files, structuring joint-venture allocations, and preparing organizations for capital raises and regional investment opportunities.</p>
                     </div>
+
+                    <!-- Solution 6 -->
+                    <div class="feature-card glass-card">
+                        <div class="feature-icon-wrapper magenta-glow">
+                            <i data-lucide="truck" class="feature-icon"></i>
+                        </div>
+                        <h3>AGE Trade™</h3>
+                        <span class="rec-label" style="color: var(--color-magenta); margin-bottom: 0.8rem; display: block; font-weight: 600;">Export & Import / Logistics</span>
+                        <p>Facilitating regional logistics pipelines, customs clearance vectors, and supply chain matchmaking to streamline import/export trade routes across GCC border entries.</p>
+                    </div>
+
+                    <!-- Solution 7 -->
+                    <div class="feature-card glass-card">
+                        <div class="feature-icon-wrapper cyan-glow">
+                            <i data-lucide="award" class="feature-icon"></i>
+                        </div>
+                        <h3>AGE Sports™</h3>
+                        <span class="rec-label" style="color: var(--color-cyan); margin-bottom: 0.8rem; display: block; font-weight: 600;">Soccer Academy & Placements</span>
+                        <p>Orchestrating institutional youth academy setups, high-level sports development platforms, and professional player placement networks across Middle East sports clubs.</p>
+                    </div>
+
+                    <!-- Solution 8 -->
+                    <div class="feature-card glass-card">
+                        <div class="feature-icon-wrapper gold-glow">
+                            <i data-lucide="coffee" class="feature-icon"></i>
+                        </div>
+                        <h3>AGE Hospitality™</h3>
+                        <span class="rec-label" style="color: var(--color-gold); margin-bottom: 0.8rem; display: block; font-weight: 600;">Food & Beverage Logistics</span>
+                        <p>Navigating municipal regulatory clearance, supply logistics, franchise matching, and local distributor alignment for premium global F&B brands entering the GCC.</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -288,91 +322,37 @@
         <!-- FOUNDER'S CORNER SECTION -->
         <section class="founder-section reveal-on-scroll" id="founder">
             <div class="container founder-grid-layout">
-                <div class="founder-visual-card glass-card">
+                <div class="founder-visual-card glass-card" style="padding: 0; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.05); display: flex; flex-direction: column;">
                     <div class="card-glow"></div>
-                    <div class="pitch-tactics-board">
-                        <!-- Futuristic SVG tactics diagram background -->
-                        <svg viewBox="0 0 200 300" class="pitch-svg playmaker-active" id="tactics-board">
-                            <!-- Outer Pitch boundary lines -->
-                            <rect x="10" y="10" width="180" height="280" fill="none" stroke="rgba(201, 162, 39, 0.08)" stroke-width="2" stroke-dasharray="4 2" />
-                            <line x1="10" y1="150" x2="190" y2="150" stroke="rgba(201, 162, 39, 0.08)" stroke-width="2" stroke-dasharray="4 2" />
-                            <circle cx="100" cy="150" r="35" fill="none" stroke="rgba(201, 162, 39, 0.08)" stroke-width="2" stroke-dasharray="4 2" />
-                            <!-- Goal areas -->
-                            <rect x="60" y="10" width="80" height="30" fill="none" stroke="rgba(201, 162, 39, 0.05)" stroke-width="1.5" />
-                            <rect x="60" y="260" width="80" height="30" fill="none" stroke="rgba(201, 162, 39, 0.05)" stroke-width="1.5" />
-                            
-                            <!-- Tactical Vector Lines -->
-                            <!-- Playmaker Passes -->
-                            <path d="M100,150 L60,90" class="tactic-line playmaker-line" stroke="var(--color-gold)" stroke-width="1.5" fill="none" stroke-dasharray="100" stroke-dashoffset="100" />
-                            <path d="M100,150 L140,90" class="tactic-line playmaker-line" stroke="var(--color-gold)" stroke-width="1.5" fill="none" stroke-dasharray="100" stroke-dashoffset="100" />
-                            
-                            <!-- Resilience Shields -->
-                            <path d="M70,210 L130,210" class="tactic-line resilience-line" stroke="var(--text-primary)" stroke-width="1.5" fill="none" stroke-dasharray="100" stroke-dashoffset="100" />
-                            <path d="M100,150 L100,210" class="tactic-line resilience-line" stroke="var(--text-primary)" stroke-width="1.5" fill="none" stroke-dasharray="100" stroke-dashoffset="100" />
-                            
-                            <!-- Acceleration Shots -->
-                            <path d="M60,90 L100,50" class="tactic-line acceleration-line" stroke="var(--color-gold)" stroke-width="1.5" fill="none" stroke-dasharray="100" stroke-dashoffset="100" />
-                            <path d="M140,90 L100,50" class="tactic-line acceleration-line" stroke="var(--color-gold)" stroke-width="1.5" fill="none" stroke-dasharray="100" stroke-dashoffset="100" />
-
-                            <!-- Play Nodes -->
-                            <!-- Midfield orchestrator (Gold) -->
-                            <circle cx="100" cy="150" r="7" fill="var(--color-gold)" class="playmaker-node" />
-                            <!-- Forward nodes (White) -->
-                            <circle cx="60" cy="90" r="6" fill="#ffffff" class="acceleration-node" />
-                            <circle cx="140" cy="90" r="6" fill="#ffffff" class="acceleration-node" />
-                            <circle cx="100" cy="50" r="6" fill="var(--color-gold)" />
-                            <!-- Defensive nodes (Charcoal/Muted) -->
-                            <circle cx="70" cy="210" r="6" fill="rgba(255, 255, 255, 0.4)" class="resilience-node" />
-                            <circle cx="130" cy="210" r="6" fill="rgba(255, 255, 255, 0.4)" class="resilience-node" />
-                        </svg>
-                        
-                        <!-- Glowing Jersey Graphic -->
-                        <div class="founder-jersey-badge">
-                            <div class="jersey-glow"></div>
-                            <i data-lucide="award" class="icon-award-jersey" style="color: var(--color-gold);"></i>
-                            <span class="jersey-number">10</span>
-                        </div>
+                    <div style="position: relative; width: 100%; height: 450px; overflow: hidden;">
+                        <img src="founder_portrait.png" alt="Yahya Al Ghassani" style="width: 100%; height: 100%; object-fit: cover; object-position: center top; transition: transform var(--transition-normal);">
                     </div>
-                    <div class="founder-visual-footer">
-                        <span class="founder-status-tag">Founder & Chairman</span>
-                        <div class="founder-trophy-shelf">
-                            <i data-lucide="trophy" class="text-gold" title="Championship Standards"></i>
-                            <i data-lucide="shield" class="text-cyan" title="Sovereign Protection"></i>
-                            <i data-lucide="zap" class="text-magenta" title="High-Valency Networks"></i>
+                    <div class="founder-visual-footer" style="padding: 1.8rem; background: rgba(0, 0, 0, 0.2); border-top: 1px solid rgba(255, 255, 255, 0.03); display: flex; justify-content: space-between; align-items: center;">
+                        <span class="founder-status-tag" style="font-family: var(--font-heading); color: var(--color-gold); font-weight: 600; font-size: 0.9rem; letter-spacing: 0.05em; text-transform: uppercase;">Founder & Chairman</span>
+                        <div style="display: flex; gap: 0.8rem; color: var(--text-muted);">
+                            <a href="https://www.linkedin.com/company/135205377/" target="_blank" style="color: inherit;"><i data-lucide="linkedin" style="width: 18px; height: 18px;"></i></a>
+                            <a href="#contact" style="color: inherit;"><i data-lucide="mail" style="width: 18px; height: 18px;"></i></a>
                         </div>
                     </div>
                 </div>
 
                 <div class="founder-content">
-                    <div class="badge-premium">
-                        <i data-lucide="activity" class="icon-sparkle"></i>
-                        <span>The Playmaker's Creed</span>
+                    <div class="badge-premium animate-fade-in">
+                        <i data-lucide="shield" class="icon-sparkle"></i>
+                        <span>Chairman's Corner</span>
                     </div>
                     <h2 class="section-title">Message from <br><span class="gradient-text">Our Founder</span></h2>
-                    <p class="section-desc-light">
-                        The discipline of elite sport. The precision of strategic growth. Yahya Al Ghassani translates the visionary orchestration of a professional playmaker directly into B2B corporate expansion across the GCC.
+                    <p class="section-desc-light" style="font-size: 1.05rem; line-height: 1.75; margin-bottom: 2rem; color: var(--text-secondary);">
+                        Yahya Al Ghassani provides strategic backing, regulatory orchestration, and high-valency relationships to global firms establishing their footprints in the GCC. By aligning corporate growth directly with regional economic visions, AGE bridges access into high-barrier corporate nodes.
                     </p>
                     
                     <!-- Dynamic Quote Box -->
-                    <div class="founder-quote-box glass-card-nested animate-glow">
+                    <div class="founder-quote-box glass-card-nested animate-glow" style="margin-bottom: 0;">
                         <i data-lucide="quote" class="quote-icon text-cyan"></i>
-                        <p class="founder-quote-text" id="founder-quote">
-                            "Individual talent wins games, but teamwork, strategic backing, and zero operational friction win championships. Al Ghassani Enterprises acts as your midfield engine room, distributing perfect assists so you can score."
+                        <p class="founder-quote-text" id="founder-quote" style="font-style: italic; font-size: 1.1rem; line-height: 1.7; color: var(--text-primary);">
+                            "In a landscape of rapid transformation, execution is the only true currency. We do not offer generic slides; we build warm, direct paths to key decision-makers and regional sponsors, aligning your growth directly with the GCC's long-term economic visions."
                         </p>
-                        <span class="founder-signature">— Yahya Al Ghassani, Founder & Chairman</span>
-                    </div>
-
-                    <!-- Tactical Playbook Interactive Toggles -->
-                    <div class="tactical-toggles">
-                        <button class="tactic-btn active" id="btn-tactic-playmaker" onclick="switchFounderTactic('playmaker')">
-                            <i data-lucide="git-merge"></i> <span>Playmaker Orchestration</span>
-                        </button>
-                        <button class="tactic-btn" id="btn-tactic-resilience" onclick="switchFounderTactic('resilience')">
-                            <i data-lucide="shield"></i> <span>Defensive Resilience</span>
-                        </button>
-                        <button class="tactic-btn" id="btn-tactic-acceleration" onclick="switchFounderTactic('acceleration')">
-                            <i data-lucide="trending-up"></i> <span>Forward Acceleration</span>
-                        </button>
+                        <span class="founder-signature" style="display: block; margin-top: 1rem; color: var(--color-gold); font-weight: 600;">— Yahya Al Ghassani, Founder & Chairman</span>
                     </div>
                 </div>
             </div>
@@ -633,7 +613,7 @@
                                 <textarea id="contact-message" rows="4" placeholder="Briefly describe your expansion bottlenecks (e.g. GCC market access, regulatory hurdles, executive sponsorships) and how you wish to collaborate." class="custom-textarea"></textarea>
                             </div>
 
-                            <button type="submit" class="btn btn-primary btn-block btn-glow">Submit Advisory Request</button>
+                            <button type="submit" class="btn btn-primary btn-block">Request Strategic Session</button>
                         </form>
                     </div>
                 </div>
@@ -645,59 +625,68 @@
     <footer class="footer">
         <div class="container footer-grid">
             <div class="footer-brand">
-                <a href="#" class="logo">
-                    <img src="logo.png" alt="AGE Logo" class="logo-img small-logo">
+                <a href="index.html" class="logo" style="margin-bottom: 1.5rem; display: flex;">
+                    <svg class="logo-svg" viewBox="0 0 70 40" width="70" height="40" style="display: block; width: 70px; height: 40px; margin-right: 0.8rem;">
+                        <path d="M15,32 L22,8 L29,32 M18,24 L26,24" fill="none" stroke="var(--color-gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M48,20 Q48,9 39,9 Q32,9 32,20 Q32,31 39,31 Q44,31 46,27 L46,22 L40,22" fill="none" stroke="var(--color-gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M62,9 L52,9 L52,31 L62,31 M52,20 L60,20" fill="none" stroke="var(--color-gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
                     <div class="logo-text-group">
                         <span class="logo-title">AGE</span>
                         <span class="logo-subtitle">Al Ghassani Enterprises</span>
                     </div>
                 </a>
-                <p class="footer-bio">An elite boutique strategic growth firm assisting organizations in navigating GCC markets and facilitating strategic relationships.</p>
-                <p class="footer-contact-info" style="font-size: 0.85rem; color: var(--text-secondary); display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.8rem; margin-top: -0.2rem;">
-                    <i data-lucide="mail" style="width: 14px; height: 14px; color: var(--color-gold);"></i>
-                    <a href="mailto:info@alghassani.com" style="color: inherit;">info@alghassani.com</a>
+                <p class="footer-bio" style="font-size: 0.85rem; line-height: 1.6; color: var(--text-secondary); margin-bottom: 1rem;">
+                    Opening Doors. Creating Opportunity. Accelerating Growth.
                 </p>
-                <div class="social-links">
-                    <a href="https://www.linkedin.com/company/135205377" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
-                    <a href="#" aria-label="Twitter"><i data-lucide="twitter"></i></a>
-                    <a href="#" aria-label="GitHub"><i data-lucide="github"></i></a>
-                </div>
+                <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5;">
+                    Elite strategic growth firm advising global corporations, sovereign entities, and institutional boards across the GCC.
+                </p>
+            </div>
+
+            <div class="footer-links-group">
+                <h5>Locations</h5>
+                <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.8rem;">
+                    <li style="font-size: 0.85rem; color: var(--text-secondary); display: flex; align-items: center; gap: 0.5rem;">
+                        <i data-lucide="map-pin" style="width: 14px; height: 14px; color: var(--color-gold); stroke-width: 1.5px;"></i> Dubai, UAE (DIFC)
+                    </li>
+                    <li style="font-size: 0.85rem; color: var(--text-secondary); display: flex; align-items: center; gap: 0.5rem;">
+                        <i data-lucide="map-pin" style="width: 14px; height: 14px; color: var(--color-gold); stroke-width: 1.5px;"></i> Abu Dhabi, UAE (ADGM)
+                    </li>
+                    <li style="font-size: 0.85rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.5rem;">
+                        <i data-lucide="map-pin" style="width: 14px; height: 14px; color: var(--text-muted); stroke-width: 1.5px;"></i> Riyadh, KSA (Future)
+                    </li>
+                </ul>
             </div>
 
             <div class="footer-links-group">
                 <h5>Solutions</h5>
                 <ul>
-                    <li><a href="#solutions">AGE Launch™</a></li>
-                    <li><a href="#solutions">AGE Connect™</a></li>
-                    <li><a href="#solutions">AGE Scale™</a></li>
-                    <li><a href="#solutions">AGE AI™</a></li>
-                    <li><a href="#solutions">AGE Capital™</a></li>
+                    <li><a href="#solutions">AGE Launch™ (Market Entry)</a></li>
+                    <li><a href="#solutions">AGE Connect™ (Introductions)</a></li>
+                    <li><a href="#solutions">AGE Scale™ (Acceleration)</a></li>
+                    <li><a href="#solutions">AGE AI™ (Transformation)</a></li>
+                    <li><a href="#solutions">AGE Capital™ (JV Structuring)</a></li>
+                    <li><a href="#solutions">AGE Trade™ (Logistics)</a></li>
+                    <li><a href="#solutions">AGE Sports™ (Soccer Academy)</a></li>
+                    <li><a href="#solutions">AGE Hospitality™ (Food & Beverage)</a></li>
                 </ul>
             </div>
 
             <div class="footer-links-group">
-                <h5>Sectors</h5>
+                <h5>Engagement & Legal</h5>
                 <ul>
-                    <li><a href="#industries">Technology</a></li>
-                    <li><a href="#industries">Government & Healthcare</a></li>
-                    <li><a href="#industries">Sports & Energy</a></li>
-                    <li><a href="#industries">Family Businesses</a></li>
-                    <li><a href="#industries">Financial Services</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-links-group">
-                <h5>Corporate</h5>
-                <ul>
-                    <li><a href="#portal">Client Portal Login</a></li>
-                    <li><a href="profile.html">Corporate Profile PDF</a></li>
-                    <li><a href="presentation.html">Executive Presentation</a></li>
-                    <li><a href="#contact">Strategic Evaluation</a></li>
+                    <li><a href="portal.html">Client Workspace</a></li>
+                    <li><a href="presentation.html">Slide Deck</a></li>
+                    <li><a href="profile.html">Corporate Profile</a></li>
+                    <li><a href="#contact">Strategic Assessment</a></li>
+                    <li><a href="https://www.linkedin.com/company/135205377" target="_blank">LinkedIn Profile</a></li>
+                    <li><a href="mailto:info@alghassani.com">Secure Email</a></li>
                 </ul>
             </div>
         </div>
 
-        <div class="footer-bottom text-center">
+        <div class="footer-bottom text-center" style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.03);">
             <p>&copy; 2026 Al Ghassani Enterprises Group Ltd. All rights reserved. Registered under DIFC Holdings Regulations, Dubai, United Arab Emirates. Advisory services aligned with DIFC, ADGM and UAE corporate regulatory guidelines.</p>
         </div>
     </footer>

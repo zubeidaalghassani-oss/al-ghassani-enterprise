@@ -14,32 +14,32 @@
     --border-glow: rgba(201, 162, 39, 0.35);
     
     --text-primary: #ffffff;
-    --text-secondary: #d1d5db;
+    --text-secondary: #D5D8DF;
     --text-muted: #8c9ba5;
     
-    /* Elegant ACCENTS (Rich Gold & White) */
-    --color-cyan-raw: 47, 67%, 47%;
-    --color-cyan: #C9A227;
-    --color-cyan-glow: rgba(201, 162, 39, 0.15);
+    /* Elegant ACCENTS (Refined Champagne Gold & White) */
+    --color-cyan-raw: 40, 55%, 55%;
+    --color-cyan: #D4B15A;
+    --color-cyan-glow: rgba(212, 177, 90, 0.15);
     
     --color-magenta-raw: 0, 0%, 100%;
     --color-magenta: #ffffff;
     --color-magenta-glow: rgba(255, 255, 255, 0.15);
 
-    --color-gold-raw: 47, 67%, 47%;
-    --color-gold: #C9A227;
-    --color-gold-glow: rgba(201, 162, 39, 0.2);
+    --color-gold-raw: 40, 55%, 55%;
+    --color-gold: #C8A04D;
+    --color-gold-glow: rgba(200, 160, 77, 0.2);
 
     --color-green-raw: 142, 70%, 45%;
     --color-green: #10B981;
     --color-green-glow: rgba(16, 185, 129, 0.15);
 
     /* Curated Classy Gradients */
-    --gradient-primary: linear-gradient(135deg, #DFBA73 0%, #C9A227 100%);
+    --gradient-primary: linear-gradient(135deg, #E1C97A 0%, #C8A04D 100%);
     --gradient-accent: linear-gradient(135deg, #2E3138 0%, #0B1F3A 100%);
-    --gradient-gold: linear-gradient(135deg, #EAD2AC 0%, #C9A227 100%);
+    --gradient-gold: linear-gradient(135deg, #E1C97A 0%, #C8A04D 100%);
     --gradient-dark: linear-gradient(180deg, #0B1F3A 0%, #051020 100%);
-    --gradient-text: linear-gradient(90deg, #FFFFFF 0%, #DFBA73 50%, #C9A227 100%);
+    --gradient-text: linear-gradient(90deg, #FFFFFF 0%, #E1C97A 50%, #C8A04D 100%);
 
     /* Shadows & Glows (Subtle and classy, not hot neon) */
     --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.3);
@@ -266,12 +266,13 @@ a {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0.75rem 1.75rem;
+    height: 56px;
+    padding: 0 2.2rem;
     font-family: var(--font-heading);
     font-weight: 500;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     border-radius: var(--radius-sm);
-    transition: all var(--transition-fast);
+    transition: all var(--transition-normal);
     cursor: pointer;
     border: none;
 }
@@ -279,12 +280,12 @@ a {
 .btn-primary {
     background: var(--gradient-primary);
     color: #0c0d12;
-    box-shadow: 0 4px 15px rgba(223, 186, 115, 0.2);
+    box-shadow: none !important;
 }
 
 .btn-primary:hover {
     transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(223, 186, 115, 0.35);
+    box-shadow: none !important;
 }
 
 .btn-glow:hover {
@@ -544,6 +545,7 @@ a {
     align-items: center;
     position: relative;
     z-index: 1;
+    background: radial-gradient(circle at center, rgba(201, 162, 39, 0.08), transparent 70%);
 }
 
 .hero-centered-container {
@@ -771,7 +773,13 @@ a {
 }
 
 .feature-card {
-    padding: 2.5rem;
+    padding: 3rem 2.5rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important;
+    transition: all var(--transition-normal);
+}
+.feature-card:hover {
+    box-shadow: 0 15px 40px rgba(201, 162, 39, 0.1) !important;
+    transform: translateY(-6px);
 }
 
 .feature-icon-wrapper {
@@ -1176,6 +1184,12 @@ a {
     padding: 2.2rem;
     display: flex;
     flex-direction: column;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.25) !important;
+    transition: all var(--transition-normal);
+}
+.portfolio-card:hover {
+    box-shadow: 0 25px 50px rgba(201, 162, 39, 0.15) !important;
+    transform: translateY(-4px);
 }
 
 .card-accent {
@@ -2262,9 +2276,13 @@ a {
     font-family: var(--font-body);
     font-size: 0.85rem;
     outline: none;
+    transition: border-color 220ms ease, box-shadow 220ms ease;
 }
 
-.custom-input:focus { border-color: var(--color-cyan); }
+.custom-input:focus {
+    border-color: var(--color-gold) !important;
+    box-shadow: 0 0 10px rgba(200, 160, 77, 0.15) !important;
+}
 
 .custom-select-small {
     background: var(--bg-surface-nested);
@@ -2276,9 +2294,13 @@ a {
     font-size: 0.85rem;
     outline: none;
     cursor: pointer;
+    transition: border-color 220ms ease, box-shadow 220ms ease;
 }
 
-.custom-select-small:focus { border-color: var(--color-cyan); }
+.custom-select-small:focus {
+    border-color: var(--color-gold) !important;
+    box-shadow: 0 0 10px rgba(200, 160, 77, 0.15) !important;
+}
 
 .btn-magenta {
     background: rgba(209, 98, 255, 0.08);
@@ -2492,6 +2514,20 @@ a {
 /* 12. INQUIRY FORM (CONTACT) */
 .contact-section {
     padding: 100px 0;
+    /* Force Dark Theme variables on the contact block for high-trust psychology */
+    --bg-base: #0B1F3A;
+    --bg-surface: rgba(46, 49, 56, 0.45);
+    --bg-surface-nested: rgba(30, 33, 40, 0.5);
+    --border-color: rgba(201, 162, 39, 0.15);
+    --border-glow: rgba(201, 162, 39, 0.35);
+    --text-primary: #ffffff;
+    --text-secondary: #D5D8DF;
+    --text-muted: #8c9ba5;
+    --color-gold: #C8A04D;
+    --color-cyan: #D4B15A;
+    
+    background-color: var(--bg-base) !important;
+    color: var(--text-primary) !important;
 }
 
 .contact-info {
@@ -2568,9 +2604,13 @@ a {
     font-size: 0.85rem;
     outline: none;
     resize: none;
+    transition: border-color 220ms ease, box-shadow 220ms ease;
 }
 
-.custom-textarea:focus { border-color: var(--color-cyan); }
+.custom-textarea:focus {
+    border-color: var(--color-gold) !important;
+    box-shadow: 0 0 10px rgba(200, 160, 77, 0.15) !important;
+}
 
 /* 13. FOOTER */
 .footer {
@@ -3845,5 +3885,17 @@ html.simulated-mobile-mode .alliance-section {
     .hero-section {
         padding: 220px 0 140px 0 !important;
     }
+}
+
+/* 6. Standardized Icon Properties */
+.feature-icon,
+.metric-icon,
+.industry-card i,
+.v-header i,
+.highlight-item i,
+.playmaker-node i {
+    stroke-width: 1.5px !important;
+    width: 24px !important;
+    height: 24px !important;
 }
 
