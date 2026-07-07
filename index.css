@@ -7,11 +7,11 @@
 /* 1. DESIGN SYSTEM VARIABLES */
 :root {
     /* Color Palette - Premium Executive Midnight Navy & Charcoal */
-    --bg-base: #0B1F3A;
-    --bg-surface: rgba(46, 49, 56, 0.45);
-    --bg-surface-nested: rgba(30, 33, 40, 0.5);
-    --border-color: rgba(201, 162, 39, 0.15);
-    --border-glow: rgba(201, 162, 39, 0.35);
+    --bg-base: #111d2e;
+    --bg-surface: rgba(255, 255, 255, 0.04);
+    --bg-surface-nested: rgba(255, 255, 255, 0.06);
+    --border-color: rgba(255, 255, 255, 0.08);
+    --border-glow: rgba(200, 160, 77, 0.25);
     
     --text-primary: #ffffff;
     --text-secondary: #D5D8DF;
@@ -36,9 +36,9 @@
 
     /* Curated Classy Gradients */
     --gradient-primary: linear-gradient(135deg, #E1C97A 0%, #C8A04D 100%);
-    --gradient-accent: linear-gradient(135deg, #2E3138 0%, #0B1F3A 100%);
+    --gradient-accent: linear-gradient(135deg, #2E3138 0%, #111d2e 100%);
     --gradient-gold: linear-gradient(135deg, #E1C97A 0%, #C8A04D 100%);
-    --gradient-dark: linear-gradient(180deg, #0B1F3A 0%, #051020 100%);
+    --gradient-dark: linear-gradient(180deg, #142338 0%, #0c1521 100%);
     --gradient-text: linear-gradient(90deg, #FFFFFF 0%, #E1C97A 50%, #C8A04D 100%);
 
     /* Shadows & Glows (Subtle and classy, not hot neon) */
@@ -373,9 +373,11 @@ a {
 }
 
 .logo-img {
-    width: 42px;
-    height: 42px;
+    width: 52px;
+    height: 52px;
     object-fit: contain;
+    filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.15)) contrast(1.15);
+    transition: all var(--transition-normal);
 }
 
 .logo-svg {
