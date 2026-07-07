@@ -29,6 +29,23 @@
             padding: 0;
         }
 
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #051020;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-gold);
+            border-radius: 10px;
+            border: 2.5px solid #051020;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #EAD2AC;
+        }
+
         body {
             font-family: var(--font-body);
             background-color: #051020; /* Dark background to frame the white letterhead sheet */

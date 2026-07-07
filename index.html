@@ -721,10 +721,24 @@
                         <h3 class="result-title">Executive Evaluation Output</h3>
                         <span class="result-tag tag-cyan">AGE Growth Modeler Matrix</span>
 
-                        <!-- Giant Maturity Score -->
+                        <!-- Giant Maturity Score with SVG Radial Progress Gauge -->
                         <div class="grand-result-container">
-                            <span class="grand-lbl">Growth Maturity Score</span>
-                            <h4 class="grand-val gradient-text" id="res-maturity-score">50%</h4>
+                            <div class="score-radial-wrapper">
+                                <svg class="score-radial-svg" viewBox="0 0 100 100">
+                                    <defs>
+                                        <linearGradient id="score-radial-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" stop-color="#DFBA73" />
+                                            <stop offset="100%" stop-color="#C9A227" />
+                                        </linearGradient>
+                                    </defs>
+                                    <circle class="score-radial-bg" cx="50" cy="50" r="45"></circle>
+                                    <circle class="score-radial-bar" id="score-radial-bar" cx="50" cy="50" r="45"></circle>
+                                </svg>
+                                <div class="score-radial-content">
+                                    <span class="grand-lbl">Growth Maturity Score</span>
+                                    <h4 class="grand-val gradient-text" id="res-maturity-score">50%</h4>
+                                </div>
+                            </div>
                             <p class="grand-increase">Investment Readiness: <span id="res-investment-level" class="text-gold">Moderate</span></p>
                         </div>
 
@@ -989,6 +1003,33 @@
                             <p class="tab-introduction">
                                 Tracking active commercial pathways, joint ventures, and municipal procurement agreements matching client products to GCC buyers.
                             </p>
+                            
+                            <!-- Sleek deal flow velocity chart -->
+                            <div class="db-chart-container glass-card-nested" style="margin-bottom: 2rem; padding: 1.5rem; border: 1px solid rgba(255, 255, 255, 0.05); border-radius: var(--radius-md);">
+                                <div class="chart-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                                    <h5 style="margin: 0; font-family: var(--font-heading); font-size: 1.1rem; color: var(--text-primary);">Deal Inflow & Synergy Velocity</h5>
+                                    <span style="font-size: 0.75rem; color: var(--color-gold); font-weight: 600; letter-spacing: 0.08em;">ACTIVE INTRODUCTIONS</span>
+                                </div>
+                                <div class="chart-wrapper" style="position: relative; height: 120px; width: 100%;">
+                                    <!-- Embedded SVG Area Chart -->
+                                    <svg viewBox="0 0 500 120" preserveAspectRatio="none" style="width: 100%; height: 100%;">
+                                        <defs>
+                                            <linearGradient id="chart-glow-grad" x1="0" y1="0" x2="0" y2="1">
+                                                <stop offset="0%" stop-color="var(--color-gold)" stop-opacity="0.25"/>
+                                                <stop offset="100%" stop-color="var(--color-gold)" stop-opacity="0.0"/>
+                                            </linearGradient>
+                                        </defs>
+                                        <!-- Trend Area -->
+                                        <path d="M 0 120 Q 50 80 100 95 T 200 40 T 300 65 T 400 25 T 500 10 L 500 120 Z" fill="url(#chart-glow-grad)"></path>
+                                        <!-- Trend Line -->
+                                        <path d="M 0 120 Q 50 80 100 95 T 200 40 T 300 65 T 400 25 T 500 10" fill="none" stroke="var(--color-gold)" stroke-width="2" stroke-linecap="round"></path>
+                                        <!-- Glowing Data Dots -->
+                                        <circle cx="200" cy="40" r="4" fill="var(--color-magenta)" filter="drop-shadow(0 0 3px var(--color-magenta))"></circle>
+                                        <circle cx="400" cy="25" r="4" fill="var(--color-cyan)" filter="drop-shadow(0 0 3px var(--color-cyan))"></circle>
+                                        <circle cx="500" cy="10" r="4" fill="var(--color-gold)" filter="drop-shadow(0 0 3px var(--color-gold))"></circle>
+                                    </svg>
+                                </div>
+                            </div>
                             
                             <div class="pipeline-container glass-card-nested">
                                 <div class="pipeline-header-row">

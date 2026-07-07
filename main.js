@@ -210,6 +210,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const maturityPct = Math.round((totalScore / 80) * 100);
         document.getElementById('res-maturity-score').innerText = `${maturityPct}%`;
 
+        // Update SVG Radial Progress Bar
+        const radialBar = document.getElementById('score-radial-bar');
+        if (radialBar) {
+            const circumference = 282.7;
+            const offset = circumference - (circumference * (maturityPct / 100));
+            radialBar.style.strokeDashoffset = offset;
+        }
+
         // 2. Investment Readiness (Capital + Leadership)
         const capitalLeadership = C + L;
         const resInvestmentLevelNode = document.getElementById('res-investment-level');
