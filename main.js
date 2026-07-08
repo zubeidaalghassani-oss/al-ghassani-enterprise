@@ -1685,6 +1685,20 @@ We would like to analyze how Al Ghassani Enterprises can support navigating our 
         let centerPulseRadius = 0;
         let introStartTime = null;
 
+        // Mobile Wording Adjuster helper to ensure text fits inside card container boundaries
+        const getShortLabel = (label, isMobileWidth) => {
+            if (!isMobileWidth) return label;
+            const shortMap = {
+                "Family Office Advisory": "Family Offices",
+                "Regulatory Support": "Regulatory Hub",
+                "AI Transformation": "AI Advisory",
+                "Sports & Event Sponsorships": "Sports/Events",
+                "Cross-Border GTM": "Market GTM",
+                "Institutional Capital": "Capital Node"
+            };
+            return shortMap[label] || label;
+        };
+
         canvas.addEventListener('mousemove', (e) => {
             const rect = canvas.getBoundingClientRect();
             const mx = e.clientX - rect.left;
@@ -1692,11 +1706,14 @@ We would like to analyze how Al Ghassani Enterprises can support navigating our 
             const cx = width / 2;
             const cy = height / 2;
             
+            // Dynamic node distance (shrunk on mobile to prevent clipping)
+            const dynamicDist = Math.min(110, width * 0.23);
+            
             let foundIdx = -1;
             outerNodes.forEach((node, idx) => {
                 const distOffset = Math.sin(node.pulsePhase) * 2;
-                const nx = cx + Math.cos(node.angle) * (node.dist + distOffset);
-                const ny = cy + Math.sin(node.angle) * (node.dist + distOffset);
+                const nx = cx + Math.cos(node.angle) * (dynamicDist + distOffset);
+                const ny = cy + Math.sin(node.angle) * (dynamicDist + distOffset);
                 const distance = Math.hypot(mx - nx, my - ny);
                 if (distance < 20) {
                     foundIdx = idx;
@@ -1747,6 +1764,10 @@ We would like to analyze how Al Ghassani Enterprises can support navigating our 
             const cx = width / 2;
             const cy = height / 2;
 
+            // Wording viewport check
+            const isMobileWidth = width < 450;
+            const dynamicDist = Math.min(110, width * 0.23); // Dynamic scaling for margin boundaries
+
             // Intro sequence multipliers
             let centerScale = 1;
             let lineDistMultiplier = 1;
@@ -1796,8 +1817,8 @@ We would like to analyze how Al Ghassani Enterprises can support navigating our 
                 const isFilteredOut = isCenterHovered ? false : (activeNetworkLabels.length > 0 && !activeNetworkLabels.includes(node.label));
                 
                 const distOffset = Math.sin(node.pulsePhase) * 2;
-                const nx = cx + Math.cos(node.angle) * (node.dist * lineDistMultiplier + distOffset);
-                const ny = cy + Math.sin(node.angle) * (node.dist * lineDistMultiplier + distOffset);
+                const nx = cx + Math.cos(node.angle) * (dynamicDist * lineDistMultiplier + distOffset);
+                const ny = cy + Math.sin(node.angle) * (dynamicDist * lineDistMultiplier + distOffset);
 
                 // Draw connecting line
                 ctx.beginPath();
@@ -1847,8 +1868,8 @@ We would like to analyze how Al Ghassani Enterprises can support navigating our 
                 ctx.globalAlpha = alpha;
 
                 const distOffset = Math.sin(node.pulsePhase) * 2;
-                const nx = cx + Math.cos(node.angle) * (node.dist * lineDistMultiplier + distOffset);
-                const ny = cy + Math.sin(node.angle) * (node.dist * lineDistMultiplier + distOffset);
+                const nx = cx + Math.cos(node.angle) * (dynamicDist * lineDistMultiplier + distOffset);
+                const ny = cy + Math.sin(node.angle) * (dynamicDist * lineDistMultiplier + distOffset);
 
                 // Outer node glow
                 const glowSize = node.size + (hoveredNodeIndex === idx || isCenterHovered ? 10 : 4) + Math.sin(node.pulsePhase) * 1.5;
@@ -1865,12 +1886,16 @@ We would like to analyze how Al Ghassani Enterprises can support navigating our 
 
                 // Outer node text (only reveal if idx < labelRevealCount)
                 if (idx < labelRevealCount) {
-                    ctx.font = (hoveredNodeIndex === idx) ? "600 11.5px Inter" : "500 11px Inter";
+                    ctx.font = (hoveredNodeIndex === idx) 
+                        ? (isMobileWidth ? "600 10px Inter" : "600 11.5px Inter") 
+                        : (isMobileWidth ? "500 9.5px Inter" : "500 11px Inter");
                     ctx.fillStyle = (hoveredNodeIndex === idx || isCenterHovered) ? "#ffffff" : "#D5D8DF";
                     ctx.textAlign = nx > cx ? "left" : "right";
                     ctx.textBaseline = "middle";
-                    const offset = nx > cx ? 12 : -12;
-                    ctx.fillText(node.label, nx + offset, ny);
+                    const offset = nx > cx ? 10 : -10;
+                    
+                    const labelText = getShortLabel(node.label, isMobileWidth);
+                    ctx.fillText(labelText, nx + offset, ny);
                 }
                 ctx.restore();
             });
