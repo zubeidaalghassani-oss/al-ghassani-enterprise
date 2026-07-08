@@ -3507,6 +3507,15 @@ html.simulated-mobile-mode .sliders-grid {
     grid-template-columns: 1fr !important;
 }
 
+html.simulated-mobile-mode .pathway-grid {
+    flex-direction: column !important;
+    gap: 2.5rem !important;
+}
+
+html.simulated-mobile-mode .pathway-arrow {
+    transform: rotate(90deg) !important;
+}
+
 html.simulated-mobile-mode .nav-menu {
     position: fixed !important;
     top: 80px !important;
@@ -3837,13 +3846,13 @@ html.simulated-mobile-mode .metric-grid-card {
     padding: 1.8rem 1.5rem !important;
 }
 
-/* 3. Hide the logo subtitle on mobile/simulated mobile to prevent header item collision */
-@media (max-width: 480px) {
-    .logo-subtitle {
+/* 3. Hide the logo text group on mobile/simulated mobile to prevent header item collision and duplication */
+@media (max-width: 768px) {
+    .logo-text-group {
         display: none !important;
     }
 }
-html.simulated-mobile-mode .logo-subtitle {
+html.simulated-mobile-mode .logo-text-group {
     display: none !important;
 }
 
