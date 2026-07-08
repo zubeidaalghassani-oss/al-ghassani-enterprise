@@ -3066,6 +3066,63 @@ html.simulated-mobile-mode .gcc-network-grid {
     gap: 2.5rem;
 }
 
+/* Simulated Mobile Stack Overrides for Forms and Portal Containers */
+html.simulated-mobile-mode .form-row,
+html.simulated-mobile-mode .input-row,
+html.simulated-mobile-mode .assessment-container {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+}
+
+/* Light Mode Overrides for Outer Simulated Mobile Body Background */
+[data-theme="light"].simulated-mobile-mode body,
+[data-theme="light"] html.simulated-mobile-mode body {
+    background: #fafafa !important;
+}
+
+/* Force Light Mode Overrides for Printable and Interactive Sections */
+[data-theme="light"] .founder-section {
+    background: var(--gradient-dark) !important;
+}
+
+[data-theme="light"] .founder-quote-box {
+    background: var(--bg-surface-nested) !important;
+    border-color: var(--border-color) !important;
+}
+
+/* Secure Workspace Portal Light Mode Overrides */
+[data-theme="light"] .portal-page,
+[data-theme="light"] body.portal-page {
+    background-color: var(--bg-base) !important;
+    color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .portal-header {
+    background: rgba(248, 250, 252, 0.85) !important;
+    border-bottom: 1px solid var(--border-color) !important;
+}
+
+[data-theme="light"] .dashboard-sidebar {
+    background: var(--bg-surface-nested) !important;
+    border-right: 1px solid var(--border-color) !important;
+}
+
+[data-theme="light"] .dashboard-content {
+    background: transparent !important;
+}
+
+/* High-Contrast Inputs for Forced Dark Block (Contact Section) */
+.contact-section .custom-input,
+.contact-section .custom-textarea {
+    color: #ffffff !important;
+}
+
+.contact-section .custom-input::placeholder,
+.contact-section .custom-textarea::placeholder {
+    color: rgba(255, 255, 255, 0.4) !important;
+}
+
+
 
 /* Integration Pathway Styling */
 .integration-pathway {
