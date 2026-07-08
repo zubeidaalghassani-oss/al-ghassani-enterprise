@@ -27,7 +27,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- CSS Link -->
-    <link rel="stylesheet" href="index.css?v=1.0.4">
+    <link rel="stylesheet" href="index.css?v=1.0.5">
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
@@ -99,10 +99,10 @@
                         <i data-lucide="sparkles" class="icon-sparkle"></i>
                         <span id="hero-badge-region">Elite GCC Growth Advisory</span>
                     </div>
-                    <h1 class="hero-title animate-slide-up">
-                        Opening Doors.<br>
-                        Creating Opportunity.<br>
-                        <span class="gradient-text">Accelerating Growth.</span>
+                    <h1 class="hero-title">
+                        <span class="hero-line animate-line-1">Opening Doors.</span>
+                        <span class="hero-line animate-line-2">Creating Opportunity.</span>
+                        <span class="hero-line animate-line-3 gradient-text">Accelerating Growth.</span>
                     </h1>
                     <p class="hero-subtitle animate-slide-up-delayed" style="font-weight: 500; font-size: 1.25rem; line-height: 1.6; margin: 0 auto 2.5rem; max-width: 750px; color: var(--text-secondary);">
                         We help ambitious companies enter, grow and succeed across the GCC through strategic partnerships, executive advisory and market access.
@@ -184,32 +184,83 @@
                     </p>
                 </div>
 
-                <!-- Visual Integration Pathway -->
-                <div class="integration-pathway">
-                    <h3 class="pathway-title">Your Growth Journey: The Strategic Pathway</h3>
-                    <div class="pathway-grid">
-                        <div class="pathway-step glass-card">
-                            <div class="step-num">01</div>
-                            <h5>Strategic Evaluation</h5>
-                            <p>We assess your growth directives, evaluate market readiness, and identify critical blockers.</p>
+                <!-- Pathway has been relocated to its own section below Solutions -->
+            </div>
+        </section>
+
+        <!-- GCC NETWORK MAP & ANIMATED RELATIONSHIP ECOSYSTEM -->
+        <section class="gcc-network-section reveal-on-scroll" id="gcc-network" style="border-top: 1px solid rgba(255, 255, 255, 0.03); padding: 8rem 0; position: relative;">
+            <div class="container">
+                <div class="section-header text-center" style="margin-bottom: 4rem;">
+                    <span class="section-subtitle">Sovereign Footprint & Ecosystem</span>
+                    <h2 class="section-title">The GCC Relationship Network</h2>
+                    <p class="section-desc">
+                        Integrating institutional capital, government nodes, and corporate ecosystems across the Gulf's key financial hubs.
+                    </p>
+                </div>
+
+                <div class="gcc-network-grid">
+                    <!-- Left: Interactive GCC Map -->
+                    <div class="map-panel-card glass-card">
+                        <h4 class="panel-title"><i data-lucide="map" class="text-cyan" style="vertical-align: middle; margin-right: 0.5rem; width: 18px; height: 18px;"></i> Geographic Footprint</h4>
+                        <div class="map-container" style="position: relative; margin-top: 1.5rem;">
+                            <svg viewBox="0 0 500 400" class="gcc-svg-map">
+                                <line x1="50" y1="50" x2="450" y2="50" stroke="rgba(255,255,255,0.02)" stroke-width="1" />
+                                <line x1="50" y1="150" x2="450" y2="150" stroke="rgba(255,255,255,0.02)" stroke-width="1" />
+                                <line x1="50" y1="250" x2="450" y2="250" stroke="rgba(255,255,255,0.02)" stroke-width="1" />
+                                <line x1="50" y1="350" x2="450" y2="350" stroke="rgba(255,255,255,0.02)" stroke-width="1" />
+                                <line x1="100" y1="50" x2="100" y2="350" stroke="rgba(255,255,255,0.02)" stroke-width="1" />
+                                <line x1="200" y1="50" x2="200" y2="350" stroke="rgba(255,255,255,0.02)" stroke-width="1" />
+                                <line x1="300" y1="50" x2="300" y2="350" stroke="rgba(255,255,255,0.02)" stroke-width="1" />
+                                <line x1="400" y1="50" x2="400" y2="350" stroke="rgba(255,255,255,0.02)" stroke-width="1" />
+
+                                <path d="M 120 180 L 150 140 L 220 120 L 260 160 L 290 150 L 320 190 L 370 210 L 400 240 L 390 280 L 320 310 L 280 290 L 220 310 L 160 260 Z" 
+                                      fill="none" stroke="rgba(200, 160, 77, 0.15)" stroke-width="1.5" stroke-dasharray="4,4" />
+                                
+                                <path d="M 320 190 L 370 210 L 380 230 L 350 240 L 320 220 Z" 
+                                      fill="rgba(200, 160, 77, 0.05)" stroke="var(--color-gold)" stroke-width="1.5" stroke-linecap="round" />
+
+                                <line x1="220" y1="180" x2="330" y2="210" stroke="rgba(200, 160, 77, 0.2)" stroke-width="1" stroke-dasharray="2,2" />
+                                <line x1="220" y1="180" x2="350" y2="200" stroke="rgba(200, 160, 77, 0.2)" stroke-width="1" stroke-dasharray="2,2" />
+                                <line x1="330" y1="210" x2="350" y2="200" stroke="var(--color-gold)" stroke-width="1.5" />
+                                <line x1="290" y1="170" x2="350" y2="200" stroke="rgba(200, 160, 77, 0.2)" stroke-width="1" stroke-dasharray="2,2" />
+                                <line x1="350" y1="200" x2="410" y2="250" stroke="rgba(200, 160, 77, 0.2)" stroke-width="1" stroke-dasharray="2,2" />
+
+                                <g class="map-node" data-node="riyadh" transform="translate(220,180)" style="cursor: pointer;">
+                                    <circle r="12" fill="rgba(200, 160, 77, 0.15)" class="node-pulse" />
+                                    <circle r="5" fill="var(--color-gold)" />
+                                </g>
+                                <g class="map-node" data-node="doha" transform="translate(290,170)" style="cursor: pointer;">
+                                    <circle r="10" fill="rgba(200, 160, 77, 0.15)" class="node-pulse" />
+                                    <circle r="4.5" fill="var(--color-gold)" />
+                                </g>
+                                <g class="map-node" data-node="abudhabi" transform="translate(330,210)" style="cursor: pointer;">
+                                    <circle r="12" fill="rgba(200, 160, 77, 0.15)" class="node-pulse" />
+                                    <circle r="5" fill="var(--color-gold)" />
+                                </g>
+                                <g class="map-node active" data-node="dubai" transform="translate(350,200)" style="cursor: pointer;">
+                                    <circle r="16" fill="rgba(200, 160, 77, 0.25)" class="node-pulse" />
+                                    <circle r="7" fill="var(--color-gold)" />
+                                </g>
+                                <g class="map-node" data-node="muscat" transform="translate(410,250)" style="cursor: pointer;">
+                                    <circle r="10" fill="rgba(200, 160, 77, 0.15)" class="node-pulse" />
+                                    <circle r="4.5" fill="var(--color-gold)" />
+                                </g>
+                            </svg>
+                            
+                            <div id="map-node-details" class="map-details-overlay glass-card-nested" style="position: absolute; bottom: 15px; left: 15px; right: 15px; padding: 1.2rem; background: rgba(14, 21, 37, 0.95); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: var(--radius-sm); pointer-events: none; transition: opacity var(--transition-normal); z-index: 10;">
+                                <h4 id="map-details-title" style="font-family: var(--font-heading); margin-bottom: 0.4rem; color: var(--text-primary); font-size: 1.1rem; font-weight: 700;">Dubai, UAE (Corporate Hub)</h4>
+                                <p id="map-details-text" style="font-size: 0.82rem; line-height: 1.5; color: var(--text-secondary); margin-bottom: 0.6rem;">Operational headquarters for GCC introductions. Direct sandbox licensing, market entry frameworks, and strategic advisory connections.</p>
+                                <span class="badge-tier elevated" id="map-details-badge" style="font-size: 0.7rem; padding: 0.2rem 0.5rem; letter-spacing: 0.08em; display: inline-block;">Primary HQ</span>
+                            </div>
                         </div>
-                        <div class="pathway-arrow"><i data-lucide="arrow-right"></i></div>
-                        <div class="pathway-step glass-card">
-                            <div class="step-num">02</div>
-                            <h5>Advisory Design</h5>
-                            <p>We structure custom advisory terms, G&A allocations, success fees, or JV frameworks.</p>
-                        </div>
-                        <div class="pathway-arrow"><i data-lucide="arrow-right"></i></div>
-                        <div class="pathway-step glass-card">
-                            <div class="step-num">03</div>
-                            <h5>Playmaker Assist</h5>
-                            <p>We facilitate strategic introductions to GCC investors, corporate boards, and regional distributors where appropriate.</p>
-                        </div>
-                        <div class="pathway-arrow"><i data-lucide="arrow-right"></i></div>
-                        <div class="pathway-step glass-card">
-                            <div class="step-num">04</div>
-                            <h5>Accelerated Scale</h5>
-                            <p>We execute expansion programs, secure major accounts, and lock in growth outcomes.</p>
+                    </div>
+
+                    <!-- Right: Animated Relationship Network -->
+                    <div class="network-panel-card glass-card" style="display: flex; flex-direction: column;">
+                        <h4 class="panel-title"><i data-lucide="share-2" class="text-cyan" style="vertical-align: middle; margin-right: 0.5rem; width: 18px; height: 18px;"></i> Animated Ecosystem</h4>
+                        <div style="position: relative; flex: 1; min-height: 350px; margin-top: 1.5rem;">
+                            <canvas id="network-canvas" style="width: 100%; height: 100%; display: block; border-radius: var(--radius-sm); border: 1px solid rgba(255, 255, 255, 0.03); background: rgba(0, 0, 0, 0.15);"></canvas>
                         </div>
                     </div>
                 </div>
@@ -306,6 +357,44 @@
                         <h3>AGE Hospitality™</h3>
                         <span class="rec-label" style="color: var(--color-gold); margin-bottom: 0.8rem; display: block; font-weight: 600;">Food & Beverage Logistics</span>
                         <p>Navigating municipal regulatory clearance, supply logistics, franchise matching, and local distributor alignment for premium global F&B brands entering the GCC.</p>
+                    </div>
+                </div>
+        </section>
+
+        <!-- PATHWAY SECTION -->
+        <section class="pathway-section reveal-on-scroll" id="pathway" style="border-top: 1px solid rgba(255, 255, 255, 0.03); padding: 8rem 0; position: relative;">
+            <div class="container">
+                <div class="section-header text-center" style="margin-bottom: 4rem;">
+                    <span class="section-subtitle">Integration Sequence</span>
+                    <h2 class="section-title">Your Growth Journey: The Strategic Pathway</h2>
+                    <p class="section-desc">
+                        A structured, high-touch alignment pipeline designed to onboard, integrate, and scale global enterprises within the GCC regulatory sphere.
+                    </p>
+                </div>
+                
+                <div class="pathway-grid">
+                    <div class="pathway-step glass-card">
+                        <div class="step-num">01</div>
+                        <h5>Strategic Evaluation</h5>
+                        <p>We assess your growth directives, evaluate market readiness, and identify critical blockers.</p>
+                    </div>
+                    <div class="pathway-arrow"><i data-lucide="arrow-right"></i></div>
+                    <div class="pathway-step glass-card">
+                        <div class="step-num">02</div>
+                        <h5>Advisory Design</h5>
+                        <p>We structure custom advisory terms, G&A allocations, success fees, or JV frameworks.</p>
+                    </div>
+                    <div class="pathway-arrow"><i data-lucide="arrow-right"></i></div>
+                    <div class="pathway-step glass-card">
+                        <div class="step-num">03</div>
+                        <h5>Playmaker Assist</h5>
+                        <p>We facilitate strategic introductions to GCC investors, corporate boards, and regional distributors where appropriate.</p>
+                    </div>
+                    <div class="pathway-arrow"><i data-lucide="arrow-right"></i></div>
+                    <div class="pathway-step glass-card">
+                        <div class="step-num">04</div>
+                        <h5>Accelerated Scale</h5>
+                        <p>We execute expansion programs, secure major accounts, and lock in growth outcomes.</p>
                     </div>
                 </div>
             </div>
@@ -521,6 +610,109 @@
         </section>
 
 
+
+
+        <!-- CLIENT PORTAL PREVIEW SECTION -->
+        <section class="portal-preview-section reveal-on-scroll" id="portal-preview" style="border-top: 1px solid rgba(255, 255, 255, 0.03); padding: 8rem 0; position: relative;">
+            <div class="container grid-two-cols" style="align-items: center; gap: 4rem;">
+                <div class="portal-preview-content">
+                    <div class="badge-premium animate-fade-in" style="display: inline-flex; margin-bottom: 1.5rem;">
+                        <i data-lucide="lock" class="icon-sparkle"></i>
+                        <span>Secure Executive Workspace</span>
+                    </div>
+                    <h2 class="section-title">The Client Portal</h2>
+                    <p class="section-desc-light" style="font-size: 1.05rem; line-height: 1.75; margin-bottom: 2rem; color: var(--text-secondary);">
+                        Monitor G&A allocations, active introductions, sports placement pathways, and sovereign advisory milestones through a secure, encrypted dashboard. AGE acts as a dynamic digital platform, giving you real-time visibility into your GCC expansion pipeline.
+                    </p>
+                    
+                    <ul style="list-style: none; padding: 0; margin: 0 0 2.5rem; display: flex; flex-direction: column; gap: 1.2rem;">
+                        <li style="display: flex; align-items: center; gap: 0.8rem; font-size: 0.95rem; color: var(--text-primary);">
+                            <i data-lucide="shield-check" class="text-cyan" style="width: 20px; height: 20px; stroke-width: 1.5px;"></i> End-to-End Encrypted Data Vault
+                        </li>
+                        <li style="display: flex; align-items: center; gap: 0.8rem; font-size: 0.95rem; color: var(--text-primary);">
+                            <i data-lucide="activity" class="text-cyan" style="width: 20px; height: 20px; stroke-width: 1.5px;"></i> Live Regulatory & Introduction Tracker
+                        </li>
+                        <li style="display: flex; align-items: center; gap: 0.8rem; font-size: 0.95rem; color: var(--text-primary);">
+                            <i data-lucide="bar-chart-3" class="text-cyan" style="width: 20px; height: 20px; stroke-width: 1.5px;"></i> Dynamic Capital Velocity Metrics
+                        </li>
+                    </ul>
+                    
+                    <a href="portal.html" class="btn btn-primary btn-glow" style="display: inline-flex; align-items: center; gap: 0.8rem;">
+                        <span>Establish Workspace Connection</span>
+                        <i data-lucide="arrow-right" style="width: 18px; height: 18px; stroke-width: 1.5px;"></i>
+                    </a>
+                </div>
+                
+                <!-- Mock Dashboard Preview Card -->
+                <div class="portal-mock-card glass-card" style="padding: 2.2rem; position: relative; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.05); display: flex; flex-direction: column; gap: 1.5rem; background: rgba(14, 21, 37, 0.6); backdrop-filter: blur(20px); border-radius: var(--radius-md);">
+                    <div class="card-glow"></div>
+                    <div class="mock-card-header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255, 255, 255, 0.03); padding-bottom: 1.2rem;">
+                        <div style="display: flex; align-items: center; gap: 0.8rem;">
+                            <img src="logo.png" alt="AGE" style="height: 28px; width: 28px; object-fit: contain;">
+                            <span style="font-family: var(--font-heading); font-weight: 700; color: var(--text-primary); font-size: 0.95rem; letter-spacing: 0.05em;">WORKSPACE CONTROL</span>
+                        </div>
+                        <span class="badge-tier elevated" style="font-size: 0.65rem; background: rgba(16, 185, 129, 0.08); border-color: rgba(16, 185, 129, 0.25); color: var(--color-green); display: flex; align-items: center; gap: 0.4rem; padding: 0.2rem 0.6rem; border-radius: 20px;">
+                            <span style="display:inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--color-green);"></span> SECURED CONNECTION
+                        </span>
+                    </div>
+                    
+                    <!-- Mini Charts / Pipeline Stats -->
+                    <div class="mock-metrics-row" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
+                        <div class="glass-card-nested" style="padding: 1.2rem; border-radius: var(--radius-sm);">
+                            <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 0.3rem;">Deal Velocity</span>
+                            <span style="font-size: 1.4rem; font-weight: 700; color: var(--text-primary); font-family: var(--font-heading);">+24.8% <span style="font-size: 0.8rem; color: var(--color-green); font-weight: 500;">↑</span></span>
+                        </div>
+                        <div class="glass-card-nested" style="padding: 1.2rem; border-radius: var(--radius-sm);">
+                            <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 0.3rem;">Active Hubs</span>
+                            <span style="font-size: 1.4rem; font-weight: 700; color: var(--text-primary); font-family: var(--font-heading);">3 / Riyadh, DXB, AUH</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Glowing Mini Line Chart -->
+                    <div class="mock-chart-container glass-card-nested" style="padding: 1.5rem 1rem 0.5rem; position: relative; border-radius: var(--radius-sm);">
+                        <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; position: absolute; top: 12px; left: 15px;">Capital Velocity Index</span>
+                        <svg viewBox="0 0 350 120" style="width: 100%; height: 100px; display: block; overflow: visible;">
+                            <defs>
+                                <linearGradient id="chartGlow" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stop-color="var(--color-gold)" stop-opacity="0.25" />
+                                    <stop offset="100%" stop-color="var(--color-gold)" stop-opacity="0" />
+                                </linearGradient>
+                            </defs>
+                            <path id="portal-chart-path" d="M 0 100 Q 60 70 120 85 T 240 40 T 350 10" 
+                                  fill="none" stroke="var(--color-gold)" stroke-width="2.5" stroke-linecap="round" />
+                            <path d="M 0 100 Q 60 70 120 85 T 240 40 T 350 10 L 350 120 L 0 120 Z" 
+                                  fill="url(#chartGlow)" />
+                            
+                            <!-- Pulsing final marker node -->
+                            <circle cx="350" cy="10" r="5" fill="var(--color-gold)" />
+                            <circle cx="350" cy="10" r="10" fill="var(--color-gold)" opacity="0.3" class="node-pulse" />
+                        </svg>
+                    </div>
+                    
+                    <!-- Active Pipeline Feeds -->
+                    <div class="mock-feed" style="display: flex; flex-direction: column; gap: 0.8rem;">
+                        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); border-bottom: 1px solid rgba(255,255,255,0.02); padding-bottom: 0.4rem;">
+                            <span>ACTIVE ADVISORY PHASES</span>
+                            <span>STATUS</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem;">
+                            <div style="display: flex; align-items: center; gap: 0.5rem; color: var(--text-primary);">
+                                <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--color-gold);"></span>
+                                <span>GTM Launch Setup — UAE DIFC</span>
+                            </div>
+                            <span style="font-size: 0.75rem; color: var(--color-gold); font-weight: 600;">IN PROGRESS</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem;">
+                            <div style="display: flex; align-items: center; gap: 0.5rem; color: var(--text-primary);">
+                                <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--color-green);"></span>
+                                <span>Sovereign Introductions — Riyadh</span>
+                            </div>
+                            <span style="font-size: 0.75rem; color: var(--color-green); font-weight: 600;">ACTIVE</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
 
         <!-- PARTNERSHIP INQUIRY SECTION (CONTACT FORM) -->

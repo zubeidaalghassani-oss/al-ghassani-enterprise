@@ -2913,6 +2913,160 @@ a {
     }
 }
 
+/* ==========================================================================
+   GCC DIGITAL LUXURY & ANIMATION UPGRADE STYLES
+   ========================================================================== */
+
+/* 1. Staggered Hero Title Spans */
+.hero-title {
+    overflow: hidden;
+}
+.hero-line {
+    display: block;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeUpLine 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.animate-line-1 { animation-delay: 0.2s; }
+.animate-line-2 { animation-delay: 0.5s; }
+.animate-line-3 { animation-delay: 0.8s; }
+
+@keyframes fadeUpLine {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 2. GCC Network Section Layout */
+.gcc-network-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 2.5rem;
+    align-items: stretch;
+}
+
+.map-panel-card, .network-panel-card {
+    height: 100%;
+}
+
+.panel-title {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* 3. Interactive GCC SVG Map */
+.gcc-svg-map {
+    width: 100%;
+    height: auto;
+    max-height: 380px;
+    display: block;
+    overflow: visible;
+}
+
+.map-node circle {
+    transition: all var(--transition-normal);
+}
+
+.map-node:hover circle:last-child {
+    transform: scale(1.3);
+    fill: #ffffff;
+}
+
+.map-node.active .node-pulse {
+    animation: nodePulseGlow 2s infinite ease-in-out;
+}
+
+@keyframes nodePulseGlow {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.4;
+    }
+    50% {
+        transform: scale(1.6);
+        opacity: 0.8;
+    }
+}
+
+.map-details-overlay {
+    opacity: 1;
+    transition: opacity 250ms ease-in-out;
+}
+
+/* 4. Client Portal Preview Card & Chart */
+.portal-mock-card {
+    box-shadow: var(--shadow-lg);
+    transition: all var(--transition-normal);
+}
+
+.portal-mock-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--color-gold);
+    box-shadow: 0 15px 35px rgba(200, 160, 77, 0.1);
+}
+
+/* Pulsing node indicator */
+.node-pulse {
+    transform-origin: center;
+}
+
+/* 5. Refined Solutions Card Hover Glows */
+.solutions-container .feature-card {
+    transition: all var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+}
+
+.solutions-container .feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(200, 160, 77, 0.08) 0%, transparent 100%);
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+    z-index: 0;
+}
+
+.solutions-container .feature-card:hover {
+    transform: translateY(-8px) !important;
+    border-color: rgba(200, 160, 77, 0.4) !important;
+    box-shadow: 0 15px 35px rgba(200, 160, 77, 0.08) !important;
+    background: rgba(255, 255, 255, 0.035) !important;
+    backdrop-filter: blur(15px);
+}
+
+.solutions-container .feature-card:hover::before {
+    opacity: 1;
+}
+
+.solutions-container .feature-card:hover .feature-icon-wrapper {
+    transform: scale(1.1);
+}
+
+/* Responsive simulated mobile and viewport overrides */
+@media (max-width: 992px) {
+    .gcc-network-grid {
+        grid-template-columns: 1fr !important;
+        gap: 2.5rem;
+    }
+}
+
+html.simulated-mobile-mode .gcc-network-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2.5rem;
+}
+
+
 /* Integration Pathway Styling */
 .integration-pathway {
     margin-top: 5rem;

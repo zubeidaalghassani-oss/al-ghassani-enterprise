@@ -1453,6 +1453,230 @@ We would like to analyze how Al Ghassani Enterprises can support navigating our 
         }
     };
 
+    // ==========================================================================
+    // GCC MAP AND RELATIONSHIP NETWORK INTERACTIVITY
+    // ==========================================================================
+    const mapNodes = document.querySelectorAll('.map-node');
+    const mapDetailsTitle = document.getElementById('map-details-title');
+    const mapDetailsText = document.getElementById('map-details-text');
+    const mapDetailsBadge = document.getElementById('map-details-badge');
+    const mapDetailsOverlay = document.getElementById('map-node-details');
+
+    const nodeData = {
+        dubai: {
+            title: "Dubai, UAE (Corporate Hub)",
+            text: "Operational headquarters for GCC introductions. Direct sandbox licensing, market entry frameworks, and strategic advisory connections.",
+            badge: "Primary HQ"
+        },
+        abudhabi: {
+            title: "Abu Dhabi, UAE (Sovereign Hub)",
+            text: "Direct portal for ADGM licensing, sovereign co-investments, regulatory integration, and family office matchmaking.",
+            badge: "Sovereign Hub"
+        },
+        riyadh: {
+            title: "Riyadh, Saudi Arabia",
+            text: "Gateway to Saudi Giga-Projects under Vision 2030. Accelerating national registry filings, defense logistics, and infrastructure introduction routes.",
+            badge: "Strategic Hub"
+        },
+        doha: {
+            title: "Doha, Qatar",
+            text: "Strategic corridor for Qatar financial center introductions, institutional wealth backing, and global sports partnerships.",
+            badge: "Regional Hub"
+        },
+        muscat: {
+            title: "Muscat, Oman",
+            text: "Facilitating Oman port partnerships, logistics pipelines, maritime trade clearances, and sustainable tourism ventures.",
+            badge: "Regional Hub"
+        }
+    };
+
+    mapNodes.forEach(node => {
+        const updateNodeDetails = () => {
+            const nodeKey = node.getAttribute('data-node');
+            const data = nodeData[nodeKey];
+            if (data) {
+                mapNodes.forEach(n => n.classList.remove('active'));
+                node.classList.add('active');
+                
+                if (mapDetailsOverlay) {
+                    mapDetailsOverlay.style.opacity = '0';
+                    setTimeout(() => {
+                        if (mapDetailsTitle) mapDetailsTitle.innerText = data.title;
+                        if (mapDetailsText) mapDetailsText.innerText = data.text;
+                        if (mapDetailsBadge) mapDetailsBadge.innerText = data.badge;
+                        mapDetailsOverlay.style.opacity = '1';
+                    }, 150);
+                }
+            }
+        };
+
+        node.addEventListener('mouseenter', updateNodeDetails);
+        node.addEventListener('click', updateNodeDetails);
+    });
+
+    // RELATIONSHIP NETWORK CANVAS ANIMATION
+    const canvas = document.getElementById('network-canvas');
+    if (canvas) {
+        const ctx = canvas.getContext('2d');
+        let width = canvas.offsetWidth;
+        let height = canvas.offsetHeight;
+        canvas.width = width;
+        canvas.height = height;
+
+        const updateCanvasSize = () => {
+            if (canvas.offsetWidth !== width || canvas.offsetHeight !== height) {
+                width = canvas.offsetWidth;
+                height = canvas.offsetHeight;
+                canvas.width = width;
+                canvas.height = height;
+            }
+        };
+
+        window.addEventListener('resize', updateCanvasSize);
+
+        // Nodes definition
+        const centerNode = { x: 0, y: 0, label: "AGE", size: 30, color: "#C8A04D" };
+        const orbitLabels = ["Family Offices", "Government", "AI Platforms", "Sports Academies", "Trade Logistics", "Institutional Wealth"];
+        const outerNodes = orbitLabels.map((label, idx) => {
+            const angle = (idx * Math.PI * 2) / orbitLabels.length;
+            return {
+                label,
+                angle,
+                dist: 110,
+                size: 8,
+                color: "#D4B15A",
+                pulsePhase: Math.random() * Math.PI
+            };
+        });
+
+        let animationFrameId;
+        const animateNetwork = (time) => {
+            updateCanvasSize();
+            ctx.clearRect(0, 0, width, height);
+
+            const cx = width / 2;
+            const cy = height / 2;
+
+            // Draw links first
+            outerNodes.forEach((node, idx) => {
+                node.pulsePhase += 0.02;
+                const distOffset = Math.sin(node.pulsePhase) * 6;
+                const nx = cx + Math.cos(node.angle) * (node.dist + distOffset);
+                const ny = cy + Math.sin(node.angle) * (node.dist + distOffset);
+
+                // Draw pulsing golden line
+                ctx.beginPath();
+                ctx.moveTo(cx, cy);
+                ctx.lineTo(nx, ny);
+                const grad = ctx.createLinearGradient(cx, cy, nx, ny);
+                grad.addColorStop(0, "rgba(200, 160, 77, 0.4)");
+                grad.addColorStop(0.5, `rgba(225, 201, 122, ${0.3 + Math.sin(node.pulsePhase * 2) * 0.15})`);
+                grad.addColorStop(1, "rgba(200, 160, 77, 0.05)");
+                ctx.strokeStyle = grad;
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+
+                // Draw tiny orbital connecting dust particles
+                const particleCount = 2;
+                for (let i = 1; i <= particleCount; i++) {
+                    const ratio = ((time * 0.0015 * i + idx * 0.3) % 1.0);
+                    const px = cx + (nx - cx) * ratio;
+                    const py = cy + (ny - cy) * ratio;
+                    ctx.beginPath();
+                    ctx.arc(px, py, 2, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(225, 201, 122, ${1 - ratio})`;
+                    ctx.fill();
+                }
+            });
+
+            // Draw outer nodes
+            outerNodes.forEach(node => {
+                const distOffset = Math.sin(node.pulsePhase) * 6;
+                const nx = cx + Math.cos(node.angle) * (node.dist + distOffset);
+                const ny = cy + Math.sin(node.angle) * (node.dist + distOffset);
+
+                // Outer node glow
+                ctx.beginPath();
+                ctx.arc(nx, ny, node.size + 4 + Math.sin(node.pulsePhase) * 3, 0, Math.PI * 2);
+                ctx.fillStyle = "rgba(212, 177, 90, 0.08)";
+                ctx.fill();
+
+                // Outer node dot
+                ctx.beginPath();
+                ctx.arc(nx, ny, node.size, 0, Math.PI * 2);
+                ctx.fillStyle = node.color;
+                ctx.fill();
+
+                // Outer node text
+                ctx.font = "500 11px Inter";
+                ctx.fillStyle = "#D5D8DF";
+                ctx.textAlign = nx > cx ? "left" : "right";
+                ctx.textBaseline = "middle";
+                const offset = nx > cx ? 12 : -12;
+                ctx.fillText(node.label, nx + offset, ny);
+            });
+
+            // Draw center node (AGE)
+            ctx.beginPath();
+            ctx.arc(cx, cy, centerNode.size + 8 + Math.sin(time * 0.003) * 4, 0, Math.PI * 2);
+            ctx.fillStyle = "rgba(200, 160, 77, 0.08)";
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.arc(cx, cy, centerNode.size, 0, Math.PI * 2);
+            ctx.fillStyle = "#111d2e";
+            ctx.strokeStyle = centerNode.color;
+            ctx.lineWidth = 2.5;
+            ctx.fill();
+            ctx.stroke();
+
+            // Labeled text inside center
+            ctx.font = "800 13px Inter";
+            ctx.fillStyle = "#ffffff";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText(centerNode.label, cx, cy);
+
+            animationFrameId = requestAnimationFrame(animateNetwork);
+        };
+
+        // Start canvas loop when section is near
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (!animationFrameId) {
+                        animationFrameId = requestAnimationFrame(animateNetwork);
+                    }
+                } else {
+                    if (animationFrameId) {
+                        cancelAnimationFrame(animationFrameId);
+                        animationFrameId = null;
+                    }
+                }
+            });
+        }, { threshold: 0.1 });
+        observer.observe(canvas);
+    }
+
+    // PORTAL CHART ANIMATION ON SCROLL
+    const portalChartPath = document.getElementById('portal-chart-path');
+    if (portalChartPath) {
+        const length = portalChartPath.getTotalLength() || 400;
+        portalChartPath.style.strokeDasharray = length;
+        portalChartPath.style.strokeDashoffset = length;
+        portalChartPath.style.transition = 'stroke-dashoffset 2.2s cubic-bezier(0.25, 0.8, 0.25, 1)';
+
+        const chartObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    portalChartPath.style.strokeDashoffset = 0;
+                    chartObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2 });
+        chartObserver.observe(portalChartPath);
+    }
+
     // Initialize Google Sheets Portfolio & Insights Data
     loadPartnersFromGoogleSheet();
     loadInsightsFromGoogleSheet();
