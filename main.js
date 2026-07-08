@@ -1495,6 +1495,28 @@ We would like to analyze how Al Ghassani Enterprises can support navigating our 
         }
     };
 
+    const cityCapabilities = {
+        dubai: ["Cross-Border GTM", "AI Transformation", "Institutional Capital"],
+        abudhabi: ["Regulatory Support", "Institutional Capital"],
+        riyadh: ["Regulatory Support", "Family Office Advisory"],
+        doha: ["Institutional Capital", "Sports & Event Sponsorships"],
+        muscat: ["Cross-Border GTM"],
+        kuwait: ["Family Office Advisory"]
+    };
+
+    const restoreActiveExplorerHighlights = () => {
+        const activeTab = document.querySelector('.explorer-tab.active');
+        if (activeTab) {
+            const targetKey = activeTab.getAttribute('data-target');
+            highlightExplorerObjective(targetKey);
+        } else {
+            mapNodes.forEach(n => n.classList.remove('active', 'dimmed', 'highlighted-active'));
+            if (window.setEcosystemFilters) {
+                window.setEcosystemFilters([]); // Reset canvas filters to show all nodes
+            }
+        }
+    };
+
     mapNodes.forEach(node => {
         const updateNodeDetails = () => {
             const nodeKey = node.getAttribute('data-node');
@@ -1502,11 +1524,14 @@ We would like to analyze how Al Ghassani Enterprises can support navigating our 
             if (data) {
                 // Clear any explorer highlighting states to let direct interaction shine
                 explorerTabs.forEach(t => t.classList.remove('active'));
-                mapNodes.forEach(n => n.classList.remove('active', 'dimmed', 'highlighted-active'));
-                if (window.setEcosystemFilters) {
-                    window.setEcosystemFilters([]); // Reset canvas filters to show all nodes
-                }
                 
+                // Highlight selected city and dim other map pins
+                mapNodes.forEach(n => {
+                    n.classList.remove('active', 'dimmed', 'highlighted-active');
+                    if (n !== node) {
+                        n.classList.add('dimmed');
+                    }
+                });
                 node.classList.add('active');
                 
                 if (mapDetailsOverlay) {
@@ -1518,11 +1543,18 @@ We would like to analyze how Al Ghassani Enterprises can support navigating our 
                         mapDetailsOverlay.style.opacity = '1';
                     }, 150);
                 }
+
+                // Connect to canvas: Highlight only relevant capability nodes
+                if (window.setEcosystemFilters) {
+                    const capabilities = cityCapabilities[nodeKey] || [];
+                    window.setEcosystemFilters(capabilities);
+                }
             }
         };
 
         node.addEventListener('mouseenter', updateNodeDetails);
         node.addEventListener('click', updateNodeDetails);
+        node.addEventListener('mouseleave', restoreActiveExplorerHighlights);
     });
 
     // ==========================================================================
@@ -1648,6 +1680,10 @@ We would like to analyze how Al Ghassani Enterprises can support navigating our 
         // Interactive States for Explorer Filters & Mouse Hover
         let activeNetworkLabels = [];
         let hoveredNodeIndex = -1;
+        let isCenterHovered = false;
+        let wasCenterHovered = false;
+        let centerPulseRadius = 0;
+        let introStartTime = null;
 
         canvas.addEventListener('mousemove', (e) => {
             const rect = canvas.getBoundingClientRect();
@@ -1668,7 +1704,23 @@ We would like to analyze how Al Ghassani Enterprises can support navigating our 
             });
             
             const centerDist = Math.hypot(mx - cx, my - cy);
-            const isCenterHovered = centerDist < centerNode.size;
+            isCenterHovered = centerDist < centerNode.size;
+            
+            if (isCenterHovered && !wasCenterHovered) {
+                wasCenterHovered = true;
+                if (mapDetailsOverlay) {
+                    mapDetailsOverlay.style.opacity = '0';
+                    setTimeout(() => {
+                        if (mapDetailsTitle) mapDetailsTitle.innerText = "The AGE Gateway";
+                        if (mapDetailsText) mapDetailsText.innerText = "Connecting businesses with the right opportunities across the GCC.";
+                        if (mapDetailsBadge) mapDetailsBadge.innerText = "Strategic Alignment";
+                        mapDetailsOverlay.style.opacity = '1';
+                    }, 150);
+                }
+            } else if (!isCenterHovered && wasCenterHovered) {
+                wasCenterHovered = false;
+                restoreActiveExplorerHighlights();
+            }
             
             hoveredNodeIndex = foundIdx;
             canvas.style.cursor = (foundIdx !== -1 || isCenterHovered) ? 'pointer' : 'default';
@@ -1676,27 +1728,78 @@ We would like to analyze how Al Ghassani Enterprises can support navigating our 
 
         canvas.addEventListener('mouseleave', () => {
             hoveredNodeIndex = -1;
+            if (wasCenterHovered) {
+                wasCenterHovered = false;
+                restoreActiveExplorerHighlights();
+            }
+            isCenterHovered = false;
             canvas.style.cursor = 'default';
         });
 
         let animationFrameId;
         const animateNetwork = (time) => {
+            if (!introStartTime) introStartTime = time;
+            const elapsed = time - introStartTime;
+
             updateCanvasSize();
             ctx.clearRect(0, 0, width, height);
 
             const cx = width / 2;
             const cy = height / 2;
 
+            // Intro sequence multipliers
+            let centerScale = 1;
+            let lineDistMultiplier = 1;
+            let outerNodeAlpha = 1;
+            let labelRevealCount = orbitLabels.length;
+
+            if (elapsed < 2000) {
+                // Phase 1: Center node scales up (0 to 800ms)
+                centerScale = Math.min(1, elapsed / 800);
+                
+                // Phase 2: Lines grow outward (300 to 1200ms)
+                lineDistMultiplier = Math.min(1, Math.max(0, (elapsed - 300) / 900));
+                
+                // Phase 3: Outer nodes fade in (700 to 1500ms)
+                outerNodeAlpha = Math.min(1, Math.max(0, (elapsed - 700) / 800));
+                
+                // Phase 4: Labels appear one by one (1000 to 2000ms)
+                const labelProgress = Math.min(1, Math.max(0, (elapsed - 1000) / 1000));
+                labelRevealCount = Math.floor(labelProgress * (orbitLabels.length + 1));
+            }
+
+            // Draw center node ripple pulse if center is hovered
+            if (isCenterHovered) {
+                if (centerPulseRadius === 0) centerPulseRadius = centerNode.size;
+                centerPulseRadius += 3.5;
+                if (centerPulseRadius > 160) {
+                    centerPulseRadius = centerNode.size;
+                }
+            } else if (centerPulseRadius > 0) {
+                centerPulseRadius += 4.5;
+                if (centerPulseRadius > 160) {
+                    centerPulseRadius = 0;
+                }
+            }
+
+            if (centerPulseRadius > 0) {
+                ctx.beginPath();
+                ctx.arc(cx, cy, centerPulseRadius, 0, Math.PI * 2);
+                ctx.strokeStyle = `rgba(200, 160, 77, ${Math.max(0, 1 - (centerPulseRadius / 160)) * 0.45})`;
+                ctx.lineWidth = 1.8;
+                ctx.stroke();
+            }
+
             // Draw links first
             outerNodes.forEach((node, idx) => {
                 node.pulsePhase += 0.006; // Slowed down significantly for premium feel
-                const isFilteredOut = activeNetworkLabels.length > 0 && !activeNetworkLabels.includes(node.label);
+                const isFilteredOut = isCenterHovered ? false : (activeNetworkLabels.length > 0 && !activeNetworkLabels.includes(node.label));
                 
                 const distOffset = Math.sin(node.pulsePhase) * 2;
-                const nx = cx + Math.cos(node.angle) * (node.dist + distOffset);
-                const ny = cy + Math.sin(node.angle) * (node.dist + distOffset);
+                const nx = cx + Math.cos(node.angle) * (node.dist * lineDistMultiplier + distOffset);
+                const ny = cy + Math.sin(node.angle) * (node.dist * lineDistMultiplier + distOffset);
 
-                // Draw pulsing golden line
+                // Draw connecting line
                 ctx.beginPath();
                 ctx.moveTo(cx, cy);
                 ctx.lineTo(nx, ny);
@@ -1706,7 +1809,7 @@ We would like to analyze how Al Ghassani Enterprises can support navigating our 
                     grad.addColorStop(0, "rgba(200, 160, 77, 0.04)");
                     grad.addColorStop(1, "rgba(200, 160, 77, 0.01)");
                 } else {
-                    const lineIntensity = (hoveredNodeIndex === idx) ? 0.75 : 0.35;
+                    const lineIntensity = (hoveredNodeIndex === idx || isCenterHovered) ? 0.75 : 0.35;
                     grad.addColorStop(0, `rgba(200, 160, 77, ${lineIntensity})`);
                     grad.addColorStop(0.5, `rgba(225, 201, 122, ${(lineIntensity * 0.7) + Math.sin(node.pulsePhase * 2) * 0.08})`);
                     grad.addColorStop(1, "rgba(200, 160, 77, 0.04)");
@@ -1717,7 +1820,7 @@ We would like to analyze how Al Ghassani Enterprises can support navigating our 
                 ctx.stroke();
 
                 // Draw tiny orbital connecting dust particles
-                if (!isFilteredOut) {
+                if (!isFilteredOut && lineDistMultiplier >= 0.95) {
                     const particleCount = 2;
                     for (let i = 1; i <= particleCount; i++) {
                         const ratio = ((time * 0.0008 * i + idx * 0.3) % 1.0);
@@ -1725,7 +1828,7 @@ We would like to analyze how Al Ghassani Enterprises can support navigating our 
                         const py = cy + (ny - cy) * ratio;
                         ctx.beginPath();
                         ctx.arc(px, py, 1.8, 0, Math.PI * 2);
-                        ctx.fillStyle = `rgba(225, 201, 122, ${(1 - ratio) * (hoveredNodeIndex === idx ? 1.0 : 0.75)})`;
+                        ctx.fillStyle = `rgba(225, 201, 122, ${(1 - ratio) * (hoveredNodeIndex === idx || isCenterHovered ? 1.0 : 0.75)})`;
                         ctx.fill();
                     }
                 }
@@ -1733,48 +1836,54 @@ We would like to analyze how Al Ghassani Enterprises can support navigating our 
 
             // Draw outer nodes
             outerNodes.forEach((node, idx) => {
-                const isFilteredOut = activeNetworkLabels.length > 0 && !activeNetworkLabels.includes(node.label);
+                const isFilteredOut = isCenterHovered ? false : (activeNetworkLabels.length > 0 && !activeNetworkLabels.includes(node.label));
                 let alpha = isFilteredOut ? 0.18 : 1.0;
                 if (hoveredNodeIndex === idx) alpha = 1.0;
                 
+                // Scale outer node opacity by intro timeline
+                alpha *= outerNodeAlpha;
+
                 ctx.save();
                 ctx.globalAlpha = alpha;
 
                 const distOffset = Math.sin(node.pulsePhase) * 2;
-                const nx = cx + Math.cos(node.angle) * (node.dist + distOffset);
-                const ny = cy + Math.sin(node.angle) * (node.dist + distOffset);
+                const nx = cx + Math.cos(node.angle) * (node.dist * lineDistMultiplier + distOffset);
+                const ny = cy + Math.sin(node.angle) * (node.dist * lineDistMultiplier + distOffset);
 
                 // Outer node glow
-                const glowSize = node.size + (hoveredNodeIndex === idx ? 10 : 4) + Math.sin(node.pulsePhase) * 1.5;
+                const glowSize = node.size + (hoveredNodeIndex === idx || isCenterHovered ? 10 : 4) + Math.sin(node.pulsePhase) * 1.5;
                 ctx.beginPath();
                 ctx.arc(nx, ny, glowSize, 0, Math.PI * 2);
-                ctx.fillStyle = (hoveredNodeIndex === idx) ? "rgba(225, 201, 122, 0.22)" : "rgba(212, 177, 90, 0.06)";
+                ctx.fillStyle = (hoveredNodeIndex === idx || isCenterHovered) ? "rgba(225, 201, 122, 0.22)" : "rgba(212, 177, 90, 0.06)";
                 ctx.fill();
 
                 // Outer node dot
                 ctx.beginPath();
                 ctx.arc(nx, ny, node.size + (hoveredNodeIndex === idx ? 2 : 0), 0, Math.PI * 2);
-                ctx.fillStyle = (hoveredNodeIndex === idx) ? "#ffffff" : node.color;
+                ctx.fillStyle = (hoveredNodeIndex === idx || isCenterHovered) ? "#ffffff" : node.color;
                 ctx.fill();
 
-                // Outer node text
-                ctx.font = (hoveredNodeIndex === idx) ? "600 11.5px Inter" : "500 11px Inter";
-                ctx.fillStyle = (hoveredNodeIndex === idx) ? "#ffffff" : "#D5D8DF";
-                ctx.textAlign = nx > cx ? "left" : "right";
-                ctx.textBaseline = "middle";
-                const offset = nx > cx ? 12 : -12;
-                ctx.fillText(node.label, nx + offset, ny);
+                // Outer node text (only reveal if idx < labelRevealCount)
+                if (idx < labelRevealCount) {
+                    ctx.font = (hoveredNodeIndex === idx) ? "600 11.5px Inter" : "500 11px Inter";
+                    ctx.fillStyle = (hoveredNodeIndex === idx || isCenterHovered) ? "#ffffff" : "#D5D8DF";
+                    ctx.textAlign = nx > cx ? "left" : "right";
+                    ctx.textBaseline = "middle";
+                    const offset = nx > cx ? 12 : -12;
+                    ctx.fillText(node.label, nx + offset, ny);
+                }
                 ctx.restore();
             });
 
             // Draw center node (AGE)
+            const currentCenterSize = centerNode.size * centerScale;
             ctx.beginPath();
-            ctx.arc(cx, cy, centerNode.size + 8 + Math.sin(time * 0.001) * 2, 0, Math.PI * 2);
+            ctx.arc(cx, cy, currentCenterSize + (centerScale * (8 + Math.sin(time * 0.001) * 2)), 0, Math.PI * 2);
             ctx.fillStyle = "rgba(200, 160, 77, 0.06)";
             ctx.fill();
 
             ctx.beginPath();
-            ctx.arc(cx, cy, centerNode.size, 0, Math.PI * 2);
+            ctx.arc(cx, cy, currentCenterSize, 0, Math.PI * 2);
             ctx.fillStyle = "#111d2e";
             ctx.strokeStyle = centerNode.color;
             ctx.lineWidth = 2.5;
@@ -1782,11 +1891,13 @@ We would like to analyze how Al Ghassani Enterprises can support navigating our 
             ctx.stroke();
 
             // Labeled text inside center
-            ctx.font = "800 13px Inter";
-            ctx.fillStyle = "#ffffff";
-            ctx.textAlign = "center";
-            ctx.textBaseline = "middle";
-            ctx.fillText(centerNode.label, cx, cy);
+            if (centerScale > 0.4) {
+                ctx.font = "800 13px Inter";
+                ctx.fillStyle = "#ffffff";
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                ctx.fillText(centerNode.label, cx, cy);
+            }
 
             // Expose active network list to global scope for Explorer highlighting
             window.setEcosystemFilters = (labelsArray) => {
@@ -1797,9 +1908,12 @@ We would like to analyze how Al Ghassani Enterprises can support navigating our 
         };
 
         // Start canvas loop when section is near
+        const sectionNode = document.getElementById('gcc-network');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
+                    if (sectionNode) sectionNode.classList.add('is-visible');
+                    introStartTime = null; // Reset animation timeline
                     if (!animationFrameId) {
                         animationFrameId = requestAnimationFrame(animateNetwork);
                     }
