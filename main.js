@@ -517,16 +517,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 "Absorbed back-office operational friction for local community training camps."
             ]
         },
-        "Emirates Red Crescent CSR": {
-            sector: "Family Offices & Large Corporations",
+        "AGE Charity Foundation": {
+            sector: "Philanthropy & Social Impact",
             tag: "large-corp",
-            desc: "Coordinating corporate CSR budgets, Emirates Red Crescent charity campaigns, school sports tours, and community youth developmental football grants across the UAE.",
-            savings: "CSR Impact +95%",
-            referrals: "+$500,000",
+            desc: "Coordinating direct financial grants, specialized training equipment, and hospital support networks for children with special needs (determination), pediatric cancer, and juvenile diabetes across the UAE under the AGE Charity initiative.",
+            savings: "Lives Impacted +2,500",
+            referrals: "+$800,000",
             ip: "Charitable Trust Framework",
             alignments: [
-                "Orchestrated UAE school charity runs and youth development football drives.",
-                "Aligned corporate sponsorship funds directly with regional welfare initiatives."
+                "Partnered with leading pediatric oncology and diabetes clinics to finance treatment cycles.",
+                "Sponsored specialized athletic facilities and inclusive sports camps for children of determination."
             ]
         }
     };
@@ -740,9 +740,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 url: "#contact"
             },
             {
-                title: "Emirates Red Crescent CSR",
-                category: "COMPLIANCE",
-                summary: "Problem: Corporates required audited structures for community sports grants. Solution: Structured compliant CSR channels via AGE Capital™. Outcome: Deployed school clinics and sports grants across the UAE.",
+                title: "AGE Charity Initiative",
+                category: "PHILANTHROPY",
+                summary: "Problem: Families of special needs children and pediatric cancer/diabetes patients required wellness programs and treatment support. Solution: Established AGE Charity to coordinate funding and inclusive clinics. Outcome: Funded care cycles for over 2,500 children and sponsored inclusive youth athletic camps.",
                 date: "CASE STUDY",
                 url: "#contact"
             }
