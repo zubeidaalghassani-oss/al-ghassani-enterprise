@@ -1487,6 +1487,11 @@ We would like to analyze how Al Ghassani Enterprises can support navigating our 
             title: "Muscat, Oman",
             text: "Facilitating Oman port partnerships, logistics pipelines, maritime trade clearances, and sustainable tourism ventures.",
             badge: "Regional Hub"
+        },
+        kuwait: {
+            title: "Kuwait City, Kuwait",
+            text: "Securing alignments with regional family offices, private capital trusts, import-export regulatory paths, and local joint ventures.",
+            badge: "Regional Hub"
         }
     };
 
@@ -1495,7 +1500,13 @@ We would like to analyze how Al Ghassani Enterprises can support navigating our 
             const nodeKey = node.getAttribute('data-node');
             const data = nodeData[nodeKey];
             if (data) {
-                mapNodes.forEach(n => n.classList.remove('active'));
+                // Clear any explorer highlighting states to let direct interaction shine
+                explorerTabs.forEach(t => t.classList.remove('active'));
+                mapNodes.forEach(n => n.classList.remove('active', 'dimmed', 'highlighted-active'));
+                if (window.setEcosystemFilters) {
+                    window.setEcosystemFilters([]); // Reset canvas filters to show all nodes
+                }
+                
                 node.classList.add('active');
                 
                 if (mapDetailsOverlay) {
@@ -1513,6 +1524,91 @@ We would like to analyze how Al Ghassani Enterprises can support navigating our 
         node.addEventListener('mouseenter', updateNodeDetails);
         node.addEventListener('click', updateNodeDetails);
     });
+
+    // ==========================================================================
+    // REGIONAL OPPORTUNITY EXPLORER INTERACTIVITY
+    // ==========================================================================
+    const explorerTabs = document.querySelectorAll('.explorer-tab');
+    const explorerTitle = document.getElementById('explorer-display-title');
+    const explorerText = document.getElementById('explorer-display-text');
+
+    const explorerData = {
+        "enter-uae": {
+            title: "Strategic Access: UAE Market Entry",
+            text: "Al Ghassani Enterprises guides you through entity structuring, securing corporate partnerships, and obtaining regulatory setups in Dubai (DIFC) and Abu Dhabi (ADGM). We streamline licensing pathways with local authorities to launch your regional footprint.",
+            mapNodes: ["dubai", "abudhabi"],
+            networkNodes: ["Regulatory Support", "Cross-Border GTM"]
+        },
+        "expand-saudi": {
+            title: "Vision 2030: Saudi Arabia Expansion",
+            text: "We bridge access to Saudi Giga-Projects and private enterprise hubs, facilitating regulatory clearances in Riyadh and matching you with key corporate development offices and commercial joint venture structures.",
+            mapNodes: ["riyadh"],
+            networkNodes: ["Regulatory Support", "Family Office Advisory"]
+        },
+        "raise-capital": {
+            title: "Capital Valency: Institutional & Family Office Raising",
+            text: "We map your growth funding requirements to major GCC capital nodes—aligning with sovereign-backed allocations, institutional funds, and multi-family offices in Dubai, Abu Dhabi, Riyadh, and Doha.",
+            mapNodes: ["dubai", "abudhabi", "riyadh", "doha"],
+            networkNodes: ["Family Office Advisory", "Institutional Capital"]
+        },
+        "find-partners": {
+            title: "Ecosystem Synergies: Finding Strategic Partners",
+            text: "Leverage Yahya Al Ghassani's premier regional relationships to secure local distribution networks, high-value joint ventures, and major brand endorsements (such as Red Bull) across all six GCC financial capitals.",
+            mapNodes: ["dubai", "abudhabi", "riyadh", "doha", "muscat", "kuwait"],
+            networkNodes: ["Family Office Advisory", "Sports & Event Sponsorships", "Cross-Border GTM"]
+        },
+        "implement-ai": {
+            title: "Digital Alpha: Enterprise AI Implementation",
+            text: "Accelerate operational efficiency by deploying customized Large Language Model middleware, smart compliance auditing pipelines, and automated transactional validation modules in Dubai and Abu Dhabi.",
+            mapNodes: ["dubai", "abudhabi"],
+            networkNodes: ["AI Transformation"]
+        }
+    };
+
+    const highlightExplorerObjective = (targetKey) => {
+        const data = explorerData[targetKey];
+        if (!data) return;
+
+        // 1. Update text displays
+        if (explorerTitle) explorerTitle.innerText = data.title;
+        if (explorerText) explorerText.innerText = data.text;
+
+        // 2. Highlight SVG Map pins
+        mapNodes.forEach(node => {
+            const nodeKey = node.getAttribute('data-node');
+            node.classList.remove('active', 'dimmed', 'highlighted-active');
+            
+            if (data.mapNodes.includes(nodeKey)) {
+                node.classList.add('highlighted-active');
+            } else {
+                node.classList.add('dimmed');
+            }
+        });
+
+        // 3. Highlight Animated Canvas nodes (via global hook)
+        if (window.setEcosystemFilters) {
+            window.setEcosystemFilters(data.networkNodes);
+        }
+    };
+
+    explorerTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            explorerTabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            
+            const targetKey = tab.getAttribute('data-target');
+            highlightExplorerObjective(targetKey);
+        });
+    });
+
+    // Initialize the default explorer highlight on load
+    setTimeout(() => {
+        const activeTab = document.querySelector('.explorer-tab.active');
+        if (activeTab) {
+            const targetKey = activeTab.getAttribute('data-target');
+            highlightExplorerObjective(targetKey);
+        }
+    }, 300);
 
     // RELATIONSHIP NETWORK CANVAS ANIMATION
     const canvas = document.getElementById('network-canvas');
@@ -1536,7 +1632,7 @@ We would like to analyze how Al Ghassani Enterprises can support navigating our 
 
         // Nodes definition
         const centerNode = { x: 0, y: 0, label: "AGE", size: 30, color: "#C8A04D" };
-        const orbitLabels = ["Family Offices", "Government", "AI Platforms", "Sports Academies", "Trade Logistics", "Institutional Wealth"];
+        const orbitLabels = ["Family Office Advisory", "Regulatory Support", "AI Transformation", "Sports & Event Sponsorships", "Cross-Border GTM", "Institutional Capital"];
         const outerNodes = orbitLabels.map((label, idx) => {
             const angle = (idx * Math.PI * 2) / orbitLabels.length;
             return {
@@ -1549,6 +1645,40 @@ We would like to analyze how Al Ghassani Enterprises can support navigating our 
             };
         });
 
+        // Interactive States for Explorer Filters & Mouse Hover
+        let activeNetworkLabels = [];
+        let hoveredNodeIndex = -1;
+
+        canvas.addEventListener('mousemove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const mx = e.clientX - rect.left;
+            const my = e.clientY - rect.top;
+            const cx = width / 2;
+            const cy = height / 2;
+            
+            let foundIdx = -1;
+            outerNodes.forEach((node, idx) => {
+                const distOffset = Math.sin(node.pulsePhase) * 2;
+                const nx = cx + Math.cos(node.angle) * (node.dist + distOffset);
+                const ny = cy + Math.sin(node.angle) * (node.dist + distOffset);
+                const distance = Math.hypot(mx - nx, my - ny);
+                if (distance < 20) {
+                    foundIdx = idx;
+                }
+            });
+            
+            const centerDist = Math.hypot(mx - cx, my - cy);
+            const isCenterHovered = centerDist < centerNode.size;
+            
+            hoveredNodeIndex = foundIdx;
+            canvas.style.cursor = (foundIdx !== -1 || isCenterHovered) ? 'pointer' : 'default';
+        });
+
+        canvas.addEventListener('mouseleave', () => {
+            hoveredNodeIndex = -1;
+            canvas.style.cursor = 'default';
+        });
+
         let animationFrameId;
         const animateNetwork = (time) => {
             updateCanvasSize();
@@ -1559,8 +1689,10 @@ We would like to analyze how Al Ghassani Enterprises can support navigating our 
 
             // Draw links first
             outerNodes.forEach((node, idx) => {
-                node.pulsePhase += 0.02;
-                const distOffset = Math.sin(node.pulsePhase) * 6;
+                node.pulsePhase += 0.006; // Slowed down significantly for premium feel
+                const isFilteredOut = activeNetworkLabels.length > 0 && !activeNetworkLabels.includes(node.label);
+                
+                const distOffset = Math.sin(node.pulsePhase) * 2;
                 const nx = cx + Math.cos(node.angle) * (node.dist + distOffset);
                 const ny = cy + Math.sin(node.angle) * (node.dist + distOffset);
 
@@ -1569,57 +1701,76 @@ We would like to analyze how Al Ghassani Enterprises can support navigating our 
                 ctx.moveTo(cx, cy);
                 ctx.lineTo(nx, ny);
                 const grad = ctx.createLinearGradient(cx, cy, nx, ny);
-                grad.addColorStop(0, "rgba(200, 160, 77, 0.4)");
-                grad.addColorStop(0.5, `rgba(225, 201, 122, ${0.3 + Math.sin(node.pulsePhase * 2) * 0.15})`);
-                grad.addColorStop(1, "rgba(200, 160, 77, 0.05)");
+                
+                if (isFilteredOut) {
+                    grad.addColorStop(0, "rgba(200, 160, 77, 0.04)");
+                    grad.addColorStop(1, "rgba(200, 160, 77, 0.01)");
+                } else {
+                    const lineIntensity = (hoveredNodeIndex === idx) ? 0.75 : 0.35;
+                    grad.addColorStop(0, `rgba(200, 160, 77, ${lineIntensity})`);
+                    grad.addColorStop(0.5, `rgba(225, 201, 122, ${(lineIntensity * 0.7) + Math.sin(node.pulsePhase * 2) * 0.08})`);
+                    grad.addColorStop(1, "rgba(200, 160, 77, 0.04)");
+                }
+                
                 ctx.strokeStyle = grad;
-                ctx.lineWidth = 1.5;
+                ctx.lineWidth = (hoveredNodeIndex === idx || (!isFilteredOut && activeNetworkLabels.length > 0)) ? 2.2 : 1.2;
                 ctx.stroke();
 
                 // Draw tiny orbital connecting dust particles
-                const particleCount = 2;
-                for (let i = 1; i <= particleCount; i++) {
-                    const ratio = ((time * 0.0015 * i + idx * 0.3) % 1.0);
-                    const px = cx + (nx - cx) * ratio;
-                    const py = cy + (ny - cy) * ratio;
-                    ctx.beginPath();
-                    ctx.arc(px, py, 2, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(225, 201, 122, ${1 - ratio})`;
-                    ctx.fill();
+                if (!isFilteredOut) {
+                    const particleCount = 2;
+                    for (let i = 1; i <= particleCount; i++) {
+                        const ratio = ((time * 0.0008 * i + idx * 0.3) % 1.0);
+                        const px = cx + (nx - cx) * ratio;
+                        const py = cy + (ny - cy) * ratio;
+                        ctx.beginPath();
+                        ctx.arc(px, py, 1.8, 0, Math.PI * 2);
+                        ctx.fillStyle = `rgba(225, 201, 122, ${(1 - ratio) * (hoveredNodeIndex === idx ? 1.0 : 0.75)})`;
+                        ctx.fill();
+                    }
                 }
             });
 
             // Draw outer nodes
-            outerNodes.forEach(node => {
-                const distOffset = Math.sin(node.pulsePhase) * 6;
+            outerNodes.forEach((node, idx) => {
+                const isFilteredOut = activeNetworkLabels.length > 0 && !activeNetworkLabels.includes(node.label);
+                let alpha = isFilteredOut ? 0.18 : 1.0;
+                if (hoveredNodeIndex === idx) alpha = 1.0;
+                
+                ctx.save();
+                ctx.globalAlpha = alpha;
+
+                const distOffset = Math.sin(node.pulsePhase) * 2;
                 const nx = cx + Math.cos(node.angle) * (node.dist + distOffset);
                 const ny = cy + Math.sin(node.angle) * (node.dist + distOffset);
 
                 // Outer node glow
+                const glowSize = node.size + (hoveredNodeIndex === idx ? 10 : 4) + Math.sin(node.pulsePhase) * 1.5;
                 ctx.beginPath();
-                ctx.arc(nx, ny, node.size + 4 + Math.sin(node.pulsePhase) * 3, 0, Math.PI * 2);
-                ctx.fillStyle = "rgba(212, 177, 90, 0.08)";
+                ctx.arc(nx, ny, glowSize, 0, Math.PI * 2);
+                ctx.fillStyle = (hoveredNodeIndex === idx) ? "rgba(225, 201, 122, 0.22)" : "rgba(212, 177, 90, 0.06)";
                 ctx.fill();
 
                 // Outer node dot
                 ctx.beginPath();
-                ctx.arc(nx, ny, node.size, 0, Math.PI * 2);
-                ctx.fillStyle = node.color;
+                ctx.arc(nx, ny, node.size + (hoveredNodeIndex === idx ? 2 : 0), 0, Math.PI * 2);
+                ctx.fillStyle = (hoveredNodeIndex === idx) ? "#ffffff" : node.color;
                 ctx.fill();
 
                 // Outer node text
-                ctx.font = "500 11px Inter";
-                ctx.fillStyle = "#D5D8DF";
+                ctx.font = (hoveredNodeIndex === idx) ? "600 11.5px Inter" : "500 11px Inter";
+                ctx.fillStyle = (hoveredNodeIndex === idx) ? "#ffffff" : "#D5D8DF";
                 ctx.textAlign = nx > cx ? "left" : "right";
                 ctx.textBaseline = "middle";
                 const offset = nx > cx ? 12 : -12;
                 ctx.fillText(node.label, nx + offset, ny);
+                ctx.restore();
             });
 
             // Draw center node (AGE)
             ctx.beginPath();
-            ctx.arc(cx, cy, centerNode.size + 8 + Math.sin(time * 0.003) * 4, 0, Math.PI * 2);
-            ctx.fillStyle = "rgba(200, 160, 77, 0.08)";
+            ctx.arc(cx, cy, centerNode.size + 8 + Math.sin(time * 0.001) * 2, 0, Math.PI * 2);
+            ctx.fillStyle = "rgba(200, 160, 77, 0.06)";
             ctx.fill();
 
             ctx.beginPath();
@@ -1636,6 +1787,11 @@ We would like to analyze how Al Ghassani Enterprises can support navigating our 
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
             ctx.fillText(centerNode.label, cx, cy);
+
+            // Expose active network list to global scope for Explorer highlighting
+            window.setEcosystemFilters = (labelsArray) => {
+                activeNetworkLabels = labelsArray;
+            };
 
             animationFrameId = requestAnimationFrame(animateNetwork);
         };
