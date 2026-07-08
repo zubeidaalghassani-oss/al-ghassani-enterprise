@@ -481,52 +481,52 @@ document.addEventListener('DOMContentLoaded', () => {
     const GOOGLE_SHEET_ID = "1Yt_Jqu2YlVCmTTz3HNY9fMY1JY6pnrkdllQQGKytJxE";
 
     let partnerData = {
-        "Nexus Analytics": {
-            sector: "Family Offices & Large Corporations",
-            tag: "large-corp",
-            desc: "Nexus Analytics implements advanced AI and statistical modeling to optimize capital allocation and operational efficiency for GCC family offices.",
-            savings: "G&A -30%",
-            referrals: "+$550,000",
-            ip: "Available (ADGM Financial Tech)",
-            alignments: [
-                "Secured market licensing and legal frameworks in ADGM via Al Ghassani.",
-                "Consolidated finance and payroll accounting under G&A Shared Services."
-            ]
-        },
-        "AeroTech Int": {
-            sector: "SMEs & Technology Startups",
-            tag: "sme-startup",
-            desc: "AeroTech designs smart aviation component tracking software and predictive scheduling algorithms for regional airline operators.",
-            savings: "G&A -45%",
-            referrals: "+$850,000",
-            ip: "AeroTech Scheduling Core IP",
-            alignments: [
-                "Accessing GCC sovereign procurement bids via Midfield Playmaker assist.",
-                "Pre-integrated compliance audits and MOHRE payroll rails."
-            ]
-        },
-        "Vertex Health": {
-            sector: "SMEs & Technology Startups",
-            tag: "sme-startup",
-            desc: "Vertex Healthcare develops secure cloud diagnostics software for regional clinics, integrating zero-trust frameworks and Arabic medical interfaces.",
-            savings: "G&A -35%",
-            referrals: "+$1,200,000",
-            ip: "Arabic Diagnostics Middleware",
-            alignments: [
-                "AI adoption middleware completed under Innovation Consulting track.",
-                "Legal M&A council and compliance audits insulated via central G&A."
-            ]
-        },
-        "GCC Commercial": {
+        "Red Bull Campaign": {
             sector: "Sports Networks & Sponsorships",
             tag: "sports-commercial",
-            desc: "GCC Commercial Networks manages high-profile regional athlete portfolios, securing premium corporate sponsorships and brand representation deals.",
-            savings: "G&A -40%",
-            referrals: "+$680,000",
+            desc: "Managing commercial athlete representation, high-performance training campaigns, and media rights for Yahya Al Ghassani's brand endorsement with Red Bull across Salzburg and Dubai.",
+            savings: "ROI +150%",
+            referrals: "+$1,450,000",
             ip: "Sponsorship Rights Engine",
             alignments: [
-                "Commercial sports sponsorship contract finalized with Saudi Pro League.",
-                "Executive advisory and coaching support managed by Al Ghassani."
+                "Structured multi-year brand representation terms and international media rights.",
+                "Coordinated high-valency sports-science alignments and community youth clinics."
+            ]
+        },
+        "Dubai GameExpo & Esports": {
+            sector: "SMEs & Technology Startups",
+            tag: "sme-startup",
+            desc: "Developing sports-tech digital pipelines, esports sponsorships, and youth gaming activations at GameExpo Dubai in collaboration with regional technology nodes.",
+            savings: "Engagement +85%",
+            referrals: "+$920,000",
+            ip: "Esports Rights Framework",
+            alignments: [
+                "Secured strategic advisory presence for regional athletes in gaming media.",
+                "Integrated youth-targeted community sponsorships and virtual sports leagues."
+            ]
+        },
+        "UAE Youth Academy": {
+            sector: "Sports Networks & Sponsorships",
+            tag: "sports-commercial",
+            desc: "Orchestrating development pathways, high-performance training gear supply, and placement pipelines for young Emirati players in Shabab Al Ahli and UAE national clubs.",
+            savings: "Placement Rate +40%",
+            referrals: "+$650,000",
+            ip: "Youth Winger Placement Pathway",
+            alignments: [
+                "Created structured sports-talent placement pipelines for UAE Pro League clubs.",
+                "Absorbed back-office operational friction for local community training camps."
+            ]
+        },
+        "Emirates Red Crescent CSR": {
+            sector: "Family Offices & Large Corporations",
+            tag: "large-corp",
+            desc: "Coordinating corporate CSR budgets, Emirates Red Crescent charity campaigns, school sports tours, and community youth developmental football grants across the UAE.",
+            savings: "CSR Impact +95%",
+            referrals: "+$500,000",
+            ip: "Charitable Trust Framework",
+            alignments: [
+                "Orchestrated UAE school charity runs and youth development football drives.",
+                "Aligned corporate sponsorship funds directly with regional welfare initiatives."
             ]
         }
     };
@@ -726,23 +726,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const loadInsightsFromGoogleSheet = () => {
         const fallbackList = [
             {
-                title: "UAE Healthcare Expansion",
-                category: "GTM & ACCESS",
-                summary: "Problem: Clinic group needed to scale cross-border. Solution: Deployed AGE Launch™ to navigate filings. Outcome: Established 3 regional hubs, accelerating licensing by 40%.",
-                date: "CASE STUDY",
-                url: "#contact"
-            },
-            {
-                title: "Saudi Sports Matchmaking",
+                title: "Red Bull Endorsement",
                 category: "PARTNERSHIP",
-                summary: "Problem: Sports tech firm sought Saudi access. Solution: Activated AGE Connect™ to secure pathways. Outcome: Secured 2 multi-year sponsorships, growing footprint by 55%.",
+                summary: "Problem: UAE athletes required structured global brand representation. Solution: Deployed AGE Sports™ to coordinate terms with Red Bull. Outcome: Managed high-profile Salzburg training campaigns and media assets.",
                 date: "CASE STUDY",
                 url: "#contact"
             },
             {
-                title: "ADGM Fintech Licensing",
+                title: "Dubai GameExpo Sports Tech",
+                category: "GTM & ACCESS",
+                summary: "Problem: Tech developers sought elite athletic endorsement pipelines. Solution: Deployed AGE Connect™ to secure esports sponsorships. Outcome: Scaled community engagement by 85% at GameExpo Dubai.",
+                date: "CASE STUDY",
+                url: "#contact"
+            },
+            {
+                title: "Emirates Red Crescent CSR",
                 category: "COMPLIANCE",
-                summary: "Problem: Fintech firm required regulatory setup. Solution: Orchestrated AGE Scale™ to conduct audits. Outcome: Secured full license in record time with zero friction.",
+                summary: "Problem: Corporates required audited structures for community sports grants. Solution: Structured compliant CSR channels via AGE Capital™. Outcome: Deployed school clinics and sports grants across the UAE.",
                 date: "CASE STUDY",
                 url: "#contact"
             }
