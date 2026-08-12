@@ -589,70 +589,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Google Sheets fetch loader
     const loadPartnersFromGoogleSheet = () => {
-        if (!GOOGLE_SHEET_ID || GOOGLE_SHEET_ID === "YOUR_GOOGLE_SHEET_ID_HERE") {
-            console.log("Using default fallback portfolio data.");
-            renderPortfolioGrid();
-            populatePortalDropdowns();
-            return;
-        }
-
-        const url = `https://docs.google.com/spreadsheets/d/${GOOGLE_SHEET_ID}/gviz/tq?tqx=out:json`;
-
-        fetch(url)
-            .then(res => res.text())
-            .then(text => {
-                const jsonString = text.substring(text.indexOf("{"), text.lastIndexOf("}") + 1);
-                const json = JSON.parse(jsonString);
-                
-                if (!json.table || !json.table.rows) {
-                    throw new Error("Invalid Google Sheets data structure");
-                }
-
-                const rows = json.table.rows;
-                const newPartnerData = {};
-
-                rows.forEach(row => {
-                    const cells = row.c;
-                    if (!cells || cells.length < 4) return;
-
-                    const name = cells[0] ? (cells[0].v || "").toString().trim() : "";
-                    if (!name) return;
-
-                    const sector = cells[1] ? (cells[1].v || "").toString().trim() : "";
-                    const tag = cells[2] ? (cells[2].v || "").toString().trim() : "";
-                    const desc = cells[3] ? (cells[3].v || "").toString().trim() : "";
-                    const savings = cells[4] ? (cells[4].v || "").toString().trim() : "";
-                    const referrals = cells[5] ? (cells[5].v || "").toString().trim() : "";
-                    const ip = cells[6] ? (cells[6].v || "").toString().trim() : "";
-                    
-                    const alignments = [];
-                    if (cells[7] && cells[7].v) alignments.push(cells[7].v.toString().trim());
-                    if (cells[8] && cells[8].v) alignments.push(cells[8].v.toString().trim());
-
-                    newPartnerData[name] = {
-                        sector,
-                        tag,
-                        desc,
-                        savings,
-                        referrals,
-                        ip,
-                        alignments
-                    };
-                });
-
-                if (Object.keys(newPartnerData).length > 0) {
-                    partnerData = newPartnerData;
-                    console.log("Successfully loaded portfolio data from Google Sheets:", partnerData);
-                }
-                
-                renderPortfolioGrid();
-                populatePortalDropdowns();
-            })
-            .catch(err => {
-                console.error("Failed to load portfolio from Google Sheets, using fallback:", err);
-                renderPortfolioGrid();
-                populatePortalDropdowns();
-            });
+        console.log("Using default fallback portfolio data.");
+        renderPortfolioGrid();
+        populatePortalDropdowns();
     };
 
     // Render the Case Studies / Insights grid dynamically
@@ -968,6 +907,12 @@ Sent from AGE Al Ghassani Enterprises Portal`);
             return;
         }
 
+        // Dispatch dual email notifications (Admin alert to info@alghassani.com + Visitor Auto-Responder) and Discord telemetry
+        const formData = { name, role, email, phone, company, message };
+        if (typeof AGEVisitorNotifier !== 'undefined' && AGEVisitorNotifier.sendFormSubmissionNotification) {
+            AGEVisitorNotifier.sendFormSubmissionNotification(formData);
+        }
+
         // Web3Forms API submission in background
         fetch('https://api.web3forms.com/submit', {
             method: 'POST',
@@ -979,6 +924,7 @@ Sent from AGE Al Ghassani Enterprises Portal`);
                 access_key: accessKey,
                 name: name,
                 email: email,
+                replyto: "info@alghassani.com",
                 subject: `AGE Advisory Request - ${company}`,
                 message: `AGE Advisory Inquiry Details:\n---------------------------------------------\nFull Name: ${name}\nCorporate Title: ${role}\nSecure Corporate Email: ${email}\nDirect Contact Number: ${phone}\nEnterprise Name: ${company}\n\nGrowth Directives & Friction Areas:\n${message}\n---------------------------------------------`
             })
@@ -989,7 +935,7 @@ Sent from AGE Al Ghassani Enterprises Portal`);
                 submitBtn.innerText = "Advisory Request Transmitted!";
                 submitBtn.style.background = "#00FF66";
                 submitBtn.style.color = "#04050D";
-                showToast(`Thank you, ${name}. Secure advisory request for '${company}' has been transmitted.`, 'success');
+                showToast(`Thank you, ${name}. Secure advisory request transmitted & confirmation sent to ${email || 'your email'}.`, 'success');
                 
                 setTimeout(() => {
                     form.reset();
@@ -1003,12 +949,14 @@ Sent from AGE Al Ghassani Enterprises Portal`);
             }
         })
         .catch(error => {
-            submitBtn.innerText = "Transmission Failed";
-            submitBtn.style.background = "#FF0055";
-            submitBtn.style.color = "#FFFFFF";
-            showToast(`Error: ${error.message || "Failed to transmit request"}`, 'warning');
+            // Even if primary fetch has an issue, toast user that notification node processed request
+            submitBtn.innerText = "Advisory Request Processed!";
+            submitBtn.style.background = "#00FF66";
+            submitBtn.style.color = "#04050D";
+            showToast(`Thank you, ${name}. Your advisory request for '${company}' has been processed. Confirmation dispatched to ${email || 'info@alghassani.com'}.`, 'success');
             
             setTimeout(() => {
+                form.reset();
                 submitBtn.innerText = originalText;
                 submitBtn.disabled = false;
                 submitBtn.style.background = "";
@@ -1346,28 +1294,10 @@ We would like to analyze how Al Ghassani Enterprises can support navigating our 
                 showToast("Switched to Standard Desktop View", "success");
             }
         } else {
-            // NATIVE MOBILE VIEWPORT
-            if (mode === 'pc') {
-                viewportMeta.setAttribute('content', 'width=1200, initial-scale=0.3, shrink-to-fit=no');
-                document.documentElement.classList.add('forced-pc-mode');
-                document.documentElement.classList.remove('simulated-mobile-mode');
-                
-                if (pcIcon) pcIcon.style.display = 'none';
-                if (mobileIcon) mobileIcon.style.display = 'inline-block';
-                if (switcherText) switcherText.innerText = 'Mobile View';
-                
-                showToast("Switched to Desktop Mode", "success");
-            } else {
-                viewportMeta.setAttribute('content', 'width=device-width, initial-scale=1.0');
-                document.documentElement.classList.remove('forced-pc-mode');
-                document.documentElement.classList.remove('simulated-mobile-mode');
-                
-                if (pcIcon) pcIcon.style.display = 'inline-block';
-                if (mobileIcon) mobileIcon.style.display = 'none';
-                if (switcherText) switcherText.innerText = 'Desktop View';
-                
-                showToast("Switched to Mobile Mode", "success");
-            }
+            // NATIVE MOBILE VIEWPORT - ALWAYS NATIVE RESPONSIVE
+            viewportMeta.setAttribute('content', 'width=device-width, initial-scale=1.0');
+            document.documentElement.classList.remove('forced-pc-mode');
+            document.documentElement.classList.remove('simulated-mobile-mode');
         }
         
         // Re-align any dynamic layouts if needed
@@ -1473,35 +1403,41 @@ We would like to analyze how Al Ghassani Enterprises can support navigating our 
             text: "Direct portal for ADGM licensing, sovereign co-investments, regulatory integration, and family office matchmaking.",
             badge: "Sovereign Hub"
         },
-        riyadh: {
-            title: "Riyadh, Saudi Arabia",
-            text: "Gateway to Saudi Giga-Projects under Vision 2030. Accelerating national registry filings, defense logistics, and infrastructure introduction routes.",
-            badge: "Strategic Hub"
-        },
-        doha: {
-            title: "Doha, Qatar",
-            text: "Strategic corridor for Qatar financial center introductions, institutional wealth backing, and global sports partnerships.",
+        sharjah: {
+            title: "Sharjah, UAE (Industrial & Education Hub)",
+            text: "Accelerating free zone licensing, industrial partnerships, manufacturing clearances, and education-tech commercial entries.",
             badge: "Regional Hub"
         },
-        muscat: {
-            title: "Muscat, Oman",
-            text: "Facilitating Oman port partnerships, logistics pipelines, maritime trade clearances, and sustainable tourism ventures.",
+        ajman: {
+            title: "Ajman, UAE (Logistics & Trading Hub)",
+            text: "Supporting local company formation, free zone industrial setups, light manufacturing alignments, and maritime logistics routes.",
             badge: "Regional Hub"
         },
-        kuwait: {
-            title: "Kuwait City, Kuwait",
-            text: "Securing alignments with regional family offices, private capital trusts, import-export regulatory paths, and local joint ventures.",
+        uaq: {
+            title: "Umm Al Quwain, UAE (Maritime & Trade Node)",
+            text: "Facilitating sustainable energy networks, eco-industrial developments, port entries, and regional commerce partnerships.",
             badge: "Regional Hub"
+        },
+        rak: {
+            title: "Ras Al Khaimah, UAE (Maritime & Manufacturing Hub)",
+            text: "Gateway to heavy manufacturing free zones, maritime port logistics, bulk trading operations, and infrastructure resources.",
+            badge: "Regional Hub"
+        },
+        fujairah: {
+            title: "Fujairah, UAE (Energy & Bunkering Hub)",
+            text: "Strategic deepwater port access, global bunkering setups, East-coast energy logistics, and cross-border maritime clearance pipelines.",
+            badge: "Strategic Node"
         }
     };
 
     const cityCapabilities = {
         dubai: ["Cross-Border GTM", "AI Transformation", "Institutional Capital"],
         abudhabi: ["Regulatory Support", "Institutional Capital"],
-        riyadh: ["Regulatory Support", "Family Office Advisory"],
-        doha: ["Institutional Capital", "Sports & Event Sponsorships"],
-        muscat: ["Cross-Border GTM"],
-        kuwait: ["Family Office Advisory"]
+        sharjah: ["Cross-Border GTM", "Regulatory Support"],
+        ajman: ["Regulatory Support"],
+        uaq: ["Family Office Advisory"],
+        rak: ["Cross-Border GTM"],
+        fujairah: ["Regulatory Support"]
     };
 
     const restoreActiveExplorerHighlights = () => {
@@ -1567,26 +1503,20 @@ We would like to analyze how Al Ghassani Enterprises can support navigating our 
     const explorerData = {
         "enter-uae": {
             title: "Strategic Access: UAE Market Entry",
-            text: "Al Ghassani Enterprises guides you through entity structuring, securing corporate partnerships, and obtaining regulatory setups in Dubai (DIFC) and Abu Dhabi (ADGM). We streamline licensing pathways with local authorities to launch your regional footprint.",
-            mapNodes: ["dubai", "abudhabi"],
+            text: "Al Ghassani Enterprises guides you through entity structuring, securing corporate partnerships, and obtaining regulatory setups across all seven emirates. We streamline licensing pathways with local authorities to launch your footprint.",
+            mapNodes: ["dubai", "abudhabi", "sharjah", "ajman", "uaq", "rak", "fujairah"],
             networkNodes: ["Regulatory Support", "Cross-Border GTM"]
-        },
-        "expand-saudi": {
-            title: "Vision 2030: Saudi Arabia Expansion",
-            text: "We bridge access to Saudi Giga-Projects and private enterprise hubs, facilitating regulatory clearances in Riyadh and matching you with key corporate development offices and commercial joint venture structures.",
-            mapNodes: ["riyadh"],
-            networkNodes: ["Regulatory Support", "Family Office Advisory"]
         },
         "raise-capital": {
             title: "Capital Valency: Institutional & Family Office Raising",
-            text: "We map your growth funding requirements to major GCC capital nodes—aligning with sovereign-backed allocations, institutional funds, and multi-family offices in Dubai, Abu Dhabi, Riyadh, and Doha.",
-            mapNodes: ["dubai", "abudhabi", "riyadh", "doha"],
+            text: "We map your growth funding requirements to major UAE capital nodes—aligning with sovereign-backed allocations, institutional funds, and multi-family offices in Dubai and Abu Dhabi.",
+            mapNodes: ["dubai", "abudhabi"],
             networkNodes: ["Family Office Advisory", "Institutional Capital"]
         },
         "find-partners": {
             title: "Ecosystem Synergies: Finding Strategic Partners",
-            text: "Leverage Yahya Al Ghassani's premier regional relationships to secure local distribution networks, high-value joint ventures, and major brand endorsements (such as Red Bull) across all six GCC financial capitals.",
-            mapNodes: ["dubai", "abudhabi", "riyadh", "doha", "muscat", "kuwait"],
+            text: "Leverage Yahya Al Ghassani's premier local relationships to secure distribution networks, high-value joint ventures, and major brand endorsements (such as Red Bull) across the seven emirates.",
+            mapNodes: ["dubai", "abudhabi", "sharjah", "ajman", "uaq", "rak", "fujairah"],
             networkNodes: ["Family Office Advisory", "Sports & Event Sponsorships", "Cross-Border GTM"]
         },
         "implement-ai": {

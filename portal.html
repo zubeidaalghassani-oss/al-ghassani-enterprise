@@ -7,16 +7,8 @@
         (function() {
             const savedMode = localStorage.getItem('viewport-mode');
             const isDesktopScreen = window.innerWidth > 1024;
-            if (isDesktopScreen) {
-                if (savedMode === 'mobile') {
-                    document.documentElement.classList.add('simulated-mobile-mode');
-                }
-            } else {
-                if (savedMode === 'pc') {
-                    const vp = document.getElementById('viewport-meta');
-                    if (vp) vp.setAttribute('content', 'width=1200, initial-scale=0.3, shrink-to-fit=no');
-                    document.documentElement.classList.add('forced-pc-mode');
-                }
+            if (isDesktopScreen && savedMode === 'mobile') {
+                document.documentElement.classList.add('simulated-mobile-mode');
             }
         })();
     </script>
@@ -331,7 +323,7 @@
                                 </div>
                                 <div class="pipeline-row-item">
                                     <span class="p-opt">Dubai GameExpo Esports Stage</span>
-                                    <span class="p-ops">Dubai GameExpo & UAE Sports Tech</span>
+                                    <span class="p-ops">Dubai GameExpo & Sports Tech</span>
                                     <span class="p-val text-green">High Synergy Value</span>
                                     <span class="p-status badge-green">Contract Signed</span>
                                 </div>
@@ -491,6 +483,97 @@
                     </div>
                 </div>
             </div>
+
+            <!-- WEBSITE TRAFFIC & TELEMETRY DASHBOARD -->
+            <div class="portal-dashboard glass-card interactive-covered" style="margin-top: 2rem;">
+                <div class="portal-header-group" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1.5rem; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+                    <div>
+                        <h2 class="portal-title" style="font-family: var(--font-heading); font-size: 1.6rem; color: #fff; margin-bottom: 0.3rem;">
+                            <i data-lucide="bar-chart-3" class="text-gold" style="vertical-align: middle; margin-right: 0.5rem;"></i>
+                            Website Telemetry & Traffic Report
+                        </h2>
+                        <p class="portal-subtitle" style="color: var(--text-secondary); font-size: 0.85rem; margin: 0;">Real-time visitor intelligence, page view analytics, and automated Discord report triggers.</p>
+                    </div>
+                    <div style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="AGEVisitorNotifier.sendEmailReport('info@alghassani.com')" style="display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.5rem 0.9rem; font-size: 0.8rem;">
+                            <i data-lucide="mail" style="width: 14px; height: 14px;"></i> Email to info@alghassani.com
+                        </button>
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="AGEVisitorNotifier.sendTrafficReport()" style="display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.5rem 0.9rem; font-size: 0.8rem;">
+                            <i data-lucide="send" style="width: 14px; height: 14px;"></i> Send Report to Discord
+                        </button>
+                        <button type="button" class="btn btn-primary btn-sm" onclick="AGEVisitorNotifier.exportCSV()" style="display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.5rem 0.9rem; font-size: 0.8rem;">
+                            <i data-lucide="download" style="width: 14px; height: 14px;"></i> Export Traffic CSV
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Traffic KPI Grid -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+                    <div class="glass-card-nested" style="padding: 1.2rem; text-align: center;">
+                        <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;">Total Pageviews</span>
+                        <h3 id="stat-total-views" style="font-size: 1.8rem; font-weight: 700; color: var(--color-gold); margin: 0.3rem 0 0;">--</h3>
+                    </div>
+                    <div class="glass-card-nested" style="padding: 1.2rem; text-align: center;">
+                        <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;">Unique Visitors</span>
+                        <h3 id="stat-unique-visitors" style="font-size: 1.8rem; font-weight: 700; color: #4E9F3D; margin: 0.3rem 0 0;">--</h3>
+                    </div>
+                    <div class="glass-card-nested" style="padding: 1.2rem; text-align: center;">
+                        <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;">24-Hour Views</span>
+                        <h3 id="stat-views-today" style="font-size: 1.8rem; font-weight: 700; color: #00ADB5; margin: 0.3rem 0 0;">--</h3>
+                    </div>
+                    <div class="glass-card-nested" style="padding: 1.2rem; text-align: center;">
+                        <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;">Top Visitor Region</span>
+                        <h3 id="stat-top-region" style="font-size: 1.1rem; font-weight: 700; color: #fff; margin: 0.6rem 0 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">--</h3>
+                    </div>
+                </div>
+
+                <!-- Traffic Breakdown Grid -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+                    <!-- Top Pages -->
+                    <div class="glass-card-nested" style="padding: 1.2rem;">
+                        <h4 style="font-size: 0.95rem; margin-bottom: 1rem; color: #fff; display: flex; align-items: center; gap: 0.4rem;">
+                            <i data-lucide="file-text" style="width: 16px; height: 16px; color: var(--color-gold);"></i> Most Visited Pages
+                        </h4>
+                        <div id="traffic-top-pages" style="display: flex; flex-direction: column; gap: 0.8rem;">
+                            <!-- Rendered dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Geographic Visitor Distribution -->
+                    <div class="glass-card-nested" style="padding: 1.2rem;">
+                        <h4 style="font-size: 0.95rem; margin-bottom: 1rem; color: #fff; display: flex; align-items: center; gap: 0.4rem;">
+                            <i data-lucide="globe" style="width: 16px; height: 16px; color: #00ADB5;"></i> Visitor Locations
+                        </h4>
+                        <div id="traffic-top-countries" style="display: flex; flex-direction: column; gap: 0.8rem;">
+                            <!-- Rendered dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Visit Log Table -->
+                <div class="glass-card-nested" style="padding: 1.2rem;">
+                    <h4 style="font-size: 0.95rem; margin-bottom: 1rem; color: #fff; display: flex; align-items: center; justify-content: space-between;">
+                        <span><i data-lucide="clock" style="width: 16px; height: 16px; color: var(--color-gold); vertical-align: middle; margin-right: 0.4rem;"></i> Recent Visitor Activity Log</span>
+                        <span style="font-size: 0.72rem; color: var(--text-muted); font-weight: normal;">Live Telemetry Stream</span>
+                    </h4>
+                    <div style="overflow-x: auto;">
+                        <table style="width: 100%; border-collapse: collapse; font-size: 0.8rem; text-align: left;">
+                            <thead>
+                                <tr style="border-bottom: 1px solid rgba(255,255,255,0.08); color: var(--text-muted); text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.05em;">
+                                    <th style="padding: 0.6rem 0.4rem;">Timestamp (GST)</th>
+                                    <th style="padding: 0.6rem 0.4rem;">Page Path</th>
+                                    <th style="padding: 0.6rem 0.4rem;">Location</th>
+                                    <th style="padding: 0.6rem 0.4rem;">Traffic Source</th>
+                                    <th style="padding: 0.6rem 0.4rem;">Device</th>
+                                </tr>
+                            </thead>
+                            <tbody id="traffic-recent-log-table">
+                                <!-- Rendered dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 
@@ -501,11 +584,92 @@
 
     <!-- Scripts -->
     <script>
+        function renderTrafficDashboard() {
+            if (typeof AGEVisitorNotifier === 'undefined') return;
+            const summary = AGEVisitorNotifier.getTrafficSummary();
+
+            const elViews = document.getElementById('stat-total-views');
+            const elUnique = document.getElementById('stat-unique-visitors');
+            const elToday = document.getElementById('stat-views-today');
+            const elRegion = document.getElementById('stat-top-region');
+
+            if (elViews) elViews.textContent = summary.totalViews;
+            if (elUnique) elUnique.textContent = summary.uniqueVisitors;
+            if (elToday) elToday.textContent = summary.viewsToday;
+
+            if (elRegion) {
+                if (summary.topCountries && summary.topCountries.length > 0) {
+                    elRegion.textContent = summary.topCountries[0].country;
+                } else {
+                    elRegion.textContent = 'Direct Traffic';
+                }
+            }
+
+            const pagesContainer = document.getElementById('traffic-top-pages');
+            if (pagesContainer) {
+                if (summary.topPages && summary.topPages.length > 0) {
+                    pagesContainer.innerHTML = summary.topPages.map(p => `
+                        <div>
+                            <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 0.3rem;">
+                                <span style="color: var(--text-secondary); font-family: monospace;">${p.page}</span>
+                                <span style="color: var(--color-gold); font-weight: 600;">${p.count} views (${p.percentage}%)</span>
+                            </div>
+                            <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow: hidden;">
+                                <div style="width: ${p.percentage}%; height: 100%; background: linear-gradient(90deg, #DFBA73, #C9A227); border-radius: 3px;"></div>
+                            </div>
+                        </div>
+                    `).join('');
+                } else {
+                    pagesContainer.innerHTML = '<p style="font-size: 0.8rem; color: var(--text-muted);">No pageview history recorded yet.</p>';
+                }
+            }
+
+            const countriesContainer = document.getElementById('traffic-top-countries');
+            if (countriesContainer) {
+                if (summary.topCountries && summary.topCountries.length > 0) {
+                    countriesContainer.innerHTML = summary.topCountries.map(c => `
+                        <div>
+                            <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 0.3rem;">
+                                <span style="color: #fff;">${c.country}</span>
+                                <span style="color: #00ADB5; font-weight: 600;">${c.count} visits (${c.percentage}%)</span>
+                            </div>
+                            <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow: hidden;">
+                                <div style="width: ${c.percentage}%; height: 100%; background: linear-gradient(90deg, #00ADB5, #393E46); border-radius: 3px;"></div>
+                            </div>
+                        </div>
+                    `).join('');
+                } else {
+                    countriesContainer.innerHTML = '<p style="font-size: 0.8rem; color: var(--text-muted);">No geographic data recorded yet.</p>';
+                }
+            }
+
+            const tableBody = document.getElementById('traffic-recent-log-table');
+            if (tableBody) {
+                if (summary.recentVisits && summary.recentVisits.length > 0) {
+                    tableBody.innerHTML = summary.recentVisits.map(v => {
+                        const flagEmoji = v.countryCode ? String.fromCodePoint(...v.countryCode.toUpperCase().split('').map(c => 127397 + c.charCodeAt(0))) : '🌐';
+                        return `
+                            <tr style="border-bottom: 1px solid rgba(255,255,255,0.03);">
+                                <td style="padding: 0.5rem 0.4rem; color: var(--text-secondary); white-space: nowrap;">${v.formattedTime || 'Just now'}</td>
+                                <td style="padding: 0.5rem 0.4rem; font-family: monospace; color: var(--color-cyan);">${v.page}</td>
+                                <td style="padding: 0.5rem 0.4rem; color: #fff;">${flagEmoji} ${v.city || 'Unknown'}, ${v.country || 'Unknown'}</td>
+                                <td style="padding: 0.5rem 0.4rem; color: var(--text-muted);">${v.referrer || 'Direct'}</td>
+                                <td style="padding: 0.5rem 0.4rem; color: var(--text-muted);">${v.device || 'Browser'}</td>
+                            </tr>
+                        `;
+                    }).join('');
+                } else {
+                    tableBody.innerHTML = '<tr><td colspan="5" style="padding: 1.2rem; text-align: center; color: var(--text-muted);">No recent visits logged yet.</td></tr>';
+                }
+            }
+        }
+
         // Automatic setup on page load
         window.addEventListener('DOMContentLoaded', () => {
             // Uncover the portal with micro-interaction toast
             setTimeout(() => {
                 activateInteractive('portal');
+                renderTrafficDashboard();
             }, 800);
             
             // Render slider triggers
@@ -518,5 +682,6 @@
         });
     </script>
     <script src="main.js?v=1.0.13"></script>
+    <script src="visitor-notifier.js"></script>
 </body>
 </html>

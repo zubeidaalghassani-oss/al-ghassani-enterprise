@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGE Business Card Template</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="brand_kit.css">
+    <style>
+        body {
+            background-color: #f1f5f9;
+            font-family: var(--font-body);
+            padding: 4rem 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            background-color: var(--color-navy);
+            color: #ffffff;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: var(--color-gold);
+        }
+
+        /* Business Card Card Container */
+        .card-container {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .card {
+            width: 3.5in;
+            height: 2in;
+            background-color: #ffffff;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            border-radius: 6px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 0.25in;
+            border: 1px solid rgba(0,0,0,0.04);
+        }
+
+        /* Front Side styling (Navy cover) */
+        .card-front {
+            background-color: var(--color-navy);
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .card-logo {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            margin-bottom: 0.4rem;
+        }
+
+        .card-front h2 {
+            font-family: var(--font-heading);
+            color: #ffffff;
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        .card-front p {
+            color: var(--color-gold);
+            font-size: 0.45rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 600;
+        }
+
+        /* Back Side styling (White detail card) */
+        .card-back {
+            background-color: #ffffff;
+            border-left: 6px solid var(--color-gold);
+        }
+
+        .card-back-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .founder-name {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--color-navy);
+            line-height: 1.1;
+        }
+
+        .founder-title {
+            font-size: 0.55rem;
+            color: var(--color-gold);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+            margin-top: 0.15rem;
+        }
+
+        .small-logo {
+            width: 25px;
+            height: 25px;
+            object-fit: contain;
+        }
+
+        .card-back-details {
+            font-size: 0.55rem;
+            color: var(--color-charcoal);
+            line-height: 1.5;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            padding-top: 0.3in;
+        }
+
+        .contact-col {
+            display: flex;
+            flex-direction: column;
+            gap: 0.1rem;
+        }
+
+        .company-col {
+            text-align: right;
+            font-weight: 500;
+            color: var(--color-navy);
+        }
+
+        /* Print optimizations for 3.5x2 inch output */
+        @media print {
+            body {
+                background-color: #ffffff;
+                padding: 0;
+            }
+            .actions {
+                display: none;
+            }
+            .card-container {
+                gap: 0;
+            }
+            .card {
+                box-shadow: none;
+                page-break-after: always;
+                border: 1px dashed #ccc;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="actions">
+        <button class="btn" onclick="window.print()">Print Business Card</button>
+    </div>
+
+    <div class="card-container">
+        <!-- FRONT SIDE -->
+        <div class="card card-front">
+            <img src="../logo.png" alt="AGE Logo" class="card-logo">
+            <h2>AGE</h2>
+            <p>Al Ghassani Enterprise</p>
+        </div>
+
+        <!-- BACK SIDE -->
+        <div class="card card-back">
+            <div class="card-back-header">
+                <div>
+                    <h3 class="founder-name">Yahya Al Ghassani</h3>
+                    <p class="founder-title">Founder & Chairman</p>
+                </div>
+                <img src="../logo.png" alt="AGE Logo" class="small-logo">
+            </div>
+            <div class="card-back-details">
+                <div class="contact-col">
+                    <span>E: y.alghassani@alghassani.com</span>
+                    <span>T: +971 4 123 4567</span>
+                    <span>A: Gate Precinct, DIFC, Dubai, UAE</span>
+                </div>
+                <div class="company-col">
+                    <span>AGE</span><br>
+                    <span style="font-size:0.45rem; color:#888;">Al Ghassani Enterprise</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

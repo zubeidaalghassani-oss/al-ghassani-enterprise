@@ -7,16 +7,8 @@
         (function() {
             const savedMode = localStorage.getItem('viewport-mode');
             const isDesktopScreen = window.innerWidth > 1024;
-            if (isDesktopScreen) {
-                if (savedMode === 'mobile') {
-                    document.documentElement.classList.add('simulated-mobile-mode');
-                }
-            } else {
-                if (savedMode === 'pc') {
-                    const vp = document.getElementById('viewport-meta');
-                    if (vp) vp.setAttribute('content', 'width=1200, initial-scale=0.3, shrink-to-fit=no');
-                    document.documentElement.classList.add('forced-pc-mode');
-                }
+            if (isDesktopScreen && savedMode === 'mobile') {
+                document.documentElement.classList.add('simulated-mobile-mode');
             }
         })();
     </script>
@@ -62,6 +54,16 @@
                 <a href="#founder" class="nav-link">Leadership</a>
                 <a href="#insights" class="nav-link">Insights</a>
                 <a href="#contact" class="nav-link">Contact</a>
+
+                <!-- Mobile Region & Currency Switcher -->
+                <div class="mobile-region-select">
+                    <span class="mobile-region-label">Region & Currency</span>
+                    <div class="mobile-region-buttons">
+                        <button class="mobile-region-btn active" data-region="gcc" onclick="selectRegion('gcc')">🇦🇪 GCC (AED)</button>
+                        <button class="mobile-region-btn" data-region="europe" onclick="selectRegion('europe')">🇪🇺 Europe (EUR)</button>
+                        <button class="mobile-region-btn" data-region="global" onclick="selectRegion('global')">🌐 Global (USD)</button>
+                    </div>
+                </div>
             </nav>
 
             <div class="nav-actions">
@@ -212,7 +214,6 @@
                     <div class="explorer-layout">
                         <div class="explorer-tabs" id="explorer-tabs-container">
                             <button class="explorer-tab active" data-target="enter-uae">Enter UAE</button>
-                            <button class="explorer-tab" data-target="expand-saudi">Expand to Saudi Arabia</button>
                             <button class="explorer-tab" data-target="raise-capital">Raise Capital</button>
                             <button class="explorer-tab" data-target="find-partners">Find Strategic Partners</button>
                             <button class="explorer-tab" data-target="implement-ai">Implement AI</button>
@@ -241,41 +242,54 @@
 
                                 <path d="M 120 80 L 150 40 L 220 20 L 260 60 L 290 50 L 320 90 L 370 110 L 400 140 L 390 180 L 320 210 L 280 190 L 220 210 L 160 160 Z" 
                                       fill="none" stroke="rgba(200, 160, 77, 0.15)" stroke-width="1.5" stroke-dasharray="4,4" />
-                                
-                                <path d="M 320 90 L 370 110 L 380 130 L 350 140 L 320 120 Z" class="uae-outline-path" 
-                                      fill="rgba(200, 160, 77, 0.05)" stroke="var(--color-gold)" stroke-width="1.5" stroke-linecap="round" />
+                                                  <!-- UAE Outline Path (Scaled Up) -->
+                                <path d="M 50 250 L 110 270 L 160 310 L 220 320 L 280 320 L 350 280 L 390 240 L 440 120 L 430 70 L 420 85 L 395 110 L 380 120 L 365 125 L 340 145 L 260 185 L 150 210 L 90 220 Z" 
+                                      class="uae-outline-path" fill="rgba(200, 160, 77, 0.04)" stroke="var(--color-gold)" stroke-width="1.8" stroke-linecap="round" />
 
-                                <line x1="220" y1="80" x2="330" y2="110" stroke="rgba(200, 160, 77, 0.2)" stroke-width="1" stroke-dasharray="2,2" />
-                                <line x1="220" y1="80" x2="350" y2="100" stroke="rgba(200, 160, 77, 0.2)" stroke-width="1" stroke-dasharray="2,2" />
-                                <line x1="330" y1="110" x2="350" y2="100" stroke="var(--color-gold)" stroke-width="1.5" />
-                                <line x1="290" y1="70" x2="350" y2="100" stroke="rgba(200, 160, 77, 0.2)" stroke-width="1" stroke-dasharray="2,2" />
-                                <line x1="350" y1="100" x2="410" y2="150" stroke="rgba(200, 160, 77, 0.2)" stroke-width="1" stroke-dasharray="2,2" />
-                                <line x1="210" y1="50" x2="220" y2="80" stroke="rgba(200, 160, 77, 0.2)" stroke-width="1" stroke-dasharray="2,2" />
-                                <line x1="210" y1="50" x2="350" y2="100" stroke="rgba(200, 160, 77, 0.2)" stroke-width="1" stroke-dasharray="2,2" />
+                                <!-- Connection lines between the seven emirates -->
+                                <line x1="250" y1="190" x2="335" y2="145" stroke="var(--color-gold)" stroke-width="1.5" />
+                                <line x1="335" y1="145" x2="365" y2="125" stroke="var(--color-gold)" stroke-width="1.2" stroke-dasharray="2,2" />
+                                <line x1="365" y1="125" x2="380" y2="115" stroke="var(--color-gold)" stroke-width="1" stroke-dasharray="2,2" />
+                                <line x1="380" y1="115" x2="395" y2="105" stroke="var(--color-gold)" stroke-width="1" stroke-dasharray="2,2" />
+                                <line x1="395" y1="105" x2="420" y2="80" stroke="var(--color-gold)" stroke-width="1.2" stroke-dasharray="2,2" />
+                                <line x1="420" y1="80" x2="435" y2="135" stroke="var(--color-gold)" stroke-width="1.2" stroke-dasharray="2,2" />
+                                <line x1="435" y1="135" x2="365" y2="125" stroke="var(--color-gold)" stroke-width="1" stroke-dasharray="2,2" />
+                                <line x1="250" y1="190" x2="435" y2="135" stroke="rgba(200, 160, 77, 0.2)" stroke-width="1" stroke-dasharray="2,2" />
 
-                                <g class="map-node" data-node="riyadh" transform="translate(220,80)" style="cursor: pointer;">
+                                <!-- Abu Dhabi -->
+                                <g class="map-node" data-node="abudhabi" transform="translate(250,190)" style="cursor: pointer;">
                                     <circle r="12" fill="rgba(200, 160, 77, 0.15)" class="node-pulse" />
-                                    <circle r="5" fill="var(--color-gold)" />
+                                    <circle r="5.5" fill="var(--color-gold)" />
                                 </g>
-                                <g class="map-node" data-node="doha" transform="translate(290,70)" style="cursor: pointer;">
-                                    <circle r="10" fill="rgba(200, 160, 77, 0.15)" class="node-pulse" />
-                                    <circle r="4.5" fill="var(--color-gold)" />
-                                </g>
-                                <g class="map-node" data-node="abudhabi" transform="translate(330,110)" style="cursor: pointer;">
-                                    <circle r="12" fill="rgba(200, 160, 77, 0.15)" class="node-pulse" />
-                                    <circle r="5" fill="var(--color-gold)" />
-                                </g>
-                                <g class="map-node active" data-node="dubai" transform="translate(350,100)" style="cursor: pointer;">
+                                <!-- Dubai -->
+                                <g class="map-node active" data-node="dubai" transform="translate(335,145)" style="cursor: pointer;">
                                     <circle r="16" fill="rgba(200, 160, 77, 0.25)" class="node-pulse" />
                                     <circle r="7" fill="var(--color-gold)" />
                                 </g>
-                                <g class="map-node" data-node="muscat" transform="translate(410,150)" style="cursor: pointer;">
-                                    <circle r="10" fill="rgba(200, 160, 77, 0.15)" class="node-pulse" />
-                                    <circle r="4.5" fill="var(--color-gold)" />
+                                <!-- Sharjah -->
+                                <g class="map-node" data-node="sharjah" transform="translate(365,125)" style="cursor: pointer;">
+                                    <circle r="9" fill="rgba(200, 160, 77, 0.12)" class="node-pulse" />
+                                    <circle r="4" fill="var(--color-gold)" />
                                 </g>
-                                <g class="map-node" data-node="kuwait" transform="translate(210,50)" style="cursor: pointer;">
-                                    <circle r="10" fill="rgba(200, 160, 77, 0.15)" class="node-pulse" />
-                                    <circle r="4.5" fill="var(--color-gold)" />
+                                <!-- Ajman -->
+                                <g class="map-node" data-node="ajman" transform="translate(380,115)" style="cursor: pointer;">
+                                    <circle r="8" fill="rgba(200, 160, 77, 0.12)" class="node-pulse" />
+                                    <circle r="3.5" fill="var(--color-gold)" />
+                                </g>
+                                <!-- Umm Al Quwain -->
+                                <g class="map-node" data-node="uaq" transform="translate(395,105)" style="cursor: pointer;">
+                                    <circle r="8" fill="rgba(200, 160, 77, 0.12)" class="node-pulse" />
+                                    <circle r="3.5" fill="var(--color-gold)" />
+                                </g>
+                                <!-- Ras Al Khaimah -->
+                                <g class="map-node" data-node="rak" transform="translate(420,80)" style="cursor: pointer;">
+                                    <circle r="9" fill="rgba(200, 160, 77, 0.12)" class="node-pulse" />
+                                    <circle r="4" fill="var(--color-gold)" />
+                                </g>
+                                <!-- Fujairah -->
+                                <g class="map-node" data-node="fujairah" transform="translate(435,135)" style="cursor: pointer;">
+                                    <circle r="9" fill="rgba(200, 160, 77, 0.12)" class="node-pulse" />
+                                    <circle r="4" fill="var(--color-gold)" />
                                 </g>
                             </svg>
                             
@@ -363,11 +377,11 @@
                     <!-- Solution 6 -->
                     <div class="feature-card glass-card">
                         <div class="feature-icon-wrapper magenta-glow">
-                            <i data-lucide="truck" class="feature-icon"></i>
+                            <i data-lucide="globe-2" class="feature-icon"></i>
                         </div>
                         <h3>AGE Trade™</h3>
-                        <span class="rec-label" style="color: var(--color-magenta); margin-bottom: 0.8rem; display: block; font-weight: 600;">Export & Import / Logistics</span>
-                        <p>Facilitating regional logistics pipelines, customs clearance vectors, and supply chain matchmaking to streamline import/export trade routes across GCC border entries.</p>
+                        <span class="rec-label" style="color: var(--color-magenta); margin-bottom: 0.8rem; display: block; font-weight: 600;">Export & Import (Global Trade)</span>
+                        <p>Facilitating international trade routes, customs vectors, and global import/export supply chain operations across key GCC maritime and air trade hubs.</p>
                     </div>
 
                     <!-- Solution 7 -->
@@ -691,11 +705,12 @@
                     <div class="mock-metrics-row" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
                         <div class="glass-card-nested" style="padding: 1.2rem; border-radius: var(--radius-sm);">
                             <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 0.3rem;">Deal Velocity</span>
-                            <span style="font-size: 1.4rem; font-weight: 700; color: var(--text-primary); font-family: var(--font-heading);">+24.8% <span style="font-size: 0.8rem; color: var(--color-green); font-weight: 500;">↑</span></span>
+                            <span style="font-size: 1.3rem; font-weight: 700; color: var(--text-primary); font-family: var(--font-heading);">+24.8% <span style="font-size: 0.8rem; color: var(--color-green); font-weight: 500;">↑</span></span>
                         </div>
                         <div class="glass-card-nested" style="padding: 1.2rem; border-radius: var(--radius-sm);">
-                            <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 0.3rem;">Active Hubs</span>
-                            <span style="font-size: 1.4rem; font-weight: 700; color: var(--text-primary); font-family: var(--font-heading);">3 / Riyadh, DXB, AUH</span>
+                            <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; display: block; margin-bottom: 0.3rem;">Active Operations</span>
+                            <span style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary); font-family: var(--font-heading); display: block;">3 Core Sectors</span>
+                            <span style="font-size: 0.72rem; color: var(--text-muted); display: block; margin-top: 0.15rem;">Dubai • Abu Dhabi • Global Trade</span>
                         </div>
                     </div>
                     
@@ -729,14 +744,14 @@
                         <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem;">
                             <div style="display: flex; align-items: center; gap: 0.5rem; color: var(--text-primary);">
                                 <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--color-gold);"></span>
-                                <span>GTM Launch Setup — UAE DIFC</span>
+                                <span>Export & Import — Global Trade Node</span>
                             </div>
                             <span style="font-size: 0.75rem; color: var(--color-gold); font-weight: 600;">IN PROGRESS</span>
                         </div>
                         <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem;">
                             <div style="display: flex; align-items: center; gap: 0.5rem; color: var(--text-primary);">
                                 <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--color-green);"></span>
-                                <span>Sovereign Introductions — Riyadh</span>
+                                <span>Sovereign Introductions — UAE Hub</span>
                             </div>
                             <span style="font-size: 0.75rem; color: var(--color-green); font-weight: 600;">ACTIVE</span>
                         </div>
@@ -756,26 +771,23 @@
                         We accept a highly curated roster of corporate partners and expansion clients annually. If your organization seeks strategic GCC growth, complete the evaluation request below.
                     </p>
 
-                    <div class="contact-highlights">
-                        <div class="highlight-item">
-                            <i data-lucide="clock" class="text-cyan"></i>
+                    <div class="contact-methods" style="margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1.5rem;">
+                        <div class="contact-method-item" style="display: flex; align-items: flex-start; gap: 1rem;">
+                            <div class="method-icon-box" style="width: 44px; height: 44px; border-radius: var(--radius-sm); background: rgba(223, 186, 115, 0.08); border: 1px solid rgba(223, 186, 115, 0.2); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                <i data-lucide="shield-check" class="text-gold" style="width: 20px; height: 20px;"></i>
+                            </div>
                             <div>
-                                <h5>48-Hour Advisory Evaluation</h5>
-                                <p>Our executive advisory board will review your sector markers and respond within two business days.</p>
+                                <h5 style="color: var(--text-primary); font-size: 1rem; margin-bottom: 0.2rem; font-family: var(--font-heading);">Executive Governance</h5>
+                                <p style="color: var(--text-secondary); font-size: 0.85rem; margin: 0;">All inquiries routed through Chairman's Office.</p>
                             </div>
                         </div>
-                        <div class="highlight-item">
-                            <i data-lucide="mail" class="text-gold"></i>
-                            <div>
-                                <h5>Direct Advisory Inquiries</h5>
-                                <p>For confidential briefs, board queries, or general contact: <a href="mailto:info@alghassani.com" style="color: var(--color-gold); text-decoration: underline;">info@alghassani.com</a>.</p>
+                        <div class="contact-method-item" style="display: flex; align-items: flex-start; gap: 1rem;">
+                            <div class="method-icon-box" style="width: 44px; height: 44px; border-radius: var(--radius-sm); background: rgba(0, 173, 181, 0.08); border: 1px solid rgba(0, 173, 181, 0.2); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                <i data-lucide="mail" class="text-cyan" style="width: 20px; height: 20px;"></i>
                             </div>
-                        </div>
-                        <div class="highlight-item">
-                            <i data-lucide="shield-check" class="text-magenta"></i>
                             <div>
-                                <h5>Strict Confidentiality</h5>
-                                <p>All submissions are protected under standard multi-lateral NDAs conforming to DIFC & ADGM guidelines.</p>
+                                <h5 style="color: var(--text-primary); font-size: 1rem; margin-bottom: 0.2rem; font-family: var(--font-heading);">Confidential Channel</h5>
+                                <a href="mailto:info@alghassani.com" style="color: var(--color-gold); font-size: 0.85rem; text-decoration: none;">info@alghassani.com</a>
                             </div>
                         </div>
                     </div>
@@ -836,22 +848,22 @@
                 <p class="footer-bio" style="font-size: 0.85rem; line-height: 1.6; color: var(--text-secondary); margin-bottom: 1rem;">
                     Opening Doors. Creating Opportunity. Accelerating Growth.
                 </p>
-                <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5;">
+                <p class="footer-subbio" style="font-size: 0.8rem; color: var(--text-muted);">
                     Elite strategic growth firm advising global corporations, sovereign entities, and institutional boards across the GCC.
                 </p>
             </div>
 
             <div class="footer-links-group">
-                <h5>Locations</h5>
+                <h5>Presence & Operations</h5>
                 <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.8rem;">
                     <li style="font-size: 0.85rem; color: var(--text-secondary); display: flex; align-items: center; gap: 0.5rem;">
-                        <i data-lucide="map-pin" style="width: 14px; height: 14px; color: var(--color-gold); stroke-width: 1.5px;"></i> Dubai, UAE (DIFC)
+                        <i data-lucide="map-pin" style="width: 14px; height: 14px; color: var(--color-gold); stroke-width: 1.5px;"></i> Dubai, UAE
                     </li>
                     <li style="font-size: 0.85rem; color: var(--text-secondary); display: flex; align-items: center; gap: 0.5rem;">
-                        <i data-lucide="map-pin" style="width: 14px; height: 14px; color: var(--color-gold); stroke-width: 1.5px;"></i> Abu Dhabi, UAE (ADGM)
+                        <i data-lucide="map-pin" style="width: 14px; height: 14px; color: var(--color-gold); stroke-width: 1.5px;"></i> Abu Dhabi, UAE
                     </li>
-                    <li style="font-size: 0.85rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.5rem;">
-                        <i data-lucide="map-pin" style="width: 14px; height: 14px; color: var(--text-muted); stroke-width: 1.5px;"></i> Riyadh, KSA (Future)
+                    <li style="font-size: 0.85rem; color: var(--text-secondary); display: flex; align-items: center; gap: 0.5rem;">
+                        <i data-lucide="globe" style="width: 14px; height: 14px; color: var(--color-gold); stroke-width: 1.5px;"></i> Export & Import (Global Trade)
                     </li>
                 </ul>
             </div>
@@ -884,7 +896,7 @@
         </div>
 
         <div class="footer-bottom text-center" style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.03);">
-            <p>&copy; 2026 Al Ghassani Enterprises Group Ltd. All rights reserved. Registered under DIFC Holdings Regulations, Dubai, United Arab Emirates. Advisory services aligned with DIFC, ADGM and UAE corporate regulatory guidelines.</p>
+            <p>&copy; 2026 Al Ghassani Enterprises Group Ltd. All rights reserved. Registered under DIFC Holdings Regulations, Dubai, UAE. Advisory services aligned with DIFC, ADGM and UAE corporate regulatory guidelines.</p>
         </div>
     </footer>
 
@@ -899,5 +911,6 @@
 
     <!-- JS Link -->
     <script src="main.js?v=1.0.13"></script>
+    <script src="visitor-notifier.js"></script>
 </body>
 </html>
